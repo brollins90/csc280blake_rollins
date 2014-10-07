@@ -1,10 +1,6 @@
 package edu.neumont.csc280.webserver;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 
 import edu.neumont.servlet.HttpHandler;
 import edu.neumont.servlet.HttpRequest;
@@ -39,20 +35,18 @@ public class MyHttpHandler implements HttpHandler {
         resp.setContentType("image/png");
         resp.setStatusCode(MyHttpStatusCode.OK.getValue());
 
-        File image = new File("img.png");
-        byte[] imageBytes = new byte[(int) image.length()];
-        FileInputStream fis;
+//        File image = new File("img.png");
+        byte[] imageBytes = new byte[1024];
+//        FileInputStream fis;
         try {
-            fis = new FileInputStream(image);
-            BufferedInputStream bis = new BufferedInputStream(fis);
-            bis.read(imageBytes, 0, imageBytes.length);
+            InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("img.png");
+//            BufferedInputStream bis = new BufferedInputStream(is);
+            int bytesRead = is.read(imageBytes, 0, imageBytes.length);
             resp.setContent(imageBytes);
-            bis.close();
+            is.close();
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
