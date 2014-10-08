@@ -3,4 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    <servlet>
+        <servlet-name>ItemServlet</servlet-name>
+        <servlet-class>edu.neumont.csc280.lab3.ItemServlet</servlet-class>
+    </servlet>
 </web-app>
