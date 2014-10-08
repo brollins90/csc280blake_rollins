@@ -20,19 +20,19 @@ public class ItemServlet extends HttpServlet {
         String uri = request.getPathInfo();
         // if uri is not null
         String[] parts = uri.split("/");
-        String item = parts[1];
+        String itemID = parts[1];
+
+        request.setAttribute("id", itemID);
+
+        RequestDispatcher rd;
         if (uri.endsWith("/image")) {
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/item_" + item + ".png");
+            rd = request.getRequestDispatcher("/WEB-INF/item_" + itemID + ".png");
             rd.forward(request, response);
         } else if(uri.endsWith("/bid")) {
-            //RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/item_" + item + ".png");
-            doPost(request, response);
         } else {
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/item.jsp");
-            //RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/item_" + item + ".jsp");
+            rd = request.getRequestDispatcher("/WEB-INF/item.jsp");
             rd.forward(request, response);
         }
-//        response.getWriter().println(uri);
 
 
     }
