@@ -4,16 +4,31 @@
     <title></title>
 </head>
 <body>
-<form action="post" action="/item/<%request.getAttribute("id");%>/bid"/>
-<h1>Auction Item #1234</h1>
-<img width="200" src="http://localhost:8080/lab2/item/<%request.getAttribute("id");%>/image"/>
+<%
+    String line = "";
+    line = "<form method=\"post\" action=\"/lab3/item/" + request.getAttribute("id") + "/bid\"/>";
+    out.println(line);
+
+    line = "<h1>Auction Item #"+request.getAttribute("id")+"</h1>";
+    out.println(line);
+
+    line = "<input name=\"id\" style=\"display:none;\" value=\""+request.getAttribute("id")+"\"/>";
+    out.println(line);
+
+    line = "<img width=\"200\" src=\"/lab3/item/" + request.getAttribute("id") + "/image\"/>";
+    out.println(line);
+%>
 <dl>
     <dt>Current Bid:</dt>
-    <dd>$1.00</dd>
+    <%
+        line = "<dd>$" + request.getAttribute("currentBid") + "</dd>";
+        out.println(line);
+    %>
+
     <dt>Time Left</dt>
     <dd>2 Days</dd>
     <dt>
-        <input/>
+        <input name="incrementBid"/>
     </dt>
     <dd>
         <input type="submit" value="Place a bid"/>
