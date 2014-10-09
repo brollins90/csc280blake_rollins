@@ -9,6 +9,8 @@ import java.io.InputStream;
 
 public class MyHttpHandler implements HttpHandler
 {
+    private int amount = 5;
+
     @Override
     public void doGet(HttpRequest request, HttpResponse response) {
         System.out.println("goGet");
@@ -28,12 +30,21 @@ public class MyHttpHandler implements HttpHandler
         }
     }
 
+    public void doPost(HttpRequest request, HttpResponse response) {
+        System.out.println("doPost");
+
+        if (request.getUri().equalsIgnoreCase("/lab2/item")) {
+            amount++;
+        }
+        doGet(request, response);
+    }
+
     private void getItem(HttpRequest request, HttpResponse response) {
 
         response.setContentType("text/html");
         response.setStatusCode(MyHttpStatusCode.OK.getValue());
         try {
-            response.getOutputStream().write(("<html>" + "  <body>" + "    <h1>Auction Item #1234</h1>" + "    <img width=\"200\" src=\"http://localhost:8080/lab2/image\"/>" + "    <dl>" + "      <dt>Current Bid:</dt>" + "      <dd>$1.00</dd>" + "      <dt>Time Left</dt>" + "      <dd>2 Days</dd>" + "      <dt>" + "        <input/>" + "      </dt>" + "      <dd>" + "        <input type=\"submit\" value=\"Place a bid\"/>" + "      </dd>" + "    </dl>" + "  </body>" + "</html>").getBytes());
+            response.getOutputStream().write(("<html><body><form method=\"post\"> <h1>Auction Item #1234</h1><img width=\"200\" src=\"http://localhost:8080/lab2/image\"/><dl><dt>Current Bid:</dt><dd>$" + amount + ".00</dd><dt>Time Left</dt><dd>2 Days</dd><dt><input name=\"amount\"/></dt><dd><input type=\"submit\" value=\"Place a bid\"/></dd></dl></form></body></html>").getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }

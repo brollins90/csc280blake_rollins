@@ -39,18 +39,22 @@ public class ServerWorker implements Runnable {
                         throw new InvalidParameterException("HttpRequest does not contain 3 parts.");
                     }
 
-                    // 0 should be "GET"
-                    if (!requestParts[0].equalsIgnoreCase("GET")) {
-                        throw new InvalidParameterException(requestParts[0] + " is an unsupported method.");
-                    }
-                    // 2 should be "HTTP/1.1"
-                    if (!requestParts[2].equalsIgnoreCase("HTTP/1.1")) {
-                        throw new InvalidParameterException(requestParts[0] + " is an unsupported protocol version.");
-                    }
-
                     HttpRequest request = new MyHttpRequest(requestParts[1]);
                     HttpResponse response = new MyHttpResponse(new ByteArrayOutputStream());
-                    handler.doGet(request, response);
+
+                    if (requestParts[0].equalsIgnoreCase("GET")) {
+                        handler.doGet(request, response);
+                    }
+
+                    if (requestParts[0].equalsIgnoreCase("POST")) {
+                        handler.doPost(request, response);
+                    }
+
+//                    // 2 should be "HTTP/1.1"
+//                    if (!requestParts[2].equalsIgnoreCase("HTTP/1.1")) {
+//                        throw new InvalidParameterException(requestParts[0] + " is an unsupported protocol version.");
+//                    }
+
 
                     writeResponse(socketOut, response);
                 }

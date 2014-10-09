@@ -27,5 +27,4 @@ public enum MyHttpStatusCode {
         }
         return MyHttpStatusCode.ERROR500;
     }
-
 }
