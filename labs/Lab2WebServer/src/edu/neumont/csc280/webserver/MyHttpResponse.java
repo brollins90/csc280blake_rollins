@@ -2,7 +2,6 @@ package edu.neumont.csc280.webserver;
 
 import edu.neumont.servlet.HttpResponse;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
