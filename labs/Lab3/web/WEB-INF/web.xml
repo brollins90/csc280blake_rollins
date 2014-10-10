@@ -7,4 +7,8 @@
         <servlet-name>ItemServlet</servlet-name>
         <servlet-class>edu.neumont.csc280.lab3.ItemServlet</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>ItemServlet</servlet-name>
+        <url-pattern>/item/*</url-pattern>
+    </servlet-mapping>
 </web-app>

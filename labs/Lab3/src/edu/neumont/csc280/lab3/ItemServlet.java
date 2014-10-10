@@ -15,45 +15,48 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/item/*")
 public class ItemServlet extends HttpServlet {
 
     private static final AuctionManager manager = new ArrayAuctionManager();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String uri = request.getPathInfo();
-        RequestDispatcher rd;
+        try {
 
-        // check for a null path
-        uri = (uri == null) ? "/" : uri;
+            String uri = request.getPathInfo();
 
-        String[] parts = uri.split("/");
-        String itemID = (parts.length == 0) ? "" : parts[1];
+            // check for a null path
+            uri = (uri == null) ? "/" : uri;
 
-        AuctionItem thisItem = manager.getItem(itemID);
-        if (thisItem != null)
-        {
-            request.setAttribute("id", itemID);
-            request.setAttribute("currentBid", manager.getItem(itemID).getCurrentPrice());
+            String[] parts = uri.split("/");
+            String itemID = (parts.length == 0) ? "" : parts[1];
 
-            if (uri.endsWith("/image")) {
-                rd = request.getRequestDispatcher("/WEB-INF/images/item_" + itemID + ".png");
-                rd.forward(request, response);
-            } else if (uri.endsWith("/bid")) {
-                response.sendRedirect(request.getRequestURI().substring(0, request.getRequestURI().length() - 4));
-            } else {
-                rd = request.getRequestDispatcher("/WEB-INF/item.jsp");
+            AuctionItem thisItem = manager.getItem(itemID);
+            if (thisItem != null)
+            {
+                request.setAttribute("id", itemID);
+                request.setAttribute("currentBid", manager.getItem(itemID).getCurrentPrice());
+
+                if (uri.endsWith("/image")) {
+                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/images/item_" + itemID + ".png");
+                     rd.forward(request, response);
+                } else if (uri.endsWith("/bid")) {
+                    response.sendRedirect(request.getRequestURI().substring(0, request.getRequestURI().length() - 4));
+                } else {
+                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/item.jsp");
+                    rd.forward(request, response);
+                }
+            } // item does not exist
+            else {
+                response.setStatus(404);
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/404.jsp");
                 rd.forward(request, response);
             }
-        } // item does not exist
-        else {
-            response.setStatus(404);
-            rd = request.getRequestDispatcher("/WEB-INF/404.jsp");
+        }
+        catch (Exception e) {
+            response.setStatus(500);
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/500.jsp");
             rd.forward(request, response);
         }
-
-
-
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
