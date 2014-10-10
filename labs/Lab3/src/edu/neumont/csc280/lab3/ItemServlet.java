@@ -1,11 +1,11 @@
 package edu.neumont.csc280.lab3;
 
-import edu.neumont.csc280.lab3.nubay.ArrayAuctionManager;
-import edu.neumont.csc280.lab3.nubay.AuctionItem;
-import edu.neumont.csc280.lab3.nubay.AuctionManager;
-import edu.neumont.csc280.lab3.nubay.Bid;
+import edu.neumont.csc280.lab3.nubay.*;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,6 +24,9 @@ public class ItemServlet extends HttpServlet {
 
             String uri = request.getPathInfo();
 
+//
+
+
             // check for a null path
             uri = (uri == null) ? "/" : uri;
 
@@ -34,7 +37,7 @@ public class ItemServlet extends HttpServlet {
             if (thisItem != null)
             {
                 request.setAttribute("id", itemID);
-                request.setAttribute("currentBid", manager.getItem(itemID).getCurrentPrice());
+                request.setAttribute("currentBid", manager.getItem(itemID).getCurrentPrice().toString());
 
                 if (uri.endsWith("/image")) {
                     RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/images/item_" + itemID + ".png");
@@ -62,15 +65,15 @@ public class ItemServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String itemID = request.getParameter("id");
-        Double incAmount;
+        Money incAmount;
         try{
-            incAmount = Double.parseDouble(request.getParameter("incrementBid"));
+            incAmount = Money.dollars(new BigDecimal(request.getParameter("incrementBid")));
         } catch (Exception e) {
-            incAmount = 0.01d;
+            incAmount = Money.dollars(0.01d);
         }
-        Double current = manager.getItem(itemID).getCurrentPrice();
+//        BigDecimal current = manager.getItem(itemID).getCurrentPrice();
 
-        Double newAmount = current + incAmount;
+        Money newAmount = Money.dollars(manager.getItem(itemID).getCurrentPrice().getAmount().add(incAmount.getAmount()));
 
         manager.getItem(itemID).addBid(new Bid(itemID, newAmount, "Blake"));
 

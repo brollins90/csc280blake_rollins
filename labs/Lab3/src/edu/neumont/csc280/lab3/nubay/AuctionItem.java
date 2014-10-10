@@ -1,5 +1,6 @@
 package edu.neumont.csc280.lab3.nubay;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Stack;
 
@@ -86,14 +87,14 @@ public class AuctionItem {
 
     public boolean addBid(Bid newBid) {
 
-        if (bids.peek().getAmount() < newBid.getAmount()) {
+        if (bids.peek().getAmount().getAmount().compareTo(newBid.getAmount().getAmount()) < 1) {
             bids.push(newBid);
             return true;
         }
         return false;
     }
 
-    public Double getCurrentPrice() {
+    public Money getCurrentPrice() {
         return bids.peek().getAmount();
     }
 }
