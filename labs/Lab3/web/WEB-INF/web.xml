@@ -7,8 +7,16 @@
         <servlet-name>ItemServlet</servlet-name>
         <servlet-class>edu.neumont.csc280.lab3.ItemServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DispatcherServlet</servlet-name>
+        <servlet-class>edu.neumont.csc280.lab3.DispatcherServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ItemServlet</servlet-name>
         <url-pattern>/item/*</url-pattern>
     </servlet-mapping>
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>DispatcherServlet</servlet-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</servlet-mapping>-->
 </web-app>

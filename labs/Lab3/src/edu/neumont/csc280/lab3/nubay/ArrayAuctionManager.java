@@ -1,8 +1,6 @@
 package edu.neumont.csc280.lab3.nubay;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 
 public class ArrayAuctionManager implements AuctionManager {
@@ -35,6 +33,11 @@ public class ArrayAuctionManager implements AuctionManager {
     @Override
     public Iterator<AuctionItem> items() {
         return data.values().iterator();
+    }
+
+    @Override
+    public List itemIds() {
+        return Arrays.asList(data.values().toArray());
     }
 
     @Override
