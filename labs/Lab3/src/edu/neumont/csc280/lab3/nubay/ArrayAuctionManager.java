@@ -1,6 +1,7 @@
 package edu.neumont.csc280.lab3.nubay;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 public class ArrayAuctionManager implements AuctionManager {
@@ -9,7 +10,7 @@ public class ArrayAuctionManager implements AuctionManager {
     //private final Double StartingPrice;
 
     public ArrayAuctionManager() {
-        data = new HashMap<>();
+        data = new ConcurrentHashMap<>();
         //StartingPrice = 0.01d;
 
         // load some test data for me
