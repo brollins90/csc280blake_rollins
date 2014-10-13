@@ -59,7 +59,7 @@ public class AuctionItem {
         this.name = name;
     }
 
-    public String getDescription(String description) {
+    public String getDescription() {
         return this.description;
     }
 

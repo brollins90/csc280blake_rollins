@@ -64,9 +64,25 @@ public class ItemServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String itemID = request.getParameter("id");
+        String bidAmount = request.getParameter("bidAmount");
+
         Money incAmount;
         try {
-            incAmount = Money.dollars(new BigDecimal(request.getParameter("incrementBid")));
+            switch(bidAmount){
+                default:
+                case "one":
+                    incAmount = Money.dollars(1.00d);
+                    break;
+                case "five":
+                    incAmount = Money.dollars(5.00d);
+                    break;
+                case "ten":
+                    incAmount = Money.dollars(10.00d);
+                    break;
+                case "custom":
+                    incAmount = Money.dollars(new BigDecimal(request.getParameter("incrementBid")));
+                    break;
+            }
         } catch (Exception e) {
             incAmount = Money.dollars(0.01d);
         }
