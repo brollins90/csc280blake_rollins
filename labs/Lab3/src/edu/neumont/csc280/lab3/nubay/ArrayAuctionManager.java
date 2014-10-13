@@ -18,15 +18,15 @@ public class ArrayAuctionManager implements AuctionManager {
         data.put("1234",
                 new AuctionItem(
                         "1234",
-                        "url",
-                        "itemname",
+                        "item_1234.png",
+                        "Item one two three four",
                         "Items decs"
                 ));
         data.put("12345",
                 new AuctionItem(
                         "12345",
-                        "url5",
-                        "itemname5",
+                        "item_12345.png",
+                        "This one goes up to five.",
                         "Items desc5"
                 ));
     }

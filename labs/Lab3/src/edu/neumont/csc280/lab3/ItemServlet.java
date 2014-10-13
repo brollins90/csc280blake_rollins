@@ -39,7 +39,7 @@ public class ItemServlet extends HttpServlet {
                     request.setAttribute("currentBid", manager.getItem(itemID).getCurrentPrice().toString());
 
                     if (uri.endsWith("/image")) {
-                        RequestDispatcher rd = request.getRequestDispatcher("/img/item_" + itemID + ".png");
+                        RequestDispatcher rd = request.getRequestDispatcher("/img/" + item.getImageUrl());
                         rd.forward(request, response);
                     } else if (uri.endsWith("/bid")) {
                         response.sendRedirect(request.getRequestURI().substring(0, request.getRequestURI().length() - 4));
