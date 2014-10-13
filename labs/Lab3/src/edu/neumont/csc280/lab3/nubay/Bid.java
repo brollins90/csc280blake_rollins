@@ -1,15 +1,14 @@
 package edu.neumont.csc280.lab3.nubay;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 
 public class Bid {
 
-    private String itemId;
     private Date date;
-    private Money bidAmount;
-    private String user;
+    private final String itemId;
+    private final Money bidAmount;
+    private final String user;
 
     public Bid(String itemID, Double amount, String user) {
         this(itemID, Money.dollars(amount), user);
@@ -25,11 +24,16 @@ public class Bid {
     public Money getAmount() {
         return this.bidAmount;
     }
+
     public Date getBidDate() {
         return this.date;
     }
-    public String getItemId(){
+
+    public String getItemId() {
         return this.itemId;
     }
-    public String getUser() {return this.user; }
+
+    public String getUser() {
+        return this.user;
+    }
 }

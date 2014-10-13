@@ -4,7 +4,7 @@
 
 <% AuctionItem model = (AuctionItem)request.getAttribute("item");%>
 
-<form method="post" action="<%=application.getContextPath()%>/item/<%=model.getId()%>/bid"/>
+<form method="post" action="<%=application.getContextPath()%>/item/<%=model.getId()%>/bid">
     <h1>Auction Item #<%=model.getId()%></h1>
     <input name="id" style="display:none;" value="<%=model.getId()%>"/>
     <img width="200" src="<%=application.getContextPath()%>/item/<%=model.getId()%>/image"/>

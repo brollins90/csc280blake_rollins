@@ -2,17 +2,13 @@ package edu.neumont.csc280.lab3;
 
 import edu.neumont.csc280.lab3.nubay.*;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.math.BigDecimal;
 
 // /item/*
 public class ItemServlet extends HttpServlet {

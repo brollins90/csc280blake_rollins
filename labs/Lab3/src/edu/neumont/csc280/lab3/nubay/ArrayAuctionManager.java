@@ -6,11 +6,11 @@ import java.util.*;
 public class ArrayAuctionManager implements AuctionManager {
 
     private final Map<String, AuctionItem> data;
-    private final Double StartingPrice;
+    //private final Double StartingPrice;
 
     public ArrayAuctionManager() {
         data = new HashMap<>();
-        StartingPrice = 0.01d;
+        //StartingPrice = 0.01d;
 
         // load some test data for me
 

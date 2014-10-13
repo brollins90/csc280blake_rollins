@@ -23,11 +23,11 @@ public class Money {
         return new Money(amount, USD);
     }
 
-    Money(BigDecimal amount, Currency currency) {
+    private Money(BigDecimal amount, Currency currency) {
         this(amount, currency, DEFAULT_ROUNDING);
     }
 
-    Money(BigDecimal amount, Currency currency, RoundingMode rounding) {
+    private Money(BigDecimal amount, Currency currency, RoundingMode rounding) {
         this.amount = amount;
         this.currency = currency;
 
