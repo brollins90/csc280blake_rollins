@@ -1,10 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link href="<%=application.getContextPath()%>/css/main.css" rel="stylesheet"/>
     <meta http-equiv="refresh" content="5" >
-    <title>Item #<%=request.getAttribute("id")%></title>
+    <title>Item List</title>
 </head>
 <body>
+<a href="<%=application.getContextPath()%>/item/">
+<div class="header">
+    Blake's NuBay Auction Site!
+</div></a>
+<div class="container">
     <form method="post" action="/lab3/item/<%=request.getAttribute("id")%>/bid"/>
     <h1>Auction Item #<%=request.getAttribute("id")%></h1>
     <input name="id" style="display:none;" value="<%=request.getAttribute("id")%>"/>
@@ -23,6 +29,7 @@
         </dd>
     </dl>
     </form>
+    </div>
 </body>
 </html>
 
