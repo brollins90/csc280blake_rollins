@@ -16,13 +16,19 @@ public class ArrayAuctionManager implements AuctionManager {
 
         // load some test data for me
 
-        AuctionItem put = data.put(
-                "1234",
+        data.put("1234",
                 new AuctionItem(
                         "1234",
                         "url",
                         "itemname",
                         "Items decs"
+                ));
+        data.put("12345",
+                new AuctionItem(
+                        "12345",
+                        "url5",
+                        "itemname5",
+                        "Items desc5"
                 ));
     }
 

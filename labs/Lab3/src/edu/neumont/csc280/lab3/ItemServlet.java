@@ -45,7 +45,7 @@ public class ItemServlet extends HttpServlet {
                 } else if (uri.endsWith("/bid")) {
                     response.sendRedirect(request.getRequestURI().substring(0, request.getRequestURI().length() - 4));
                 } else {
-                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/item.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/itemTemplate.jsp");
                     rd.forward(request, response);
                 }
             } // item does not exist
