@@ -1,15 +1,19 @@
+<%@ page import="edu.neumont.csc280.lab3.nubay.AuctionItem" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="header.jsp"%>
-    <form method="post" action="/lab3/item/<%=request.getAttribute("id")%>/bid"/>
-    <h1>Auction Item #<%=request.getAttribute("id")%></h1>
-    <input name="id" style="display:none;" value="<%=request.getAttribute("id")%>"/>
-    <img width="200" src="/lab3/item/<%=request.getAttribute("id")%>/image"/>
+
+<% AuctionItem model = (AuctionItem)request.getAttribute("item");%>
+
+<form method="post" action="<%=application.getContextPath()%>/item/<%=model.getId()%>/bid"/>
+    <h1>Auction Item #<%=model.getId()%></h1>
+    <input name="id" style="display:none;" value="<%=model.getId()%>"/>
+    <img width="200" src="<%=application.getContextPath()%>/item/<%=model.getId()%>/image"/>
     <dl>
         <dt>Current Bid:</dt>
-        <dd><%=request.getAttribute("currentBid")%></dd>
+        <dd><%=model.getCurrentPrice()%></dd>
 
         <dt>Time Left</dt>
-        <dd>2 Days</dd>
+        <dd><%=model.getTimeLeft()%></dd>
         <dt>
             <input name="incrementBid"/>
         </dt>

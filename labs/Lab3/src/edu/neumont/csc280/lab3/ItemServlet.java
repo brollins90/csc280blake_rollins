@@ -37,6 +37,8 @@ public class ItemServlet extends HttpServlet {
 
                 AuctionItem thisItem = manager.getItem(itemID);
                 if (thisItem != null) {
+                    AuctionItem item = manager.getItem(itemID);
+                    request.setAttribute("item", item);
                     request.setAttribute("id", itemID);
                     request.setAttribute("currentBid", manager.getItem(itemID).getCurrentPrice().toString());
 
@@ -56,8 +58,7 @@ public class ItemServlet extends HttpServlet {
                     rd.forward(request, response);
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             response.setStatus(500);
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/500.jsp");
             rd.forward(request, response);
@@ -68,7 +69,7 @@ public class ItemServlet extends HttpServlet {
 
         String itemID = request.getParameter("id");
         Money incAmount;
-        try{
+        try {
             incAmount = Money.dollars(new BigDecimal(request.getParameter("incrementBid")));
         } catch (Exception e) {
             incAmount = Money.dollars(0.01d);
@@ -79,6 +80,6 @@ public class ItemServlet extends HttpServlet {
 
         manager.getItem(itemID).addBid(new Bid(itemID, newAmount, "Blake"));
 
-                response.sendRedirect(request.getRequestURI().substring(0, request.getRequestURI().length() - 4));
+        response.sendRedirect(request.getRequestURI().substring(0, request.getRequestURI().length() - 4));
     }
 }
