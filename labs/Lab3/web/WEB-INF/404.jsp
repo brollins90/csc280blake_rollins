@@ -1,10 +1,4 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Page not found</title>
-</head>
-<body>
+<%@ include file="header.jsp"%>
 Sorry, the requested page was not found.
-</body>
-</html>
+<%@ include file="footer.jsp"%>
