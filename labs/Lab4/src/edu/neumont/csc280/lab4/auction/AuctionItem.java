@@ -8,7 +8,7 @@ public class AuctionItem {
     private Stack<Bid> bids;
     private String id;
     private String imageUrl;
-    private String name;
+    private String title;
     private String description;
     private Date startTime;
     private Date endTime;
@@ -17,11 +17,11 @@ public class AuctionItem {
 //        CreateBids();
 //    }
 
-    public AuctionItem(String id, String imageUrl, String name, String description) {
+    public AuctionItem(String id, String imageUrl, String title, String description) {
 
         this.id = id;
         this.imageUrl = imageUrl;
-        this.name = name;
+        this.title = title;
         this.description = description;
         this.startTime = new Date();
         this.endTime = new Date();
@@ -51,12 +51,12 @@ public class AuctionItem {
         this.imageUrl = imageUrl;
     }
 
-    public String getName() {
-        return this.name;
+    public String getTitle() {
+        return this.title;
     }
 
-    private void setName(String name) {
-        this.name = name;
+    private void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {

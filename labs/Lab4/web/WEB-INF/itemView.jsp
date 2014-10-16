@@ -1,13 +1,12 @@
-<%@ page import="edu.neumont.csc280.lab3.nubay.AuctionItem" %>
+<%@ page import="edu.neumont.csc280.lab4.auction.AuctionItem" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="header.jsp"%>
-
-<% AuctionItem model = (AuctionItem)request.getAttribute("item");%>
+<% AuctionItem model = (AuctionItem)request.getAttribute("model"); %>
 
 <form method="post" action="<%=application.getContextPath()%>/item/<%=model.getId()%>/bid">
     <h1>Auction Item #<%=model.getId()%></h1>
     <input name="id" style="display:none;" value="<%=model.getId()%>"/>
-    <img width="200" src="<%=application.getContextPath()%>/item/<%=model.getId()%>/image"/>
+    <img width="200" src="<%=application.getContextPath()%><%=model.getImageUrl()%>"/>
     <dl>
 
         <dt>Description:</dt>

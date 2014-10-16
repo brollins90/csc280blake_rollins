@@ -1,5 +1,6 @@
 package edu.neumont.csc280.lab4;
 
+import edu.neumont.csc280.lab4.auction.AuctionItem;
 import edu.neumont.csc280.lab4.auction.AuctionManager;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,8 +27,9 @@ public class ItemGetController {
     }
 
     public ModelAndView retreiveItem(String id) {
-        //TODO
-        return null;
+        AuctionItem item = manager.getItem(id);
+        ModelAndView mv = new ModelAndView(item, "itemView");
+        return mv;
     }
 
     public ModelAndView updateItem(Long id) {
