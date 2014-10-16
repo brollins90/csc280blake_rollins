@@ -54,6 +54,8 @@ public class ItemServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        ModelAndView mv = null;
         try {
             String pathInfo = request.getPathInfo();
             pathInfo = (pathInfo == null) ? "/" : pathInfo;
@@ -63,33 +65,38 @@ public class ItemServlet extends HttpServlet {
             String itemId = (parts.length > 1) ? parts[1] : "";
             String action = (parts.length > 2) ? parts[2] : "";
 
-            ModelAndView mv = null;
 
 
             System.out.println("get");
 
             ItemGetController controller = new ItemGetController(request, response);
 
+            action = ("".equalsIgnoreCase(itemId)) ? "list" : action;
             action = ("".equalsIgnoreCase(action) && !"".equalsIgnoreCase(itemId)) ? "retrieve" : action;
 
             if ("retrieve".equalsIgnoreCase(action)) {
                 System.out.println("retrieve");
                 mv = controller.retreiveItem(itemId);
+            } else if ("list".equalsIgnoreCase(action)) {
+                System.out.println("retrieve");
+                mv = controller.getAllItems();
             } else {
                 System.out.println("action not retrieve");
-                // i am pretty sure we need to list all items here
-                mv = controller.getAllItems();
+                mv = new ModelAndView(null, "500");
             }
 
             request.setAttribute("model", mv.getModel());
+        } catch (Exception e) {
+            System.out.println("Exception");
+            e.printStackTrace();
+            mv = new ModelAndView(null, "500");
+        } finally {
+
             String viewLocation = "/WEB-INF/" + mv.getViewName() + ".jsp";
             System.out.println("viewLocation: " + viewLocation);
             RequestDispatcher rd = request.getRequestDispatcher(viewLocation);
             rd.forward(request, response);
 
-        } catch (Exception e) {
-            System.out.println("Exception");
-            e.printStackTrace();
         }
 
     }

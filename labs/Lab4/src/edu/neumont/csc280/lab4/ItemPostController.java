@@ -60,7 +60,8 @@ public class ItemPostController {
         Money newAmount = Money.dollars(manager.getItem(itemID).getCurrentPrice().getAmount().add(incAmount.getAmount()));
 
         AuctionItem item = manager.getItem(itemID);
-        item.addBid(new Bid(itemID, newAmount, "Blake"));
+
+        item.placeBid(new Bid(itemID, newAmount, "Blake"));
 
         return new ModelAndView(item, "itemView");
     }

@@ -10,7 +10,7 @@
         while(it.hasNext()) {
             AuctionItem current = (AuctionItem)it.next();
             out.print("<div class=\"itemdiv\">\n" +
-                    "<a href=\"" +application.getContextPath() + "/item/" + current.getId() + "\">"+ current.getName() +"</a>\n" +
+                    "<a href=\"" +application.getContextPath() + "/item/" + current.getId() + "\">"+ current.getTitle() +"</a>\n" +
                     "</div>\n");
         }
     %>

@@ -5,7 +5,6 @@ import java.util.Stack;
 
 public class AuctionItem {
 
-    private Stack<Bid> bids;
     private String id;
     private String imageUrl;
     private String title;
@@ -13,21 +12,24 @@ public class AuctionItem {
     private Date startTime;
     private Date endTime;
 
+    private Stack<Bid> bids;
 //    public AuctionItem() {
 //        CreateBids();
 //    }
 
-    public AuctionItem(String id, String imageUrl, String title, String description) {
-
+    public AuctionItem(String id) {
         this.id = id;
-        this.imageUrl = imageUrl;
-        this.title = title;
-        this.description = description;
+        CreateBids();
         this.startTime = new Date();
         this.endTime = new Date();
         this.endTime.setTime((this.startTime.getTime() + 1 * 24 * 60 * 60 * 1000));
-        CreateBids();
+    }
 
+    public AuctionItem(String id, String imageUrl, String title, String description) {
+        this(id);
+        this.imageUrl = imageUrl;
+        this.title = title;
+        this.description = description;
     }
 
     private void CreateBids() {
@@ -55,7 +57,7 @@ public class AuctionItem {
         return this.title;
     }
 
-    private void setTitle(String title) {
+    protected void setTitle(String title) {
         this.title = title;
     }
 
@@ -63,7 +65,7 @@ public class AuctionItem {
         return this.description;
     }
 
-    private void setDescription(String description) {
+    protected void setDescription(String description) {
         this.description = description;
     }
 
@@ -71,16 +73,22 @@ public class AuctionItem {
         return this.startTime;
     }
 
-    private void setStartTime(Date startTime) {
+    protected void setStartTime(Date startTime) {
         this.startTime = startTime;
+    }
+    protected void setStartTime(long startTime) {
+        this.startTime = new Date(startTime);
     }
 
     public Date getEndTime() {
         return this.endTime;
     }
 
-    private void setEndTime(Date endTime) {
+    protected void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+    protected void setEndTime(long endTime) {
+        this.endTime = new Date(endTime);
     }
 
     public String getTimeLeft() {
@@ -108,13 +116,11 @@ public class AuctionItem {
         return this.bids.size();
     }
 
-    public boolean addBid(Bid newBid) {
+    public void placeBid(Bid newBid) {
 
         if (bids.peek().getAmount().getAmount().compareTo(newBid.getAmount().getAmount()) < 1) {
             bids.push(newBid);
-            return true;
         }
-        return false;
     }
 
     public Money getCurrentPrice() {

@@ -1,51 +1,76 @@
 package edu.neumont.csc280.lab4.auction;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
 public class ArrayAuctionManager implements AuctionManager {
 
+    private static long nextItemId = 1;
     private final Map<String, AuctionItem> data;
-    //private final Double StartingPrice;
 
     public ArrayAuctionManager() {
         data = new ConcurrentHashMap<>();
-        //StartingPrice = 0.01d;
 
-        // load some test data for me
+        String id1 = this.createItem();
+        this.updateItemDescription(id1, "Item 1 description.");
+        this.updateItemTitle(id1, "Item 1 Title.");
+        this.updateItemImageUrl(id1, "/img/item_1.png");
 
-        data.put("1234",
-                new AuctionItem(
-                        "1234",
-                        "/img/item_1234.png",
-                        "Item one two three four",
-                        "Items decs"
-                ));
-        data.put("12345",
-                new AuctionItem(
-                        "12345",
-                        "/img/item_12345.png",
-                        "This one goes up to five.",
-                        "Items desc5"
-                ));
+        String id2 = this.createItem();
+        this.updateItemDescription(id2, "Item 2 desc.");
+        this.updateItemTitle(id2, "Item 3 Title.");
+        this.updateItemImageUrl(id2, "/img/item_2.png");
+
     }
 
     @Override
-    public Iterator<AuctionItem> items() {
-        return data.values().iterator();
-    }
+    public String createItem() {
+        String thisItemId = "" + nextItemId++;
 
-    @Override
-    public List itemIds() {
-        return Arrays.asList(data.values().toArray());
+        assert !this.data.containsKey(thisItemId);
+
+        this.data.put(thisItemId, new AuctionItem(thisItemId));
+        return thisItemId;
     }
 
     @Override
     public AuctionItem getItem(String id) {
-        return data.get(id);
+        return this.data.get(id);
+    }
+
+    @Override
+    public List<AuctionItem> getItems() {
+        return new ArrayList<>(this.data.values());
+    }
+
+    @Override
+    public void updateItemDescription(String itemId, String newValue) {
+        this.data.get(itemId).setDescription(newValue);
+    }
+
+    @Override
+    public void updateItemStartTime(String itemId, long newValue) {
+        this.data.get(itemId).setStartTime(newValue);
+    }
+
+    @Override
+    public void updateItemEndTime(String itemId, long newValue) {
+        this.data.get(itemId).setEndTime(newValue);
+    }
+
+    @Override
+    public void updateItemTitle(String itemId, String newValue) {
+        this.data.get(itemId).setTitle(newValue);
+    }
+
+    @Override
+    public void updateItemImageUrl(String itemId, String newValue) {
+        this.data.get(itemId).setImageUrl(newValue);
+    }
+
+    @Override
+    public void placeBid(String itemId, Bid bid) {
+        this.data.get(itemId).placeBid(bid);
     }
 }

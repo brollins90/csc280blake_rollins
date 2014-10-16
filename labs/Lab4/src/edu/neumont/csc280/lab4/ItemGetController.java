@@ -5,6 +5,7 @@ import edu.neumont.csc280.lab4.auction.AuctionManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Iterator;
 import java.util.List;
 
 public class ItemGetController {
@@ -21,20 +22,19 @@ public class ItemGetController {
     }
 
     public ModelAndView getAllItems() {
-        List<String> itemIds = manager.itemIds();
+        List<AuctionItem> itemIds = manager.getItems();
         ModelAndView mv = new ModelAndView(itemIds, "itemList");
         return mv;
     }
 
     public ModelAndView retreiveItem(String id) {
         AuctionItem item = manager.getItem(id);
-        ModelAndView mv = new ModelAndView(item, "itemView");
+        ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemView");
         return mv;
     }
 
-    public ModelAndView updateItem(Long id) {
-        //TODO
-        return null;
+    public ModelAndView updateItem(String id) {
+        return retreiveItem(id);
     }
 
     public ModelAndView createItem() {
@@ -42,7 +42,7 @@ public class ItemGetController {
         return null;
     }
 
-    public ModelAndView deleteItem(Long id) {
+    public ModelAndView deleteItem(String id) {
         //TODO
         return null;
     }
