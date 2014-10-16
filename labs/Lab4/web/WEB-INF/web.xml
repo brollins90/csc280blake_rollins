@@ -3,8 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    <listener>
+        <listener-class>edu.neumont.csc280.lab4.ServiceLoader</listener-class>
+    </listener>
     <servlet>
         <servlet-name>ItemServlet</servlet-name>
         <servlet-class>edu.neumont.csc280.lab4.ItemServlet</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>ItemServlet</servlet-name>
+        <url-pattern>/item/*</url-pattern>
+    </servlet-mapping>
 </web-app>
