@@ -9,22 +9,34 @@
     <dl>
 
         <dt>Title:</dt>
-        <dd><%=model.getTitle()%></dd>
+        <dd>
+            <input id="item_title" value="<%=model.getTitle()%>"/>
+        </dd>
 
         <dt>Description:</dt>
-        <dd><%=model.getDescription()%></dd>
+        <dd>
+            <input id="item_description" value="<%=model.getDescription()%>"/>
+        </dd>
 
         <dt>Start Bid:</dt>
-        <dd><%=model.getCurrentPrice()%></dd>
+        <dd>
+            <input id="item_start_bid" value="0.01"/>
+        </dd>
 
         <dt>Start Time:</dt>
-        <dd><%=model.getStartTime()%></dd>
+        <dd>
+            <input id="item_start_time" value="<%=model.getStartTime()%>"/>
+        </dd>
 
         <dt>End Time:</dt>
-        <dd><%=model.getEndTime()%></dd>
+        <dd>
+            <input id="item_end_time" value="<%=model.getEndTime()%>"/>
+        </dd>
 
         <dt>img URL:</dt>
-        <dd><%=model.getImageUrl()%></dd>
+        <dd>
+            <input id="item_image_url" value="<%=model.getImageUrl()%>"/>
+        </dd>
 
         <dd>
             <input type="submit" value="Create the item"/>

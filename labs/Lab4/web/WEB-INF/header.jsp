@@ -2,7 +2,6 @@
 <html>
 <head>
     <link href="<%=application.getContextPath()%>/css/main.css" rel="stylesheet"/>
-    <meta http-equiv="refresh" content="5" >
     <title>Item List</title>
 </head>
 <body>

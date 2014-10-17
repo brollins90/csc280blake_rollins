@@ -9,22 +9,34 @@
     <dl>
 
         <dt>Title:</dt>
-        <dd><%=model.getTitle()%></dd>
+        <dd>
+            <input name="item_title" value="<%=model.getTitle()%>"/>
+        </dd>
 
         <dt>Description:</dt>
-        <dd><%=model.getDescription()%></dd>
+        <dd>
+            <textarea name="item_description"><%=model.getDescription()%></textarea>
+        </dd>
 
         <dt>Start Bid:</dt>
-        <dd><%=model.getCurrentPrice()%></dd>
+        <dd>
+            <input name="item_start_bid" value="0.01"/>
+        </dd>
 
         <dt>Start Time:</dt>
-        <dd><%=model.getStartTime()%></dd>
+        <dd>
+            <input name="item_start_time" value="<%=model.getStartTime()%>"/>
+        </dd>
 
         <dt>End Time:</dt>
-        <dd><%=model.getEndTime()%></dd>
+        <dd>
+            <input name="item_end_time" value="<%=model.getEndTime()%>"/>
+        </dd>
 
         <dt>img URL:</dt>
-        <dd><%=model.getImageUrl()%></dd>
+        <dd>
+            <input name="item_image_url" value="<%=model.getImageUrl()%>"/>
+        </dd>
 
         <dd>
             <input type="submit" value="Update the item"/>
@@ -32,4 +44,3 @@
     </dl>
 </form>
 <%@ include file="footer.jsp"%>
-

@@ -10,14 +10,10 @@ import java.util.List;
 
 public class ItemGetController {
 
-    private HttpServletRequest request;
-    private HttpServletResponse response;
     private AuctionManager manager;
 
     public ItemGetController(HttpServletRequest request, HttpServletResponse response)
     {
-        this.request = request;
-        this.response = response;
         manager = (AuctionManager)request.getServletContext().getAttribute("manager");
     }
 
@@ -27,24 +23,33 @@ public class ItemGetController {
         return mv;
     }
 
+    public ModelAndView createItem() {
+        AuctionItem item = manager.getItem(manager.createItem());
+        ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemCreate");
+        return mv;
+    }
+
+    public ModelAndView deleteItem(String id) {
+        AuctionItem item = manager.getItem(id);
+        ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemDelete");
+        return mv;
+    }
+
     public ModelAndView retreiveItem(String id) {
         AuctionItem item = manager.getItem(id);
         ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemView");
         return mv;
     }
 
+//    public ModelAndView retreiveItemJSON(String id) {
+//        //TODO
+//        return null;
+//    }
+
     public ModelAndView updateItem(String id) {
-        return retreiveItem(id);
-    }
-
-    public ModelAndView createItem() {
-        //TODO
-        return null;
-    }
-
-    public ModelAndView deleteItem(String id) {
-        //TODO
-        return null;
+        AuctionItem item = manager.getItem(id);
+        ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemUpdate");
+        return mv;
     }
 }
 

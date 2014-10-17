@@ -8,6 +8,68 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ItemServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        ModelAndView mv = null;
+        try {
+            String pathInfo = request.getPathInfo();
+            pathInfo = (pathInfo == null) ? "/" : pathInfo;
+
+            String[] parts = pathInfo.split("/");
+            String method = request.getMethod();
+            String itemId = (parts.length > 1) ? parts[1] : "";
+            String action = (parts.length > 2) ? parts[2] : "";
+
+
+
+            System.out.println("get");
+
+            ItemGetController controller = new ItemGetController(request, response);
+
+            action = ("".equalsIgnoreCase(itemId)) ? "list" : action;
+            action = ("".equalsIgnoreCase(action) && !"".equalsIgnoreCase(itemId)) ? "retrieve" : action;
+
+            System.out.println(action);
+            if ("create".equalsIgnoreCase(action)) {
+                mv = controller.createItem();
+            }
+            else if ("delete".equalsIgnoreCase(action)) {
+                mv = controller.deleteItem(itemId);
+            }
+            else if ("retrieve".equalsIgnoreCase(action)) {
+                mv = controller.retreiveItem(itemId);
+            }
+//            else if ("retrievejson".equalsIgnoreCase(action)) {
+//                mv = controller.retreiveItemJSON(itemId);
+//            }
+            else if ("update".equalsIgnoreCase(action)) {
+                mv = controller.updateItem(itemId);
+            }
+            else if ("list".equalsIgnoreCase(action)) {
+                mv = controller.getAllItems();
+            }
+            else {
+                System.out.println("bad action");
+                mv = new ModelAndView(null, "500");
+            }
+
+            request.setAttribute("model", mv.getModel());
+        } catch (Exception e) {
+            System.out.println("Exception");
+            e.printStackTrace();
+            mv = new ModelAndView(null, "500");
+        } finally {
+
+            String viewLocation = "/WEB-INF/" + mv.getViewName() + ".jsp";
+            System.out.println("viewLocation: " + viewLocation);
+            RequestDispatcher rd = request.getRequestDispatcher(viewLocation);
+            rd.forward(request, response);
+
+        }
+
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String pathInfo = request.getPathInfo();
@@ -51,54 +113,6 @@ public class ItemServlet extends HttpServlet {
             System.out.println("Exception");
             e.printStackTrace();
         }
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        ModelAndView mv = null;
-        try {
-            String pathInfo = request.getPathInfo();
-            pathInfo = (pathInfo == null) ? "/" : pathInfo;
-
-            String[] parts = pathInfo.split("/");
-            String method = request.getMethod();
-            String itemId = (parts.length > 1) ? parts[1] : "";
-            String action = (parts.length > 2) ? parts[2] : "";
-
-
-
-            System.out.println("get");
-
-            ItemGetController controller = new ItemGetController(request, response);
-
-            action = ("".equalsIgnoreCase(itemId)) ? "list" : action;
-            action = ("".equalsIgnoreCase(action) && !"".equalsIgnoreCase(itemId)) ? "retrieve" : action;
-
-            if ("retrieve".equalsIgnoreCase(action)) {
-                System.out.println("retrieve");
-                mv = controller.retreiveItem(itemId);
-            } else if ("list".equalsIgnoreCase(action)) {
-                System.out.println("retrieve");
-                mv = controller.getAllItems();
-            } else {
-                System.out.println("action not retrieve");
-                mv = new ModelAndView(null, "500");
-            }
-
-            request.setAttribute("model", mv.getModel());
-        } catch (Exception e) {
-            System.out.println("Exception");
-            e.printStackTrace();
-            mv = new ModelAndView(null, "500");
-        } finally {
-
-            String viewLocation = "/WEB-INF/" + mv.getViewName() + ".jsp";
-            System.out.println("viewLocation: " + viewLocation);
-            RequestDispatcher rd = request.getRequestDispatcher(viewLocation);
-            rd.forward(request, response);
-
-        }
-
     }
 
 }
