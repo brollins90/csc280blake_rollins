@@ -228,7 +228,7 @@ public class AuctionItem {
 
     public void placeBid(Bid newBid) {
 
-        if (bids.peek().getAmount().getAmount().compareTo(newBid.getAmount().getAmount()) < 1) {
+        if (getNumBids() == 0 || bids.peek().getAmount().getAmount().compareTo(newBid.getAmount().getAmount()) < 1) {
             bids.push(newBid);
         }
     }

@@ -13,7 +13,7 @@
 
 <form method="post" action="<%=application.getContextPath()%>/item/<%=model.getId()%>/bid">
     <h1>Auction Item #<%=model.getId()%></h1>
-    <input name="id" style="display:none;" value="<%=model.getId()%>"/>
+    <input id="item_id" style="display:none;" value="<%=model.getId()%>"/>
     <img width="200" src="<%=application.getContextPath()%><%=model.getImageUrl()%>"/>
     <dl>
 
