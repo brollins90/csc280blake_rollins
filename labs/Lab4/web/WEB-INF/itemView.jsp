@@ -1,7 +1,9 @@
 <%@ page import="edu.neumont.csc280.lab4.auction.AuctionItem" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="header.jsp"%>
+<%@ include file="header1.jsp"%>
+<script src="<%=application.getContextPath()%>/js/itemView.js" type="text/javascript"></script>
+<%@ include file="header2.jsp"%>
 <% AuctionItem model = (AuctionItem)request.getAttribute("model"); %>
 
 <a href="<%=application.getContextPath()%>/item/<%=model.getId()%>/update">Update this item</a><br/>
@@ -14,20 +16,30 @@
     <img width="200" src="<%=application.getContextPath()%><%=model.getImageUrl()%>"/>
     <dl>
 
-        <dt>Description:</dt>
-        <dd><%=model.getDescription()%></dd>
+        <div>
+            <label for="item_description">Description:</label>
+            <label id="item_description" ><%=model.getDescription()%></label>
+        </div>
 
-        <dt>Current Bid:</dt>
-        <dd><%=model.getCurrentPrice()%></dd>
+        <div>
+            <label for="item_current_bid">Current Bid:</label>
+            <label id="item_current_bid" ><%=model.getCurrentPrice()%></label>
+        </div>
 
-        <dt>Start Time:</dt>
-        <dd><%=(new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(model.getStartTime())) + " - " + model.getStartTime()%></dd>
+        <div>
+            <label for="item_number_bids">Number of bids:</label>
+            <label id="item_number_bids" ><%=model.getNumBids()%></label>
+        </div>
 
-        <dt>End Time:</dt>
-        <dd><%=(new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(model.getEndTime())) + " - " + model.getEndTime()%></dd>
+        <div>
+            <label for="item_start_time">Start time:</label>
+            <label id="item_start_time" ><%=model.getStartTime()%></label>
+        </div>
 
-        <dt>Time Left</dt>
-        <dd><%=model.getTimeLeft()%></dd>
+        <div>
+            <label for="item_end_time">End time:</label>
+            <label id="item_end_time" ><%=model.getEndTime()%></label>
+        </div>
 
         <dt>Bid Amount:</dt>
         <dd><input type="radio" name="bidAmount" value="one" checked>$1</dd>
@@ -43,5 +55,6 @@
         </dd>
     </dl>
     </form>
+
 <%@ include file="footer.jsp"%>
 

@@ -16,7 +16,6 @@ public class Bid {
 
     public Bid(String itemID, Money amount, String user) {
         this.itemId = itemID;
-        //this.date = System.nanoTime();
         this.bidAmount = amount;
         this.user = user;
     }

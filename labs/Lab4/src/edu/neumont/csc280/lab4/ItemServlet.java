@@ -17,7 +17,6 @@ public class ItemServlet extends HttpServlet {
             pathInfo = (pathInfo == null) ? "/" : pathInfo;
 
             String[] parts = pathInfo.split("/");
-            String method = request.getMethod();
             String itemId = (parts.length > 1) ? parts[1] : "";
             String action = (parts.length > 2) ? parts[2] : "";
 
@@ -38,10 +37,10 @@ public class ItemServlet extends HttpServlet {
                 mv = controller.deleteItem(itemId);
             }
             else if ("retrieve".equalsIgnoreCase(action)) {
-                mv = controller.retreiveItem(itemId);
+                mv = controller.retrieveItem(itemId);
             }
 //            else if ("retrievejson".equalsIgnoreCase(action)) {
-//                mv = controller.retreiveItemJSON(itemId);
+//                mv = controller.retrieveItemJSON(itemId);
 //            }
             else if ("update".equalsIgnoreCase(action)) {
                 mv = controller.updateItem(itemId);
@@ -76,7 +75,6 @@ public class ItemServlet extends HttpServlet {
             pathInfo = (pathInfo == null) ? "/" : pathInfo;
 
             String[] parts = pathInfo.split("/");
-            String method = request.getMethod();
             String itemId = (parts.length > 1) ? parts[1] : "";
             String action = (parts.length > 2) ? parts[2] : "";
 

@@ -1,8 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <link href="<%=application.getContextPath()%>/css/main.css" rel="stylesheet"/>
-    <title>Item List</title>
+
 </head>
 <body>
 <a href="<%=application.getContextPath()%>/item/">

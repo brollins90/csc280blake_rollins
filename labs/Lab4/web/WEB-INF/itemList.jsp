@@ -2,7 +2,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="header.jsp"%>
+<%@ include file="header1.jsp"%>
+<script src="<%=application.getContextPath()%>/js/itemList.js" type="text/javascript"></script>
+<%@ include file="header2.jsp"%>
 <% List<AuctionItem> model = (List<AuctionItem>)request.getAttribute("model"); %>
     <h1>Items:</h1>
     <%

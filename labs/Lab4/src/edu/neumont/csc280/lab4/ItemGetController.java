@@ -39,13 +39,13 @@ public class ItemGetController {
         return mv;
     }
 
-    public ModelAndView retreiveItem(String id) {
+    public ModelAndView retrieveItem(String id) {
         AuctionItem item = manager.getItem(id);
         ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemView");
         return mv;
     }
 
-//    public ModelAndView retreiveItemJSON(String id) {
+//    public ModelAndView retrieveItemJSON(String id) {
 //        //TODO
 //        return null;
 //    }

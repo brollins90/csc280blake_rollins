@@ -1,6 +1,8 @@
 <%@ page import="edu.neumont.csc280.lab4.auction.AuctionItem" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="header.jsp"%>
+<%@ include file="header1.jsp"%>
+<script src="<%=application.getContextPath()%>/js/itemUpdate.js" type="text/javascript"></script>
+<%@ include file="header2.jsp"%>
 <% AuctionItem model = (AuctionItem)request.getAttribute("model"); %>
 
 <form method="post" action="<%=application.getContextPath()%>/item/<%=model.getId()%>/update">
