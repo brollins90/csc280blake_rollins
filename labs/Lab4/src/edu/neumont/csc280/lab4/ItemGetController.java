@@ -45,10 +45,11 @@ public class ItemGetController {
         return mv;
     }
 
-//    public ModelAndView retrieveItemJSON(String id) {
-//        //TODO
-//        return null;
-//    }
+    public ModelAndView retrieveItemJSON(String id) {
+        AuctionItem item = manager.getItem(id);
+        ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item.toJSON(), "itemJson");
+        return mv;
+    }
 
     public ModelAndView updateItem(String id) {
         AuctionItem item = manager.getItem(id);

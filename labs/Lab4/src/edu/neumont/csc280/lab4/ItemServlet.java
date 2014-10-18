@@ -36,12 +36,12 @@ public class ItemServlet extends HttpServlet {
             else if ("delete".equalsIgnoreCase(action)) {
                 mv = controller.deleteItem(itemId);
             }
+            else if ("json".equalsIgnoreCase(action)) {
+                mv = controller.retrieveItemJSON(itemId);
+            }
             else if ("retrieve".equalsIgnoreCase(action)) {
                 mv = controller.retrieveItem(itemId);
             }
-//            else if ("retrievejson".equalsIgnoreCase(action)) {
-//                mv = controller.retrieveItemJSON(itemId);
-//            }
             else if ("update".equalsIgnoreCase(action)) {
                 mv = controller.updateItem(itemId);
             }

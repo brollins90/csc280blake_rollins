@@ -6,6 +6,7 @@
 <%@ include file="header2.jsp"%>
 <% AuctionItem model = (AuctionItem)request.getAttribute("model"); %>
 
+<a href="<%=application.getContextPath()%>/item/<%=model.getId()%>/json">View item json</a><br/>
 <a href="<%=application.getContextPath()%>/item/<%=model.getId()%>/update">Update this item</a><br/>
 <a href="<%=application.getContextPath()%>/item/<%=model.getId()%>/delete">Delete this item</a><br/>
 <a href="<%=application.getContextPath()%>/item/0/create">Create a new item</a><br/>
@@ -15,6 +16,11 @@
     <input name="id" style="display:none;" value="<%=model.getId()%>"/>
     <img width="200" src="<%=application.getContextPath()%><%=model.getImageUrl()%>"/>
     <dl>
+
+        <div>
+            <label for="item_title">Title:</label>
+            <label id="item_title" ><%=model.getTitle()%></label>
+        </div>
 
         <div>
             <label for="item_description">Description:</label>

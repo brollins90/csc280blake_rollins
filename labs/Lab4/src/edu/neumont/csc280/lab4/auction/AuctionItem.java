@@ -5,49 +5,48 @@ import java.util.Stack;
 
 public class AuctionItem {
 
+    private String description;
     private String id;
     private String imageUrl;
     private String title;
-    private String description;
-    private long startTime;
-    private long endTime;
+
     private Money startPrice;
 
+    private long endTime;
+    private long startTime;
+
     private Stack<Bid> bids;
-//    public AuctionItem() {
-//        CreateBids();
-//    }
 
     public AuctionItem(String id) {
         this.id = id;
-        CreateBids();
+        this.description = "Default description.";
+        this.imageUrl = "/img/default.png";
+        this.title = "Default title";
+
+        this.startPrice = Money.dollars(0.01d);
+
         this.startTime = new Date().getTime();
         this.endTime = startTime + 7 * 24 * 60 * 60 * 1000;
-//        this.endTime.setTime((this.startTime.getTime() + 1 * 24 * 60 * 60 * 1000));
-        this.startPrice = Money.dollars(0.01d);
+
+        CreateBids();
     }
-
-    public AuctionItem(String id, String imageUrl, String title, String description) {
-        this(id);
-        this.imageUrl = imageUrl;
-        this.title = title;
-        this.description = description;
-    }
-
-    private void CreateBids() {
-        this.bids = new Stack<>();
-        //this.bids.add(new Bid(this.id, 0.0d, "Default"));
-    }
-
-
 
     public String getId() {
         return this.id;
     }
 
-//    private void setId(String id) {
+//    protected void setId(String id) {
+//        // TODO
 //        this.id = id;
 //    }
+
+    public ValidationResult validateId(String newValue){
+        // TODO
+        ValidationResult result = new ValidationResult();
+        result.setSuccess(false);
+        result.addMessage("Changing the Id is not implemented.");
+        return result;
+    }
 
 
 
@@ -59,6 +58,13 @@ public class AuctionItem {
         this.imageUrl = imageUrl;
     }
 
+    public ValidationResult validateImageUrl(String newValue){
+        // TODO
+        ValidationResult result = new ValidationResult();
+        result.setSuccess(false);
+        result.addMessage("Changing the ImageUrl is not implemented.");
+        return result;
+    }
 
 
     public String getTitle() {
@@ -69,6 +75,13 @@ public class AuctionItem {
         this.title = title;
     }
 
+    public ValidationResult validateTitle(String newValue){
+        // TODO
+        ValidationResult result = new ValidationResult();
+        result.setSuccess(false);
+        result.addMessage("Changing the title is not implemented.");
+        return result;
+    }
 
 
     public String getDescription() {
@@ -79,6 +92,13 @@ public class AuctionItem {
         this.description = description;
     }
 
+    public ValidationResult validateDescription(String newValue){
+        // TODO
+        ValidationResult result = new ValidationResult();
+        result.setSuccess(false);
+        result.addMessage("Changing the description is not implemented.");
+        return result;
+    }
 
 
     public long getStartTime() {
@@ -172,30 +192,34 @@ public class AuctionItem {
     }
 
 
+//
+//    public String getTimeLeft() {
+//
+//        String diffString = "";
+//
+//        Date start = new Date(this.getStartTime());
+//        Date end = new Date(this.getEndTime());
+//
+//        long diff = end.getTime() - new Date().getTime();
+//        if (diff > 1) {
+//
+//            long diffSeconds = diff / 1000 % 60;
+//            long diffMinutes = diff / (60 * 1000) % 60;
+//            long diffHours = diff / (60 * 60 * 1000) % 24;
+//            long diffDays = diff / (24 * 60 * 60 * 1000);
+//
+//            diffString += (diffDays == 0) ? "" : diffDays + " days, ";
+//            diffString += (diffHours == 0) ? "" : diffHours + " hours, ";
+//            diffString += (diffMinutes == 0) ? "" : diffMinutes + " minutes, ";
+//            diffString += (diffSeconds == 0) ? "" : diffSeconds + " seconds.";
+//        } else {
+//            diffString = "Time has passed.";
+//        }
+//        return diffString;
+//    }
 
-    public String getTimeLeft() {
-
-        String diffString = "";
-
-        Date start = new Date(this.getStartTime());
-        Date end = new Date(this.getEndTime());
-
-        long diff = end.getTime() - new Date().getTime();
-        if (diff > 1) {
-
-            long diffSeconds = diff / 1000 % 60;
-            long diffMinutes = diff / (60 * 1000) % 60;
-            long diffHours = diff / (60 * 60 * 1000) % 24;
-            long diffDays = diff / (24 * 60 * 60 * 1000);
-
-            diffString += (diffDays == 0) ? "" : diffDays + " days, ";
-            diffString += (diffHours == 0) ? "" : diffHours + " hours, ";
-            diffString += (diffMinutes == 0) ? "" : diffMinutes + " minutes, ";
-            diffString += (diffSeconds == 0) ? "" : diffSeconds + " seconds.";
-        } else {
-            diffString = "Time has passed.";
-        }
-        return diffString;
+    private void CreateBids() {
+        this.bids = new Stack<>();
     }
 
     public int getNumBids() {
@@ -212,5 +236,18 @@ public class AuctionItem {
     public Money getCurrentPrice() {
 
         return (getNumBids() > 0) ? bids.peek().getAmount() : startPrice;
+    }
+
+    public String toJSON() {
+
+        String json = "{ \"id\": \"" + this.id + "\", ";
+        json += "\"title\": \"" + this.title + "\", ";
+        json += "\"description\": \"" + this.description + "\", ";
+        json += "\"current_bid\": \"" + this.getCurrentPrice() + "\", ";
+        json += "\"num_bids\": \"" + this.getNumBids() + "\", ";
+        json += "\"start_time\": \"" + this.startTime + "\", ";
+        json += "\"end_time\": \"" + this.endTime + "\" }";
+
+        return json;
     }
 }
