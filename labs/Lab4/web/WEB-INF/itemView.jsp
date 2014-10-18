@@ -1,7 +1,12 @@
 <%@ page import="edu.neumont.csc280.lab4.auction.AuctionItem" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="header.jsp"%>
 <% AuctionItem model = (AuctionItem)request.getAttribute("model"); %>
+
+<a href="<%=application.getContextPath()%>/item/<%=model.getId()%>/update">Update this item</a><br/>
+<a href="<%=application.getContextPath()%>/item/<%=model.getId()%>/delete">Delete this item</a><br/>
+<a href="<%=application.getContextPath()%>/item/0/create">Create a new item</a><br/>
 
 <form method="post" action="<%=application.getContextPath()%>/item/<%=model.getId()%>/bid">
     <h1>Auction Item #<%=model.getId()%></h1>
@@ -16,10 +21,10 @@
         <dd><%=model.getCurrentPrice()%></dd>
 
         <dt>Start Time:</dt>
-        <dd><%=model.getStartTime()%></dd>
+        <dd><%=(new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(model.getStartTime())) + " - " + model.getStartTime()%></dd>
 
         <dt>End Time:</dt>
-        <dd><%=model.getEndTime()%></dd>
+        <dd><%=(new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(model.getEndTime())) + " - " + model.getEndTime()%></dd>
 
         <dt>Time Left</dt>
         <dd><%=model.getTimeLeft()%></dd>

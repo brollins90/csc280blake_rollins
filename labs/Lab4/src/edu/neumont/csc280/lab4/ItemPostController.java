@@ -36,32 +36,43 @@ public class ItemPostController {
     public ModelAndView updateItem(String id) {
         AuctionItem item = manager.getItem(id);
 
-        String itemTitle = request.getParameter("item_title");
-        String itemDescription = request.getParameter("item_description");
         String itemStartBid = request.getParameter("item_start_bid");
-        String itemStartTime = request.getParameter("item_start_time");
-        String itemEndTime = request.getParameter("item_end_time");
-        String itemImageUrl = request.getParameter("item_image_url");
+//
+//        // Title
+//        String itemTitle = request.getParameter("item_title");
+//        if (! item.getTitle().equals(itemTitle)) {
+//            manager.updateItemTitle(id,itemTitle);
+//        }
+//
+//        // Description
+//        String itemDescription = request.getParameter("item_description");
+//        if (! item.getDescription().equals(itemDescription)) {
+//            manager.updateItemDescription(id, itemDescription);
+//        }
 
-        if (! item.getTitle().equals(itemTitle)) {
-            manager.updateItemTitle(id,itemTitle);
-        }
-        if (! item.getDescription().equals(itemDescription)) {
-            manager.updateItemDescription(id, itemDescription);
-        }
+        // Start Time
+        String itemStartTime = request.getParameter("item_start_time");
         long startTimeLong = 0;
         try { startTimeLong = Long.parseLong(itemStartTime); } catch (Exception e) {}
-        if (! item.getStartTime().equals(startTimeLong)) {
-            manager.updateItemStartTime(id, startTimeLong);
+        if (hasValueChanged(item.getStartTime(), startTimeLong)) {
+            if ("".equals(item.validateStartTime(startTimeLong))) {
+                manager.updateItemStartTime(id, startTimeLong);
+            }
         }
-        long endTimeLong = 0;
-        try { endTimeLong = Long.parseLong(itemEndTime); } catch (Exception e) {}
-        if (! item.getEndTime().equals(endTimeLong)) {
-            manager.updateItemStartTime(id, endTimeLong);
-        }
-        if (! item.getImageUrl().equals(itemImageUrl)) {
-            manager.updateItemImageUrl(id, itemImageUrl);
-        }
+//
+//        // End Time
+//        String itemEndTime = request.getParameter("item_end_time");
+//        long endTimeLong = 0;
+//        try { endTimeLong = Long.parseLong(itemEndTime); } catch (Exception e) {}
+//        if (item.getEndTime() != (endTimeLong)) {
+//            manager.updateItemStartTime(id, endTimeLong);
+//        }
+//
+//        // Image URL
+//        String itemImageUrl = request.getParameter("item_image_url");
+//        if (! item.getImageUrl().equals(itemImageUrl)) {
+//            manager.updateItemImageUrl(id, itemImageUrl);
+//        }
 
         return null;
     }
@@ -100,4 +111,16 @@ public class ItemPostController {
 
         return new ModelAndView(item, "itemView");
     }
+
+    private<T extends Comparable<T>> boolean hasValueChanged (T one, T two) {
+        System.out.println("hasValueChanged(" + one + ", " + two + ")");
+        if (one.compareTo(two) == 0) {
+
+            System.out.println("no");
+            return false;
+        }
+        System.out.println("yes");
+        return true;
+    }
+
 }

@@ -9,8 +9,8 @@ public class AuctionItem {
     private String imageUrl;
     private String title;
     private String description;
-    private Date startTime;
-    private Date endTime;
+    private long startTime;
+    private long endTime;
 
     private Stack<Bid> bids;
 //    public AuctionItem() {
@@ -20,9 +20,9 @@ public class AuctionItem {
     public AuctionItem(String id) {
         this.id = id;
         CreateBids();
-        this.startTime = new Date();
-        this.endTime = new Date();
-        this.endTime.setTime((this.startTime.getTime() + 1 * 24 * 60 * 60 * 1000));
+        this.startTime = new Date().getTime();
+        this.endTime = startTime + 7 * 24 * 60 * 60 * 1000;
+//        this.endTime.setTime((this.startTime.getTime() + 1 * 24 * 60 * 60 * 1000));
     }
 
     public AuctionItem(String id, String imageUrl, String title, String description) {
@@ -37,13 +37,17 @@ public class AuctionItem {
         this.bids.add(new Bid(this.id, 0.0d, "Default"));
     }
 
+
+
     public String getId() {
         return this.id;
     }
 
-    private void setId(String id) {
-        this.id = id;
-    }
+//    private void setId(String id) {
+//        this.id = id;
+//    }
+
+
 
     public String getImageUrl() {
         return this.imageUrl;
@@ -53,6 +57,8 @@ public class AuctionItem {
         this.imageUrl = imageUrl;
     }
 
+
+
     public String getTitle() {
         return this.title;
     }
@@ -60,6 +66,8 @@ public class AuctionItem {
     protected void setTitle(String title) {
         this.title = title;
     }
+
+
 
     public String getDescription() {
         return this.description;
@@ -69,32 +77,66 @@ public class AuctionItem {
         this.description = description;
     }
 
-    public Date getStartTime() {
+
+
+    public long getStartTime() {
         return this.startTime;
     }
 
-    protected void setStartTime(Date startTime) {
+    protected void setStartTime(long startTime) {
         this.startTime = startTime;
     }
-    protected void setStartTime(long startTime) {
-        this.startTime = new Date(startTime);
+
+    public String validateStartTime(long newValue) {
+        String retVal = "";
+
+        Date now = new Date();
+
+        if (newValue + 1 < now.getTime()) {
+            retVal = "Start Time must be later than Now.";
+        }
+
+        System.out.println("validateStartTime: " + retVal);
+        return retVal;
     }
 
-    public Date getEndTime() {
+
+    public long getEndTime() {
         return this.endTime;
     }
 
-    protected void setEndTime(Date endTime) {
+    protected void setEndTime(long endTime) {
         this.endTime = endTime;
     }
-    protected void setEndTime(long endTime) {
-        this.endTime = new Date(endTime);
+
+    public String validateEndTime(long newValue) {
+        String retVal = "";
+
+        long start = this.startTime;
+
+        if (newValue + 1 < start + 1000 * 60 * 60) {
+            retVal = "End Time must be more than one hour after the start time.";
+        }
+
+        Date now = new Date();
+
+        if (newValue + 1 < now.getTime()) {
+            retVal = "End Time must be later than Now.";
+        }
+
+        return retVal;
     }
+
+
 
     public String getTimeLeft() {
 
         String diffString = "";
-        long diff = this.endTime.getTime() - new Date().getTime();
+
+        Date start = new Date(this.getStartTime());
+        Date end = new Date(this.getEndTime());
+
+        long diff = end.getTime() - new Date().getTime();
         if (diff > 1) {
 
             long diffSeconds = diff / 1000 % 60;
