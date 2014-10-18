@@ -30,16 +30,12 @@
         </dd>
 
     <div>
-        <label for="start_time">Start Time:</label>
-        <input type="text" name="start_time" value="<%=model.getStartTime()%>" id="start_time" />
+        <label for="item_start_time">Start Time:</label>
+        <input type="text" name="item_start_time" value="<%=model.getStartTime()%>" id="item_start_time" />
         <span id="notice_start_time" class="notice">If you edit the start time, the end time will automatically be set to 7 days later than the new start time</span>
         <%--<span id="validate_start_time"><% if (start_time_error) { out.print(start_time_error_message); } %></span>--%>
 
     </div>
-        <dt>Start Time:</dt>
-        <dd>
-            <input name="item_start_time" value="<%=model.getStartTime()%>"/>
-        </dd>
 
         <dt>End Time:</dt>
         <dd>

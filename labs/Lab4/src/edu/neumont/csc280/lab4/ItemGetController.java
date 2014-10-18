@@ -10,10 +10,14 @@ import java.util.List;
 
 public class ItemGetController {
 
+    private HttpServletRequest request;
+    private HttpServletResponse response;
     private AuctionManager manager;
 
     public ItemGetController(HttpServletRequest request, HttpServletResponse response)
     {
+        this.request = request;
+        this.response = response;
         manager = (AuctionManager)request.getServletContext().getAttribute("manager");
     }
 
@@ -51,6 +55,19 @@ public class ItemGetController {
         ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemUpdate");
         return mv;
     }
+//
+//    public ModelAndView validateItem(String id) {
+//        AuctionItem item = manager.getItem(id);
+//
+//        String action = this.request.getParameter("action");
+//        if ("validate_item_start_time".equals(action)) {
+//            String check_value = this.request.getParameter("check_value");
+//            long check_value_long = 0;
+//            try { check_value_long = Long.parseLong(check_value); } catch (Exception e) {}
+//            String validated = item.validateStartTime(check_value_long);
+//
+//        }
+//    }
 }
 
 

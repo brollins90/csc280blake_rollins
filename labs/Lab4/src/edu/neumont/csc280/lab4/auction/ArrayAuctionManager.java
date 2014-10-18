@@ -55,7 +55,17 @@ public class ArrayAuctionManager implements AuctionManager {
     }
 
     @Override
+    public void updateItemStartTime(String itemId, String newValue) {
+        this.data.get(itemId).setStartTime(newValue);
+    }
+
+    @Override
     public void updateItemEndTime(String itemId, long newValue) {
+        this.data.get(itemId).setEndTime(newValue);
+    }
+
+    @Override
+    public void updateItemEndTime(String itemId, String newValue) {
         this.data.get(itemId).setEndTime(newValue);
     }
 

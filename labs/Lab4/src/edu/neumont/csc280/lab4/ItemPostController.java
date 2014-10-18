@@ -52,11 +52,15 @@ public class ItemPostController {
 
         // Start Time
         String itemStartTime = request.getParameter("item_start_time");
-        long startTimeLong = 0;
-        try { startTimeLong = Long.parseLong(itemStartTime); } catch (Exception e) {}
-        if (hasValueChanged(item.getStartTime(), startTimeLong)) {
-            if ("".equals(item.validateStartTime(startTimeLong))) {
-                manager.updateItemStartTime(id, startTimeLong);
+        if (hasValueChanged(String.valueOf(item.getStartTime()), itemStartTime)) {
+
+            if (item.validateStartTime(itemStartTime).getSuccess()) {
+                manager.updateItemStartTime(id, itemStartTime);
+
+                // To make sure that the end time is always after the start time, update the end time to 7
+                // days after the start time.  If they want to change the end time in the same instance
+                // of this POST then that will overwrite this change since it runs afterward anyway.
+                manager.updateItemEndTime(id, Long.valueOf(itemStartTime) + 7 * 24 * 60 * 60 * 1000);
             }
         }
 //

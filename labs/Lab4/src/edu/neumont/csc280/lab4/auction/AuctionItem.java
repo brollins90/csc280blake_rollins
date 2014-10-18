@@ -11,6 +11,7 @@ public class AuctionItem {
     private String description;
     private long startTime;
     private long endTime;
+    private Money startPrice;
 
     private Stack<Bid> bids;
 //    public AuctionItem() {
@@ -23,6 +24,7 @@ public class AuctionItem {
         this.startTime = new Date().getTime();
         this.endTime = startTime + 7 * 24 * 60 * 60 * 1000;
 //        this.endTime.setTime((this.startTime.getTime() + 1 * 24 * 60 * 60 * 1000));
+        this.startPrice = Money.dollars(0.01d);
     }
 
     public AuctionItem(String id, String imageUrl, String title, String description) {
@@ -34,7 +36,7 @@ public class AuctionItem {
 
     private void CreateBids() {
         this.bids = new Stack<>();
-        this.bids.add(new Bid(this.id, 0.0d, "Default"));
+        //this.bids.add(new Bid(this.id, 0.0d, "Default"));
     }
 
 
@@ -86,18 +88,39 @@ public class AuctionItem {
     protected void setStartTime(long startTime) {
         this.startTime = startTime;
     }
+    protected void setStartTime(String startTime) throws NumberFormatException {
+        setStartTime(Long.parseLong(startTime));
+    }
 
-    public String validateStartTime(long newValue) {
-        String retVal = "";
+    public ValidationResult validateStartTime(String newValue) {
+        ValidationResult result = new ValidationResult();
+        try
+        {
+            result.combine(validateStartTime(Long.parseLong(newValue)));
+        }
+        catch (NumberFormatException e) {
+            result.setSuccess(false);
+            result.addMessage(e.getMessage());
+        }
+        return result;
+    }
 
+    public ValidationResult validateStartTime(long newValue) {
+        ValidationResult result = new ValidationResult();
         Date now = new Date();
 
         if (newValue + 1 < now.getTime()) {
-            retVal = "Start Time must be later than Now.";
+            result.setSuccess(false);
+            result.addMessage("Start Time must be later than Now.");
         }
 
-        System.out.println("validateStartTime: " + retVal);
-        return retVal;
+        if (this.bids.size() > 0) {
+            result.setSuccess(false);
+            result.addMessage("Start time cannot change since bids have been placed");
+        }
+
+        System.out.println("validateStartTime: " + result.toJSON());
+        return result;
     }
 
 
@@ -108,23 +131,44 @@ public class AuctionItem {
     protected void setEndTime(long endTime) {
         this.endTime = endTime;
     }
+    protected void setEndTime(String endTime) throws NumberFormatException {
+        setEndTime(Long.parseLong(endTime));
+    }
 
-    public String validateEndTime(long newValue) {
-        String retVal = "";
-
-        long start = this.startTime;
-
-        if (newValue + 1 < start + 1000 * 60 * 60) {
-            retVal = "End Time must be more than one hour after the start time.";
+    public ValidationResult validateEndTime(String newValue) {
+        ValidationResult result = new ValidationResult();
+        try
+        {
+            result.combine(validateEndTime(Long.parseLong(newValue)));
         }
+        catch (NumberFormatException e) {
+            result.setSuccess(false);
+            result.addMessage(e.getMessage());
+        }
+        return result;
+    }
 
+    public ValidationResult validateEndTime(long newValue) {
+        ValidationResult result = new ValidationResult();
         Date now = new Date();
 
-        if (newValue + 1 < now.getTime()) {
-            retVal = "End Time must be later than Now.";
+        if (newValue + 1 < this.startTime + 1000 + 60 + 60) {
+            result.setSuccess(false);
+            result.addMessage("End Time must be more than one hour after the start time.");
         }
 
-        return retVal;
+         if (newValue + 1 < now.getTime()) {
+            result.setSuccess(false);
+            result.addMessage("End Time must be later than Now.");
+        }
+
+        if (this.bids.size() > 0) {
+            result.setSuccess(false);
+            result.addMessage("End time cannot change since bids have been placed");
+        }
+
+        System.out.println("validateEndTime: " + result.toJSON());
+        return result;
     }
 
 
@@ -166,6 +210,7 @@ public class AuctionItem {
     }
 
     public Money getCurrentPrice() {
-        return bids.peek().getAmount();
+
+        return (getNumBids() > 0) ? bids.peek().getAmount() : startPrice;
     }
 }
