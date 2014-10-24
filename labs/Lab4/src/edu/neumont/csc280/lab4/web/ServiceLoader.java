@@ -1,4 +1,4 @@
-package edu.neumont.csc280.lab4;
+package edu.neumont.csc280.lab4.web;
 
 import edu.neumont.csc280.lab4.auction.ArrayAuctionManager;
 import edu.neumont.csc280.lab4.auction.AuctionManager;

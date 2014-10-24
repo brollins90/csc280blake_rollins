@@ -1,10 +1,10 @@
-package edu.neumont.csc280.lab4;
+package edu.neumont.csc280.lab4.web;
 
-import edu.neumont.csc280.lab4.auction.ArrayAuctionManager;
-import edu.neumont.csc280.lab4.auction.AuctionManager;
+import edu.neumont.csc280.lab4.web.ItemGetController;
+import edu.neumont.csc280.lab4.web.ItemPostController;
+import edu.neumont.csc280.lab4.web.ModelAndView;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

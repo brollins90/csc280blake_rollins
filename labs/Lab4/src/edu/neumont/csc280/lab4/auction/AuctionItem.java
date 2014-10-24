@@ -250,7 +250,7 @@ public class AuctionItem {
         json += "\"description\": \"" + this.description + "\", ";
         json += "\"current_bid\": \"" + this.getCurrentPrice() + "\", ";
         json += "\"num_bids\": \"" + this.getNumBids() + "\", ";
-        json += "\"start_time\": \"" + this.getStartTimeISO() + "\", ";
+        json += "\"start_time\": \"" + this.startTime + "\", ";
         json += "\"end_time\": \"" + this.endTime + "\" }";
 
         return json;

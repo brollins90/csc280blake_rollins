@@ -1,4 +1,4 @@
-package edu.neumont.csc280.lab4;
+package edu.neumont.csc280.lab4.web;
 
 public class ModelAndView {
 

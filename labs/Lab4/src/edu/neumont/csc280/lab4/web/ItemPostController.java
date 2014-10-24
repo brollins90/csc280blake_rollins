@@ -1,4 +1,4 @@
-package edu.neumont.csc280.lab4;
+package edu.neumont.csc280.lab4.web;
 
 import edu.neumont.csc280.lab4.auction.AuctionItem;
 import edu.neumont.csc280.lab4.auction.AuctionManager;
@@ -8,7 +8,6 @@ import edu.neumont.csc280.lab4.auction.Money;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.util.Map;
 
 public class ItemPostController {
 

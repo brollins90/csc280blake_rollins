@@ -8,11 +8,11 @@
         <param-value>edu.neumont.csc280.lab4.auction.ArrayAuctionManager</param-value>
     </context-param>
     <listener>
-        <listener-class>edu.neumont.csc280.lab4.ServiceLoader</listener-class>
+        <listener-class>edu.neumont.csc280.lab4.web.ServiceLoader</listener-class>
     </listener>
     <servlet>
         <servlet-name>ItemServlet</servlet-name>
-        <servlet-class>edu.neumont.csc280.lab4.ItemServlet</servlet-class>
+        <servlet-class>edu.neumont.csc280.lab4.web.ItemServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ItemServlet</servlet-name>
