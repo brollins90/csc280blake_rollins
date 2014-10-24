@@ -4,6 +4,8 @@
 <%@ include file="header1.jsp"%>
 <script src="<%=application.getContextPath()%>/js/itemView.js" type="text/javascript"></script>
 <%@ include file="header2.jsp"%>
+
+
 <% AuctionItem model = (AuctionItem)request.getAttribute("model"); %>
 
 <a href="<%=application.getContextPath()%>/item/<%=model.getId()%>/json">View item json</a><br/>

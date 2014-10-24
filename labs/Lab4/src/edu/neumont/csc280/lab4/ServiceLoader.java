@@ -12,7 +12,18 @@ public class ServiceLoader implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext ctx = servletContextEvent.getServletContext();
-        AuctionManager manager = new ArrayAuctionManager();
+
+        AuctionManager manager = null;
+        try {
+            String managerType = ctx.getInitParameter("managertype");
+            System.out.println("about to create a manager of type: " + managerType);
+            Class t = Class.forName(managerType);
+            manager = (AuctionManager) t.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+            manager = new ArrayAuctionManager();
+        }
+
         ctx.setAttribute("manager", manager);
     }
 

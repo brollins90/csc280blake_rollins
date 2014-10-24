@@ -1,6 +1,10 @@
 package edu.neumont.csc280.lab4;
 
+import edu.neumont.csc280.lab4.auction.ArrayAuctionManager;
+import edu.neumont.csc280.lab4.auction.AuctionManager;
+
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -78,7 +82,7 @@ public class ItemServlet extends HttpServlet {
             String itemId = (parts.length > 1) ? parts[1] : "";
             String action = (parts.length > 2) ? parts[2] : "";
 
-            ModelAndView mv = null;
+            /* ModelAndView mv = null; */
 
             System.out.println("post");
 
@@ -86,15 +90,15 @@ public class ItemServlet extends HttpServlet {
 
             if ("create".equalsIgnoreCase(action)) {
                 System.out.println("create");
-                mv = controller.createItem();
+                /* mv = */ controller.createItem();
 
             } else if ("update".equalsIgnoreCase(action)) {
                 System.out.println("update");
-                mv = controller.updateItem(itemId);
+                /* mv = */ controller.updateItem(itemId);
 
             } else if ("bid".equalsIgnoreCase(action)) {
                 System.out.println("bid");
-                mv = controller.placeBid(itemId);
+                /* mv = */ controller.placeBid(itemId);
 
             } else {
                 System.out.println("bad action, doing get");

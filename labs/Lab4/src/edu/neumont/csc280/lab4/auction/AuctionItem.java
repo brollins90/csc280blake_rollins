@@ -2,6 +2,7 @@ package edu.neumont.csc280.lab4.auction;
 
 import java.util.Date;
 import java.util.Stack;
+import org.joda.time.DateTime;
 
 public class AuctionItem {
 
@@ -103,6 +104,10 @@ public class AuctionItem {
 
     public long getStartTime() {
         return this.startTime;
+    }
+
+    public String getStartTimeISO() {
+        return new DateTime(this.startTime).toString();
     }
 
     protected void setStartTime(long startTime) {
@@ -245,7 +250,7 @@ public class AuctionItem {
         json += "\"description\": \"" + this.description + "\", ";
         json += "\"current_bid\": \"" + this.getCurrentPrice() + "\", ";
         json += "\"num_bids\": \"" + this.getNumBids() + "\", ";
-        json += "\"start_time\": \"" + this.startTime + "\", ";
+        json += "\"start_time\": \"" + this.getStartTimeISO() + "\", ";
         json += "\"end_time\": \"" + this.endTime + "\" }";
 
         return json;

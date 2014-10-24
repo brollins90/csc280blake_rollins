@@ -1,6 +1,5 @@
 package edu.neumont.csc280.lab4.auction;
 
-import java.util.Iterator;
 import java.util.List;
 
 public interface AuctionManager {
@@ -19,7 +18,7 @@ public interface AuctionManager {
     public AuctionItem getItem(String id);
 
     /**
-     * Gets an iterator for all the item ids
+     * Gets a List of all the item ids
      * @return
      */
     public List<AuctionItem> getItems();
