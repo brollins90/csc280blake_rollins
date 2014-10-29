@@ -1,9 +1,5 @@
 package edu.neumont.csc280.lab4.user;
 
-import edu.neumont.csc280.lab4.user.HashMapUserService;
-import edu.neumont.csc280.lab4.user.User;
-import edu.neumont.csc280.lab4.user.UserService;
-import edu.neumont.csc280.lab4.user.UsernameAlreadyExistsException;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -2,7 +2,6 @@ package edu.neumont.csc280.lab4.item;
 
 import java.util.Date;
 import java.util.Stack;
-import org.joda.time.DateTime;
 
 public class AuctionItem {
 
@@ -41,14 +40,13 @@ public class AuctionItem {
 //        this.id = id;
 //    }
 
-    public ValidationResult validateId(String newValue){
+    public ValidationResult validateId(String newValue) {
         // TODO
         ValidationResult result = new ValidationResult();
 //        result.setSuccess(false);
 //        result.addMessage("Changing the Id is not implemented.");
         return result;
     }
-
 
 
     public String getImageUrl() {
@@ -59,7 +57,7 @@ public class AuctionItem {
         this.imageUrl = imageUrl;
     }
 
-    public ValidationResult validateImageUrl(String newValue){
+    public ValidationResult validateImageUrl(String newValue) {
         // TODO
         ValidationResult result = new ValidationResult();
 //        result.setSuccess(false);
@@ -76,7 +74,7 @@ public class AuctionItem {
         this.title = title;
     }
 
-    public ValidationResult validateTitle(String newValue){
+    public ValidationResult validateTitle(String newValue) {
         // TODO
         ValidationResult result = new ValidationResult();
 //        result.setSuccess(false);
@@ -93,7 +91,7 @@ public class AuctionItem {
         this.description = description;
     }
 
-    public ValidationResult validateDescription(String newValue){
+    public ValidationResult validateDescription(String newValue) {
         // TODO
         ValidationResult result = new ValidationResult();
 //        result.setSuccess(false);
@@ -148,7 +146,7 @@ public class AuctionItem {
             result.addMessage("End Time must be more than one hour after the start time.");
         }
 
-         if (newValue + 1 < now.getTime()) {
+        if (newValue + 1 < now.getTime()) {
             result.setSuccess(false);
             result.addMessage("End Time must be later than Now.");
         }
@@ -161,8 +159,6 @@ public class AuctionItem {
         System.out.println("validateEndTime: " + result.toJSON());
         return result;
     }
-
-
 
 
     public int getNumBids() {

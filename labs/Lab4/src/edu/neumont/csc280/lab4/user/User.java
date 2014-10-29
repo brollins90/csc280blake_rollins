@@ -10,14 +10,22 @@ public class User {
     private final String username;
     private final String password;
 
-    public User(String username, String password){
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
         this.id = ++counter;
     }
 
-    public Long getId() {return this.id;}
-    public String getUsername() {return this.username;}
-    public String getPassword() {return this.password;}
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
 
 }

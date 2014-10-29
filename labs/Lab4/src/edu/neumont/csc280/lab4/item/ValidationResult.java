@@ -14,20 +14,20 @@ public class ValidationResult {
     }
 
     public ValidationResult(String message) {
+        this();
         success = false;
-        messages = new ArrayList<>();
         addMessage(message);
     }
 
     public boolean getSuccess() {
-        return  this.success;
+        return this.success;
     }
 
     public void setSuccess(boolean success) {
         this.success = success;
     }
 
-    public void addMessage(String message){
+    public void addMessage(String message) {
         this.messages.add(message);
     }
 
@@ -42,7 +42,7 @@ public class ValidationResult {
         }
 
         // combine the messages
-        for(String m : other.messages) {
+        for (String m : other.messages) {
             addMessage(m);
         }
     }
@@ -50,7 +50,7 @@ public class ValidationResult {
     @Override
     public String toString() {
         String retVal = "";
-        for(String m : messages) {
+        for (String m : messages) {
             retVal += m + "\n";
         }
         return retVal;
@@ -60,19 +60,19 @@ public class ValidationResult {
         String retVal = "{ \"success\": " + success + ",";
         retVal += " \"messages\": [ ";
         retVal += (success) ? "succeeded" : "failed";
-        for(String m : messages) {
+        for (String m : messages) {
             retVal += ", " + m;
         }
         retVal += " ] }";
 
-        return  retVal;
+        return retVal;
     }
 
     public String toHTML() {
         String retVal = "";
-        for(String m : messages) {
+        for (String m : messages) {
             retVal += "<div class='validation_error'>" + m + "</div>";
         }
-        return  retVal;
+        return retVal;
     }
 }

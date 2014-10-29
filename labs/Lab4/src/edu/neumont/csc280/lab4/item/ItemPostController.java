@@ -1,12 +1,5 @@
 package edu.neumont.csc280.lab4.item;
 
-import edu.neumont.csc280.lab4.item.AuctionItem;
-import edu.neumont.csc280.lab4.item.ItemService;
-import edu.neumont.csc280.lab4.item.Bid;
-import edu.neumont.csc280.lab4.item.Money;
-import edu.neumont.csc280.lab4.user.RegisterUserModel;
-import edu.neumont.csc280.lab4.user.User;
-import edu.neumont.csc280.lab4.user.UsernameAlreadyExistsException;
 import edu.neumont.csc280.lab4.web.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;

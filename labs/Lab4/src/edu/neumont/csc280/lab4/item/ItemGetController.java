@@ -1,7 +1,5 @@
 package edu.neumont.csc280.lab4.item;
 
-import edu.neumont.csc280.lab4.item.AuctionItem;
-import edu.neumont.csc280.lab4.item.ItemService;
 import edu.neumont.csc280.lab4.web.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,11 +12,10 @@ public class ItemGetController {
     private HttpServletResponse response;
     private ItemService manager;
 
-    public ItemGetController(HttpServletRequest request, HttpServletResponse response)
-    {
+    public ItemGetController(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
-        manager = (ItemService)request.getServletContext().getAttribute("manager");
+        manager = (ItemService) request.getServletContext().getAttribute("manager");
     }
 
     public ModelAndView beginCreateItemWorkflow() {

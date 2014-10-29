@@ -1,6 +1,8 @@
 package edu.neumont.csc280.lab4.item;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -28,8 +30,7 @@ public class HashMapItemService implements ItemService {
     public AuctionItem createItem() {
         String thisItemId = "" + nextItemId++;
 
-        if (this.data.containsKey(thisItemId))
-        {
+        if (this.data.containsKey(thisItemId)) {
             throw new ItemIdAlreadyExistsException();
         }
 

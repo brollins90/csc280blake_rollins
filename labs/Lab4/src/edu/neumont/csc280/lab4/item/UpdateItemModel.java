@@ -7,10 +7,10 @@ package edu.neumont.csc280.lab4.item;
 public class UpdateItemModel {
 
     public AuctionItem item;
-    public ValidationResult validationResults;
+    public ValidationResult validationResult;
 
     public UpdateItemModel() {
-        validationResults = new ValidationResult();
+        validationResult = new ValidationResult();
     }
 
     public UpdateItemModel(AuctionItem item) {
@@ -26,12 +26,12 @@ public class UpdateItemModel {
         this.item = item;
     }
 
-    public ValidationResult getValidationResults() {
-        return validationResults;
+    public ValidationResult getValidationResult() {
+        return validationResult;
     }
 
     public void addValidationResult(ValidationResult result) {
-        this.validationResults.combine(result);
+        this.validationResult.combine(result);
     }
 }
 

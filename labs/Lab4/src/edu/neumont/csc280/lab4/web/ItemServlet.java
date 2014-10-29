@@ -24,7 +24,6 @@ public class ItemServlet extends HttpServlet {
             String action = (parts.length > 2) ? parts[2] : "";
 
 
-
             System.out.println("get");
 
             ItemGetController controller = new ItemGetController(request, response);
@@ -35,23 +34,17 @@ public class ItemServlet extends HttpServlet {
             System.out.println(action);
             if ("create".equalsIgnoreCase(action)) {
                 mv = controller.beginCreateItemWorkflow();
-            }
-            else if ("delete".equalsIgnoreCase(action)) {
+            } else if ("delete".equalsIgnoreCase(action)) {
                 mv = controller.beginDeleteItemWorkflow(itemId);
-            }
-            else if ("json".equalsIgnoreCase(action)) {
+            } else if ("json".equalsIgnoreCase(action)) {
                 mv = controller.retrieveItemJSON(itemId);
-            }
-            else if ("retrieve".equalsIgnoreCase(action)) {
+            } else if ("retrieve".equalsIgnoreCase(action)) {
                 mv = controller.retrieveItem(itemId);
-            }
-            else if ("update".equalsIgnoreCase(action)) {
+            } else if ("update".equalsIgnoreCase(action)) {
                 mv = controller.beginUpdateItemWorkflow(itemId);
-            }
-            else if ("list".equalsIgnoreCase(action)) {
+            } else if ("list".equalsIgnoreCase(action)) {
                 mv = controller.getAllItems();
-            }
-            else {
+            } else {
                 System.out.println("bad action");
                 mv = new ModelAndView(null, "500");
             }
@@ -114,7 +107,7 @@ public class ItemServlet extends HttpServlet {
         } catch (Exception e) {
             System.out.println("Exception");
             e.printStackTrace();
-        } finally{
+        } finally {
 
             request.setAttribute("model", mv.getModel());
             String viewLocation = "/WEB-INF/" + mv.getViewName() + ".jsp";

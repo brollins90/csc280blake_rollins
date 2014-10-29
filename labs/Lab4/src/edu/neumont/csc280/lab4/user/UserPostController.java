@@ -1,6 +1,5 @@
 package edu.neumont.csc280.lab4.user;
 
-import edu.neumont.csc280.lab4.user.UserService;
 import edu.neumont.csc280.lab4.web.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
