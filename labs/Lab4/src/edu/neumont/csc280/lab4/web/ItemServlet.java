@@ -1,8 +1,7 @@
 package edu.neumont.csc280.lab4.web;
 
-import edu.neumont.csc280.lab4.web.ItemGetController;
-import edu.neumont.csc280.lab4.web.ItemPostController;
-import edu.neumont.csc280.lab4.web.ModelAndView;
+import edu.neumont.csc280.lab4.item.ItemGetController;
+import edu.neumont.csc280.lab4.item.ItemPostController;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

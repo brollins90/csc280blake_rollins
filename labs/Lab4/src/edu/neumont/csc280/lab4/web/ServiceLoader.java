@@ -1,7 +1,7 @@
 package edu.neumont.csc280.lab4.web;
 
-import edu.neumont.csc280.lab4.auction.ArrayAuctionManager;
-import edu.neumont.csc280.lab4.auction.AuctionManager;
+import edu.neumont.csc280.lab4.item.ArrayItemService;
+import edu.neumont.csc280.lab4.item.ItemService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -13,15 +13,15 @@ public class ServiceLoader implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext ctx = servletContextEvent.getServletContext();
 
-        AuctionManager manager = null;
+        ItemService manager = null;
         try {
             String managerType = ctx.getInitParameter("managertype");
             System.out.println("about to create a manager of type: " + managerType);
             Class t = Class.forName(managerType);
-            manager = (AuctionManager) t.newInstance();
+            manager = (ItemService) t.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
-            manager = new ArrayAuctionManager();
+            manager = new ArrayItemService();
         }
 
         ctx.setAttribute("manager", manager);

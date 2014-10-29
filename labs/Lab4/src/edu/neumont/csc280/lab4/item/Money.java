@@ -1,4 +1,4 @@
-package edu.neumont.csc280.lab4.auction;
+package edu.neumont.csc280.lab4.item;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

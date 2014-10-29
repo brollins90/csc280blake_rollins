@@ -1,8 +1,8 @@
-package edu.neumont.csc280.lab4.auction;
+package edu.neumont.csc280.lab4.item;
 
 import java.util.List;
 
-public interface AuctionManager {
+public interface ItemService {
 
     /**
      * Creates an AuctionItem and returns the ID

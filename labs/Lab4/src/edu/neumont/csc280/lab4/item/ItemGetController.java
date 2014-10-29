@@ -1,7 +1,8 @@
-package edu.neumont.csc280.lab4.web;
+package edu.neumont.csc280.lab4.item;
 
-import edu.neumont.csc280.lab4.auction.AuctionItem;
-import edu.neumont.csc280.lab4.auction.AuctionManager;
+import edu.neumont.csc280.lab4.item.AuctionItem;
+import edu.neumont.csc280.lab4.item.ItemService;
+import edu.neumont.csc280.lab4.web.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,13 +12,13 @@ public class ItemGetController {
 
     private HttpServletRequest request;
     private HttpServletResponse response;
-    private AuctionManager manager;
+    private ItemService manager;
 
     public ItemGetController(HttpServletRequest request, HttpServletResponse response)
     {
         this.request = request;
         this.response = response;
-        manager = (AuctionManager)request.getServletContext().getAttribute("manager");
+        manager = (ItemService)request.getServletContext().getAttribute("manager");
     }
 
     public ModelAndView getAllItems() {

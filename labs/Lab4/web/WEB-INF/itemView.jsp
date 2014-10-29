@@ -1,4 +1,4 @@
-<%@ page import="edu.neumont.csc280.lab4.auction.AuctionItem" %>
+<%@ page import="edu.neumont.csc280.lab4.item.AuctionItem" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="header1.jsp"%>

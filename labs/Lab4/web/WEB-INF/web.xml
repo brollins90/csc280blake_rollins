@@ -5,11 +5,19 @@
          version="3.1">
     <context-param>
         <param-name>managertype</param-name>
-        <param-value>edu.neumont.csc280.lab4.auction.ArrayAuctionManager</param-value>
+        <param-value>edu.neumont.csc280.lab4.item.ArrayItemService</param-value>
     </context-param>
     <listener>
         <listener-class>edu.neumont.csc280.lab4.web.ServiceLoader</listener-class>
     </listener>
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>edu.neumont.csc280.lab4.web.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/user/*</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>ItemServlet</servlet-name>
         <servlet-class>edu.neumont.csc280.lab4.web.ItemServlet</servlet-class>

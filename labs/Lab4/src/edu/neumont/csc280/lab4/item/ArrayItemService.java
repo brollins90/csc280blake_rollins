@@ -1,15 +1,15 @@
-package edu.neumont.csc280.lab4.auction;
+package edu.neumont.csc280.lab4.item;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-public class ArrayAuctionManager implements AuctionManager {
+public class ArrayItemService implements ItemService {
 
     private static long nextItemId = 1;
     private final Map<String, AuctionItem> data;
 
-    public ArrayAuctionManager() {
+    public ArrayItemService() {
         data = new ConcurrentHashMap<>();
 
         String id1 = this.createItem();
