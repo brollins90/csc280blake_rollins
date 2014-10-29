@@ -29,7 +29,7 @@ public class AuctionItem {
         this.startTime = new Date().getTime();
         this.endTime = startTime + 7 * 24 * 60 * 60 * 1000;
 
-        CreateBids();
+        this.bids = new Stack<>();
     }
 
     public String getId() {
@@ -44,8 +44,8 @@ public class AuctionItem {
     public ValidationResult validateId(String newValue){
         // TODO
         ValidationResult result = new ValidationResult();
-        result.setSuccess(false);
-        result.addMessage("Changing the Id is not implemented.");
+//        result.setSuccess(false);
+//        result.addMessage("Changing the Id is not implemented.");
         return result;
     }
 
@@ -62,8 +62,8 @@ public class AuctionItem {
     public ValidationResult validateImageUrl(String newValue){
         // TODO
         ValidationResult result = new ValidationResult();
-        result.setSuccess(false);
-        result.addMessage("Changing the ImageUrl is not implemented.");
+//        result.setSuccess(false);
+//        result.addMessage("Changing the ImageUrl is not implemented.");
         return result;
     }
 
@@ -79,8 +79,8 @@ public class AuctionItem {
     public ValidationResult validateTitle(String newValue){
         // TODO
         ValidationResult result = new ValidationResult();
-        result.setSuccess(false);
-        result.addMessage("Changing the title is not implemented.");
+//        result.setSuccess(false);
+//        result.addMessage("Changing the title is not implemented.");
         return result;
     }
 
@@ -96,8 +96,8 @@ public class AuctionItem {
     public ValidationResult validateDescription(String newValue){
         // TODO
         ValidationResult result = new ValidationResult();
-        result.setSuccess(false);
-        result.addMessage("Changing the description is not implemented.");
+//        result.setSuccess(false);
+//        result.addMessage("Changing the description is not implemented.");
         return result;
     }
 
@@ -106,29 +106,10 @@ public class AuctionItem {
         return this.startTime;
     }
 
-    public String getStartTimeISO() {
-        return new DateTime(this.startTime).toString();
-    }
-
     protected void setStartTime(long startTime) {
         this.startTime = startTime;
     }
-    protected void setStartTime(String startTime) throws NumberFormatException {
-        setStartTime(Long.parseLong(startTime));
-    }
 
-    public ValidationResult validateStartTime(String newValue) {
-        ValidationResult result = new ValidationResult();
-        try
-        {
-            result.combine(validateStartTime(Long.parseLong(newValue)));
-        }
-        catch (NumberFormatException e) {
-            result.setSuccess(false);
-            result.addMessage(e.getMessage());
-        }
-        return result;
-    }
 
     public ValidationResult validateStartTime(long newValue) {
         ValidationResult result = new ValidationResult();
@@ -156,22 +137,7 @@ public class AuctionItem {
     protected void setEndTime(long endTime) {
         this.endTime = endTime;
     }
-    protected void setEndTime(String endTime) throws NumberFormatException {
-        setEndTime(Long.parseLong(endTime));
-    }
 
-    public ValidationResult validateEndTime(String newValue) {
-        ValidationResult result = new ValidationResult();
-        try
-        {
-            result.combine(validateEndTime(Long.parseLong(newValue)));
-        }
-        catch (NumberFormatException e) {
-            result.setSuccess(false);
-            result.addMessage(e.getMessage());
-        }
-        return result;
-    }
 
     public ValidationResult validateEndTime(long newValue) {
         ValidationResult result = new ValidationResult();
@@ -197,35 +163,7 @@ public class AuctionItem {
     }
 
 
-//
-//    public String getTimeLeft() {
-//
-//        String diffString = "";
-//
-//        Date start = new Date(this.getStartTime());
-//        Date end = new Date(this.getEndTime());
-//
-//        long diff = end.getTime() - new Date().getTime();
-//        if (diff > 1) {
-//
-//            long diffSeconds = diff / 1000 % 60;
-//            long diffMinutes = diff / (60 * 1000) % 60;
-//            long diffHours = diff / (60 * 60 * 1000) % 24;
-//            long diffDays = diff / (24 * 60 * 60 * 1000);
-//
-//            diffString += (diffDays == 0) ? "" : diffDays + " days, ";
-//            diffString += (diffHours == 0) ? "" : diffHours + " hours, ";
-//            diffString += (diffMinutes == 0) ? "" : diffMinutes + " minutes, ";
-//            diffString += (diffSeconds == 0) ? "" : diffSeconds + " seconds.";
-//        } else {
-//            diffString = "Time has passed.";
-//        }
-//        return diffString;
-//    }
 
-    private void CreateBids() {
-        this.bids = new Stack<>();
-    }
 
     public int getNumBids() {
         return this.bids.size();

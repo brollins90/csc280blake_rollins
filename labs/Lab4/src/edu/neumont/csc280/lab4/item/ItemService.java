@@ -8,7 +8,7 @@ public interface ItemService {
      * Creates an AuctionItem and returns the ID
      * @return the ID of the created item
      */
-    public String createItem();
+    public AuctionItem createItem();
 
     /**
      * Gets the AuctionItem with the specified ID
@@ -25,10 +25,8 @@ public interface ItemService {
 
     public void updateItemDescription(String itemId, String newValue);
     public void updateItemEndTime(String itemId, long newValue);
-    public void updateItemEndTime(String itemId, String newValue);
     public void updateItemImageUrl(String itemId, String newValue);
     public void updateItemStartTime(String itemId, long newValue);
-    public void updateItemStartTime(String itemId, String newValue);
     public void updateItemTitle(String itemId, String newValue);
 
     public void placeBid(String itemId, Bid bid);

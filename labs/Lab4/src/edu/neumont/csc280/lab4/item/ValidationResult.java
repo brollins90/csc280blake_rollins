@@ -13,6 +13,12 @@ public class ValidationResult {
         messages = new ArrayList<>();
     }
 
+    public ValidationResult(String message) {
+        success = false;
+        messages = new ArrayList<>();
+        addMessage(message);
+    }
+
     public boolean getSuccess() {
         return  this.success;
     }
@@ -41,6 +47,15 @@ public class ValidationResult {
         }
     }
 
+    @Override
+    public String toString() {
+        String retVal = "";
+        for(String m : messages) {
+            retVal += m + "\n";
+        }
+        return retVal;
+    }
+
     public String toJSON() {
         String retVal = "{ \"success\": " + success + ",";
         retVal += " \"messages\": [ ";
@@ -50,6 +65,14 @@ public class ValidationResult {
         }
         retVal += " ] }";
 
+        return  retVal;
+    }
+
+    public String toHTML() {
+        String retVal = "";
+        for(String m : messages) {
+            retVal += "<div class='validation_error'>" + m + "</div>";
+        }
         return  retVal;
     }
 }

@@ -1,13 +1,20 @@
 <%@ page import="edu.neumont.csc280.lab4.item.AuctionItem" %>
+<%@ page import="edu.neumont.csc280.lab4.item.UpdateItemModel" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="header1.jsp"%>
 <script src="<%=application.getContextPath()%>/js/itemUpdate.js" type="text/javascript"></script>
 <%@ include file="header2.jsp"%>
-<% AuctionItem model = (AuctionItem)request.getAttribute("model"); %>
+<% UpdateItemModel model = (UpdateItemModel)request.getAttribute("model"); %>
 
-<form method="post" action="<%=application.getContextPath()%>/item/<%=model.getId()%>/update">
-    <h1>Auction Item #<%=model.getId()%></h1>
-    <input name="id" style="display:none;" value="<%=model.getId()%>"/>
+
+<c:if test="${!model.validationResults.success}">
+    ${model.validationResults.toHTML()}
+</c:if>
+
+<form method="post" action="<%=application.getContextPath()%>/item/<%=model.item.getId()%>/update">
+    <h1>Auction Item #<%=model.item.getId()%></h1>
+    <input name="id" style="display:none;" value="<%=model.item.getId()%>"/>
     <%--<div>--%>
         <%--<div>--%>
             <%--<label for="itemTitle">Title:</label>--%>
@@ -18,12 +25,12 @@
 
         <dt>Title:</dt>
         <dd>
-            <input name="item_title" value="<%=model.getTitle()%>"/>
+            <input name="item_title" value="<%=model.item.getTitle()%>"/>
         </dd>
 
         <dt>Description:</dt>
         <dd>
-            <textarea name="item_description"><%=model.getDescription()%></textarea>
+            <textarea name="item_description"><%=model.item.getDescription()%></textarea>
         </dd>
 
         <dt>Start Bid:</dt>
@@ -33,7 +40,7 @@
 
     <div>
         <label for="item_start_time">Start Time:</label>
-        <input type="text" name="item_start_time" value="<%=model.getStartTime()%>" id="item_start_time" />
+        <input type="text" name="item_start_time" value="<%=model.item.getStartTime()%>" id="item_start_time" />
         <span id="notice_start_time" class="notice">If you edit the start time, the end time will automatically be set to 7 days later than the new start time</span>
         <%--<span id="validate_start_time"><% if (start_time_error) { out.print(start_time_error_message); } %></span>--%>
 
@@ -41,12 +48,12 @@
 
         <dt>End Time:</dt>
         <dd>
-            <input name="item_end_time" value="<%=model.getEndTime()%>"/>
+            <input name="item_end_time" value="<%=model.item.getEndTime()%>"/>
         </dd>
 
         <dt>img URL:</dt>
         <dd>
-            <input name="item_image_url" value="<%=model.getImageUrl()%>"/>
+            <input name="item_image_url" value="<%=model.item.getImageUrl()%>"/>
         </dd>
 
         <dd>

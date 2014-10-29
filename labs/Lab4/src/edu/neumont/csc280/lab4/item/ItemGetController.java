@@ -21,21 +21,27 @@ public class ItemGetController {
         manager = (ItemService)request.getServletContext().getAttribute("manager");
     }
 
-    public ModelAndView getAllItems() {
-        List<AuctionItem> itemIds = manager.getItems();
-        ModelAndView mv = new ModelAndView(itemIds, "itemList");
-        return mv;
-    }
-
-    public ModelAndView createItem() {
-        AuctionItem item = manager.getItem(manager.createItem());
+    public ModelAndView beginCreateItemWorkflow() {
+        AuctionItem item = manager.createItem();
         ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemCreate");
         return mv;
     }
 
-    public ModelAndView deleteItem(String id) {
+    public ModelAndView beginDeleteItemWorkflow(String id) {
         AuctionItem item = manager.getItem(id);
         ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemDelete");
+        return mv;
+    }
+
+    public ModelAndView beginUpdateItemWorkflow(String id) {
+        AuctionItem item = manager.getItem(id);
+        ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(new UpdateItemModel(item), "itemUpdate");
+        return mv;
+    }
+
+    public ModelAndView getAllItems() {
+        List<AuctionItem> itemIds = manager.getItems();
+        ModelAndView mv = new ModelAndView(itemIds, "itemList");
         return mv;
     }
 
@@ -50,25 +56,6 @@ public class ItemGetController {
         ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item.toJSON(), "itemJson");
         return mv;
     }
-
-    public ModelAndView updateItem(String id) {
-        AuctionItem item = manager.getItem(id);
-        ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemUpdate");
-        return mv;
-    }
-//
-//    public ModelAndView validateItem(String id) {
-//        AuctionItem item = manager.getItem(id);
-//
-//        String action = this.request.getParameter("action");
-//        if ("validate_item_start_time".equals(action)) {
-//            String check_value = this.request.getParameter("check_value");
-//            long check_value_long = 0;
-//            try { check_value_long = Long.parseLong(check_value); } catch (Exception e) {}
-//            String validated = item.validateStartTime(check_value_long);
-//
-//        }
-//    }
 }
 
 

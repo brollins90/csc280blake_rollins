@@ -4,20 +4,20 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-public class ArrayItemService implements ItemService {
+public class HashMapItemService implements ItemService {
 
     private static long nextItemId = 1;
     private final Map<String, AuctionItem> data;
 
-    public ArrayItemService() {
+    public HashMapItemService() {
         data = new ConcurrentHashMap<>();
 
-        String id1 = this.createItem();
+        String id1 = this.createItem().getId();
         this.updateItemDescription(id1, "Item 1 description.");
         this.updateItemTitle(id1, "Item 1 Title.");
         this.updateItemImageUrl(id1, "/img/item_1.png");
 
-        String id2 = this.createItem();
+        String id2 = this.createItem().getId();
         this.updateItemDescription(id2, "Item 2 desc.");
         this.updateItemTitle(id2, "Item 3 Title.");
         this.updateItemImageUrl(id2, "/img/item_2.png");
@@ -25,13 +25,18 @@ public class ArrayItemService implements ItemService {
     }
 
     @Override
-    public String createItem() {
+    public AuctionItem createItem() {
         String thisItemId = "" + nextItemId++;
 
-        assert !this.data.containsKey(thisItemId);
+        if (this.data.containsKey(thisItemId))
+        {
+            throw new ItemIdAlreadyExistsException();
+        }
 
-        this.data.put(thisItemId, new AuctionItem(thisItemId));
-        return thisItemId;
+        AuctionItem newItem = new AuctionItem(thisItemId);
+
+        this.data.put(thisItemId, newItem);
+        return newItem;
     }
 
     @Override
@@ -46,7 +51,14 @@ public class ArrayItemService implements ItemService {
 
     @Override
     public void updateItemDescription(String itemId, String newValue) {
-        this.data.get(itemId).setDescription(newValue);
+        AuctionItem item = getItem(itemId);
+
+        ValidationResult validation = item.validateDescription(newValue);
+        if (validation.getSuccess()) {
+            item.setDescription(newValue);
+        } else {
+            throw new RuntimeException(validation.toString());
+        }
     }
 
     @Override
@@ -55,17 +67,7 @@ public class ArrayItemService implements ItemService {
     }
 
     @Override
-    public void updateItemStartTime(String itemId, String newValue) {
-        this.data.get(itemId).setStartTime(newValue);
-    }
-
-    @Override
     public void updateItemEndTime(String itemId, long newValue) {
-        this.data.get(itemId).setEndTime(newValue);
-    }
-
-    @Override
-    public void updateItemEndTime(String itemId, String newValue) {
         this.data.get(itemId).setEndTime(newValue);
     }
 

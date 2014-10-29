@@ -5,7 +5,7 @@
          version="3.1">
     <context-param>
         <param-name>managertype</param-name>
-        <param-value>edu.neumont.csc280.lab4.item.ArrayItemService</param-value>
+        <param-value>edu.neumont.csc280.lab4.item.HashMapItemService</param-value>
     </context-param>
     <listener>
         <listener-class>edu.neumont.csc280.lab4.web.ServiceLoader</listener-class>

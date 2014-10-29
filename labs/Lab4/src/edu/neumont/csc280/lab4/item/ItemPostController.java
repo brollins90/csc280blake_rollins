@@ -4,6 +4,9 @@ import edu.neumont.csc280.lab4.item.AuctionItem;
 import edu.neumont.csc280.lab4.item.ItemService;
 import edu.neumont.csc280.lab4.item.Bid;
 import edu.neumont.csc280.lab4.item.Money;
+import edu.neumont.csc280.lab4.user.RegisterUserModel;
+import edu.neumont.csc280.lab4.user.User;
+import edu.neumont.csc280.lab4.user.UsernameAlreadyExistsException;
 import edu.neumont.csc280.lab4.web.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,11 +19,10 @@ public class ItemPostController {
     private HttpServletResponse response;
     private ItemService manager;
 
-    public ItemPostController(HttpServletRequest request, HttpServletResponse response)
-    {
+    public ItemPostController(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
-        manager = (ItemService)request.getServletContext().getAttribute("manager");
+        manager = (ItemService) request.getServletContext().getAttribute("manager");
     }
 
     public ModelAndView createItem() {
@@ -33,52 +35,102 @@ public class ItemPostController {
         return null;
     }
 
-    public ModelAndView updateItem(String id) {
+
+    public ModelAndView commitUpdateItemWorkflow(String id) {
+
         AuctionItem item = manager.getItem(id);
 
-        String itemStartBid = request.getParameter("item_start_bid");
-//
+        UpdateItemModel model = new UpdateItemModel();
+        model.setItem(item);
+
 //        // Title
-//        String itemTitle = request.getParameter("item_title");
-//        if (! item.getTitle().equals(itemTitle)) {
-//            manager.updateItemTitle(id,itemTitle);
-//        }
+//        try {
+//            String updatedTitle = request.getParameter("item_title");
+//            if (hasValueChanged(item.getTitle(), updatedTitle)) {
 //
-//        // Description
-//        String itemDescription = request.getParameter("item_description");
-//        if (! item.getDescription().equals(itemDescription)) {
-//            manager.updateItemDescription(id, itemDescription);
+//                manager.updateItemTitle(id, updatedTitle);
+//            }
+//        } catch (Exception e) {
+//            model.addValidationResult(new ValidationResult(e.getMessage()));
+//            return new ModelAndView(model, "itemUpdate");
 //        }
+
+        // Description
+        try {
+            String updatedDescription = request.getParameter("item_description");
+            if (hasValueChanged(item.getDescription(), updatedDescription)) {
+                manager.updateItemDescription(id, updatedDescription);
+            }
+        } catch (Exception e) {
+//todo
+            model.addValidationResult(new ValidationResult(e.getMessage()));
+            return new ModelAndView(model, "itemUpdate");
+        }
+
 
         // Start Time
-        String itemStartTime = request.getParameter("item_start_time");
-        if (hasValueChanged(String.valueOf(item.getStartTime()), itemStartTime)) {
+        try {
+            Long updatedStartTime = Long.parseLong(request.getParameter("item_start_time"));
+            if (hasValueChanged(item.getStartTime(), updatedStartTime)) {
+                ValidationResult validation = item.validateStartTime(updatedStartTime);
 
-            if (item.validateStartTime(itemStartTime).getSuccess()) {
-                manager.updateItemStartTime(id, itemStartTime);
+                if (validation.getSuccess()) {
+                    manager.updateItemStartTime(id, updatedStartTime);
 
-                // To make sure that the end time is always after the start time, update the end time to 7
-                // days after the start time.  If they want to change the end time in the same instance
-                // of this POST then that will overwrite this change since it runs afterward anyway.
-                manager.updateItemEndTime(id, Long.valueOf(itemStartTime) + 7 * 24 * 60 * 60 * 1000);
+                    // To make sure that the end time is always after the start time, update the end time to 7
+                    // days after the start time.  If they want to change the end time in the same instance
+                    // of this POST then that will overwrite this change since it runs afterward anyway.
+                    manager.updateItemEndTime(id, updatedStartTime + 7 * 24 * 60 * 60 * 1000);
+                } else {
+                    model.addValidationResult(validation);
+                    return new ModelAndView(model, "itemUpdate");
+                }
             }
+        } catch (NumberFormatException e) {
+//todo
+            model.addValidationResult(new ValidationResult("there was an error updating the item start time"));
+            return new ModelAndView(model, "itemUpdate");
         }
-//
-//        // End Time
-//        String itemEndTime = request.getParameter("item_end_time");
-//        long endTimeLong = 0;
-//        try { endTimeLong = Long.parseLong(itemEndTime); } catch (Exception e) {}
-//        if (item.getEndTime() != (endTimeLong)) {
-//            manager.updateItemStartTime(id, endTimeLong);
-//        }
-//
-//        // Image URL
-//        String itemImageUrl = request.getParameter("item_image_url");
-//        if (! item.getImageUrl().equals(itemImageUrl)) {
-//            manager.updateItemImageUrl(id, itemImageUrl);
-//        }
 
-        return null;
+        // End Time
+        try {
+            Long updatedEndTime = Long.parseLong(request.getParameter("item_end_time"));
+            if (hasValueChanged(item.getEndTime(), updatedEndTime)) {
+                ValidationResult validation = item.validateEndTime(updatedEndTime);
+
+                if (validation.getSuccess()) {
+                    manager.updateItemEndTime(id, updatedEndTime);
+                } else {
+                    model.addValidationResult(validation);
+                    return new ModelAndView(model, "itemUpdate");
+                }
+            }
+        } catch (NumberFormatException e) {
+//todo
+            model.addValidationResult(new ValidationResult("there was an error updating the item end time"));
+            return new ModelAndView(model, "itemUpdate");
+        }
+
+        // Image URL
+        try {
+            String updatedImageUrl = request.getParameter("item_image_url");
+            if (hasValueChanged(item.getImageUrl(), updatedImageUrl)) {
+
+                ValidationResult validation = item.validateImageUrl(updatedImageUrl);
+                if (validation.getSuccess()) {
+                    manager.updateItemImageUrl(id, updatedImageUrl);
+                } else {
+                    model.addValidationResult(validation);
+                    return new ModelAndView(model, "itemUpdate");
+                }
+            }
+        } catch (Exception e) {
+//todo
+            model.addValidationResult(new ValidationResult("there was an error updating the item image"));
+            return new ModelAndView(model, "itemUpdate");
+        }
+
+        return new ModelAndView(item, "itemView");
     }
 
     public ModelAndView placeBid(String id) {
@@ -87,7 +139,7 @@ public class ItemPostController {
 
         Money incAmount;
         try {
-            switch(bidAmount){
+            switch (bidAmount) {
                 default:
                 case "one":
                     incAmount = Money.dollars(1.00d);
@@ -116,7 +168,7 @@ public class ItemPostController {
         return new ModelAndView(item, "itemView");
     }
 
-    private<T extends Comparable<T>> boolean hasValueChanged (T one, T two) {
+    private <T extends Comparable<T>> boolean hasValueChanged(T one, T two) {
         System.out.println("hasValueChanged(" + one + ", " + two + ")");
         if (one.compareTo(two) == 0) {
 

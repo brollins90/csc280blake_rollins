@@ -34,10 +34,10 @@ public class ItemServlet extends HttpServlet {
 
             System.out.println(action);
             if ("create".equalsIgnoreCase(action)) {
-                mv = controller.createItem();
+                mv = controller.beginCreateItemWorkflow();
             }
             else if ("delete".equalsIgnoreCase(action)) {
-                mv = controller.deleteItem(itemId);
+                mv = controller.beginDeleteItemWorkflow(itemId);
             }
             else if ("json".equalsIgnoreCase(action)) {
                 mv = controller.retrieveItemJSON(itemId);
@@ -46,7 +46,7 @@ public class ItemServlet extends HttpServlet {
                 mv = controller.retrieveItem(itemId);
             }
             else if ("update".equalsIgnoreCase(action)) {
-                mv = controller.updateItem(itemId);
+                mv = controller.beginUpdateItemWorkflow(itemId);
             }
             else if ("list".equalsIgnoreCase(action)) {
                 mv = controller.getAllItems();
@@ -73,6 +73,8 @@ public class ItemServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        ModelAndView mv = null;
         try {
             String pathInfo = request.getPathInfo();
             pathInfo = (pathInfo == null) ? "/" : pathInfo;
@@ -81,7 +83,6 @@ public class ItemServlet extends HttpServlet {
             String itemId = (parts.length > 1) ? parts[1] : "";
             String action = (parts.length > 2) ? parts[2] : "";
 
-            /* ModelAndView mv = null; */
 
             System.out.println("post");
 
@@ -89,15 +90,15 @@ public class ItemServlet extends HttpServlet {
 
             if ("create".equalsIgnoreCase(action)) {
                 System.out.println("create");
-                /* mv = */ controller.createItem();
+                mv = controller.createItem();
 
             } else if ("update".equalsIgnoreCase(action)) {
                 System.out.println("update");
-                /* mv = */ controller.updateItem(itemId);
+                mv = controller.commitUpdateItemWorkflow(itemId);
 
             } else if ("bid".equalsIgnoreCase(action)) {
                 System.out.println("bid");
-                /* mv = */ controller.placeBid(itemId);
+                mv = controller.placeBid(itemId);
 
             } else {
                 System.out.println("bad action, doing get");
@@ -105,14 +106,21 @@ public class ItemServlet extends HttpServlet {
                 doGet(request, response);
             }
 
-            String redirectLocation = request.getRequestURI();
-            redirectLocation = redirectLocation.substring(0, redirectLocation.lastIndexOf('/'));
-            System.out.println("redirectLocation: " + redirectLocation);
-            response.sendRedirect(redirectLocation);
+//            String redirectLocation = request.getRequestURI();
+//            redirectLocation = redirectLocation.substring(0, redirectLocation.lastIndexOf('/'));
+//            System.out.println("redirectLocation: " + redirectLocation);
+//            response.sendRedirect(redirectLocation);
 
         } catch (Exception e) {
             System.out.println("Exception");
             e.printStackTrace();
+        } finally{
+
+            request.setAttribute("model", mv.getModel());
+            String viewLocation = "/WEB-INF/" + mv.getViewName() + ".jsp";
+            System.out.println("viewLocation: " + viewLocation);
+            RequestDispatcher rd = request.getRequestDispatcher(viewLocation);
+            rd.forward(request, response);
         }
     }
 
