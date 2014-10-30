@@ -31,7 +31,7 @@ public class HashMapItemService implements ItemService {
         String thisItemId = "" + nextItemId++;
 
         if (this.data.containsKey(thisItemId)) {
-            throw new ItemIdAlreadyExistsException();
+            throw new ItemIdAlreadyExistsException("The item id already exists.");
         }
 
         AuctionItem newItem = new AuctionItem(thisItemId);
@@ -64,22 +64,50 @@ public class HashMapItemService implements ItemService {
 
     @Override
     public void updateItemStartTime(String itemId, long newValue) {
-        this.data.get(itemId).setStartTime(newValue);
+        AuctionItem item = getItem(itemId);
+
+        ValidationResult validation = item.validateStartTime(newValue);
+        if (validation.getSuccess()) {
+            item.setStartTime(newValue);
+        } else {
+            throw new RuntimeException(validation.toString());
+        }
     }
 
     @Override
     public void updateItemEndTime(String itemId, long newValue) {
-        this.data.get(itemId).setEndTime(newValue);
+        AuctionItem item = getItem(itemId);
+
+        ValidationResult validation = item.validateEndTime(newValue);
+        if (validation.getSuccess()) {
+            item.setEndTime(newValue);
+        } else {
+            throw new RuntimeException(validation.toString());
+        }
     }
 
     @Override
     public void updateItemTitle(String itemId, String newValue) {
-        this.data.get(itemId).setTitle(newValue);
+        AuctionItem item = getItem(itemId);
+
+        ValidationResult validation = item.validateTitle(newValue);
+        if (validation.getSuccess()) {
+            item.setTitle(newValue);
+        } else {
+            throw new RuntimeException(validation.toString());
+        }
     }
 
     @Override
     public void updateItemImageUrl(String itemId, String newValue) {
-        this.data.get(itemId).setImageUrl(newValue);
+        AuctionItem item = getItem(itemId);
+
+        ValidationResult validation = item.validateImageUrl(newValue);
+        if (validation.getSuccess()) {
+            item.setImageUrl(newValue);
+        } else {
+            throw new RuntimeException(validation.toString());
+        }
     }
 
     @Override

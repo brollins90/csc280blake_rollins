@@ -36,17 +36,16 @@ public class ItemPostController {
         UpdateItemModel model = new UpdateItemModel();
         model.setItem(item);
 
-//        // Title
-//        try {
-//            String updatedTitle = request.getParameter("item_title");
-//            if (hasValueChanged(item.getTitle(), updatedTitle)) {
-//
-//                manager.updateItemTitle(id, updatedTitle);
-//            }
-//        } catch (Exception e) {
-//            model.addValidationResult(new ValidationResult(e.getMessage()));
-//            return new ModelAndView(model, "itemUpdate");
-//        }
+        // Title
+        try {
+            String updatedTitle = request.getParameter("item_title");
+            if (hasValueChanged(item.getTitle(), updatedTitle)) {
+                manager.updateItemTitle(id, updatedTitle);
+            }
+        } catch (Exception e) {
+            model.addValidationResult(new ValidationResult(e.getMessage()));
+            return new ModelAndView(model, "itemUpdate");
+        }
 
         // Description
         try {
@@ -55,7 +54,6 @@ public class ItemPostController {
                 manager.updateItemDescription(id, updatedDescription);
             }
         } catch (Exception e) {
-//todo
             model.addValidationResult(new ValidationResult(e.getMessage()));
             return new ModelAndView(model, "itemUpdate");
         }
@@ -63,7 +61,7 @@ public class ItemPostController {
 
         // Start Time
         try {
-            Long updatedStartTime = Long.parseLong(request.getParameter("item_start_time"));
+            Long updatedStartTime = Long.parseLong(request.getParameter("item_start_time_long"));
             if (hasValueChanged(item.getStartTime(), updatedStartTime)) {
                 ValidationResult validation = item.validateStartTime(updatedStartTime);
 
@@ -87,7 +85,7 @@ public class ItemPostController {
 
         // End Time
         try {
-            Long updatedEndTime = Long.parseLong(request.getParameter("item_end_time"));
+            Long updatedEndTime = Long.parseLong(request.getParameter("item_end_time_long"));
             if (hasValueChanged(item.getEndTime(), updatedEndTime)) {
                 ValidationResult validation = item.validateEndTime(updatedEndTime);
 

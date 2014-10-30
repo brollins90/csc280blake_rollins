@@ -128,6 +128,32 @@ public class AuctionItem {
     }
 
 
+    public Money getStartPrice() {
+        return this.startPrice;
+    }
+
+    protected void setStartPrice(Money startPrice) {
+        this.startPrice = startPrice;
+    }
+
+
+    public ValidationResult validateStartPrice(long newValue) {
+        ValidationResult result = new ValidationResult();
+
+        if (this.bids.size() > 0) {
+            result.setSuccess(false);
+            result.addMessage("You cannot change the start price if there are bids");
+        }
+
+        if (newValue <= 0) {
+            result.setSuccess(false);
+            result.addMessage("The starting price must be greater than 0");
+        }
+
+        return result;
+    }
+
+
     public long getEndTime() {
         return this.endTime;
     }
