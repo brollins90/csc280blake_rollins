@@ -56,10 +56,7 @@ public class ItemServlet extends HttpServlet {
             mv = new ModelAndView(null, "500");
         } finally {
 
-            String viewLocation = "/WEB-INF/" + mv.getViewName() + ".jsp";
-            System.out.println("viewLocation: " + viewLocation);
-            RequestDispatcher rd = request.getRequestDispatcher(viewLocation);
-            rd.forward(request, response);
+            forwardOrRedirect(request, response, mv);
 
         }
 
@@ -99,19 +96,28 @@ public class ItemServlet extends HttpServlet {
                 doGet(request, response);
             }
 
-//            String redirectLocation = request.getRequestURI();
-//            redirectLocation = redirectLocation.substring(0, redirectLocation.lastIndexOf('/'));
-//            System.out.println("redirectLocation: " + redirectLocation);
-//            response.sendRedirect(redirectLocation);
 
         } catch (Exception e) {
             System.out.println("Exception");
             e.printStackTrace();
         } finally {
 
-            request.setAttribute("model", mv.getModel());
-            String viewLocation = "/WEB-INF/" + mv.getViewName() + ".jsp";
-            System.out.println("viewLocation: " + viewLocation);
+            forwardOrRedirect(request, response, mv);
+        }
+    }
+
+    private void forwardOrRedirect(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) throws ServletException, IOException {
+        request.setAttribute("model", mav.getModel());
+        String viewName = mav.getViewName();
+        System.out.println("viewName: " + viewName);
+
+        if (viewName.startsWith("redirect:")) {
+            String redirectLocation = viewName.substring(9, viewName.length());
+            System.out.println("redirectLocation: " + redirectLocation);
+            response.sendRedirect(redirectLocation);
+
+        } else {
+            String viewLocation = "/WEB-INF/" + viewName + ".jsp";
             RequestDispatcher rd = request.getRequestDispatcher(viewLocation);
             rd.forward(request, response);
         }

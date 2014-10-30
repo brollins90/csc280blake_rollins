@@ -121,7 +121,7 @@ public class ItemPostController {
             return new ModelAndView(model, "itemUpdate");
         }
 
-        return new ModelAndView(item, "itemView");
+        return new ModelAndView(item, "redirect:" + request.getServletContext().getContextPath() + "/item/" + item.getId());
     }
 
     public ModelAndView placeBid(String id) {
@@ -156,7 +156,7 @@ public class ItemPostController {
 
         item.placeBid(new Bid(itemID, newAmount, "Blake"));
 
-        return new ModelAndView(item, "itemView");
+        return new ModelAndView(item, "redirect:" + request.getServletContext().getContextPath() + "/item/" + item.getId());
     }
 
     private <T extends Comparable<T>> boolean hasValueChanged(T one, T two) {
