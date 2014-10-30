@@ -19,59 +19,49 @@ function updateMilliBoxes() {
 
 }
 
+
+
+function updateDateBoxes() {
+    var startDateTextBox = $('#item_start_time');
+    var startDateTextBoxLong = $('#item_start_time_long');
+    var endDateTextBox = $('#item_end_time');
+    var endDateTextBoxLong = $('#item_end_time_long');
+
+    startDateTextBox.datetimepicker('setDate', new Date(parseInt(startDateTextBoxLong.val(), 10)));
+    endDateTextBox.datetimepicker('setDate', new Date(parseInt(endDateTextBoxLong.val(), 10)));
+
+}
+
+
+
 function loadPage2() {
     var startDateTextBox = $('#item_start_time');
     var endDateTextBox = $('#item_end_time');
 
     startDateTextBox.datetimepicker({
-        dateFormat: 'dd M yy',
-        timeFormat: 'HH:mm',
         minDate: new Date(),
+        showOn: 'button',
+        buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+        buttonImageOnly: true,
         onClose: function (dateText, inst) {
-//            if (endDateTextBox.val() != '') {
-//                var testStartDate = startDateTextBox.datetimepicker('getDate');
-//                var testEndDate = endDateTextBox.datetimepicker('getDate');
-//                if (testStartDate > testEndDate) {
-//                    var newEndDateOneHourLater = startDateTextBox.datetimepicker('getDate').addHours(1);
-//                    endDateTextBox.datetimepicker('setDate', newEndDateOneHourLater);
-//                }
-//            }
-//            else {
-//                endDateTextBox.val(dateText);
-//            }
-
             updateMilliBoxes();
         },
         onSelect: function (selectedDateTime) {
-//            startDateTextBox.datetimepicker('option', 'minDate', new Date());
             endDateTextBox.datetimepicker('option', 'minDate', startDateTextBox.datetimepicker('getDate'));
-//            startDateTextBox.datetimepicker('setDate', new Date(Number.parse($('#item_start_time_long').val())));
-//            endDateTextBox.datetimepicker('setDate', new Date(Number.parse($('#item_end_time_long').val())));
         }
-    });
+    }).next('button').text('').button({ icons: { primary: 'ui-icon-calendar' } });
+
     endDateTextBox.datetimepicker({
-        dateFormat: 'dd M yy',
-        timeFormat: 'HH:mm',
+        showOn: "button",
+        buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+        buttonImageOnly: true,
         onClose: function (dateText, inst) {
-//            if (startDateTextBox.val() != '') {
-//                var testStartDate = startDateTextBox.datetimepicker('getDate');
-//                var testEndDate = endDateTextBox.datetimepicker('getDate');
-//                if (testStartDate > testEndDate)
-//                    startDateTextBox.datetimepicker('setDate', testEndDate);
-//            }
-//            else {
-//                startDateTextBox.val(dateText);
-//            }
             updateMilliBoxes();
         },
         onSelect: function (selectedDateTime) {
-////            startDateTextBox.datetimepicker('option', 'maxDate', endDateTextBox.datetimepicker('getDate'));
-//            startDateTextBox.datetimepicker('setDate', new Date(Number.parse($('#item_start_time_long').val())));
-//            endDateTextBox.datetimepicker('setDate', new Date(Number.parse($('#item_end_time_long').val())));
         }
-    });
-    endDateTextBox.datetimepicker('setDate', new Date(parseInt($('#item_start_time_long').val(), 10)));
+    }).next('button').text('').button({ icons: { primary: 'ui-icon-calendar' } });
 
-//    startDateTextBox.datetimepicker('setDate', new Date(Number.parse($('#item_start_time_long'))));
-//    endDateTextBox.datetimepicker('setDate', new Date(Number.parse($('#item_end_time_long').val())));
+    updateDateBoxes();
+
 }
