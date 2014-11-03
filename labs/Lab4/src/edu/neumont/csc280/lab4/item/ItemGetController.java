@@ -19,37 +19,51 @@ public class ItemGetController {
     }
 
     public ModelAndView beginCreateItemWorkflow() {
-        AuctionItem item = manager.createItem();
-        ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemCreate");
-        return mv;
+
+        return new ModelAndView(null, "itemForm");
+//        ModelAndView mav = null;
+//
+//        if (id != null && !id.isEmpty()){
+//            AuctionItem item = manager.lookupById(id);
+//            mav = new ModelAndView(item, "itemForm");
+//        }
+//        return mav;
     }
 
     public ModelAndView beginDeleteItemWorkflow(String id) {
-        AuctionItem item = manager.getItem(id);
-        ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemDelete");
-        return mv;
+//        AuctionItem item = manager.getItem(id);
+//        ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemDelete");
+//        return mv;
+        return null;
     }
 
     public ModelAndView beginUpdateItemWorkflow(String id) {
-        AuctionItem item = manager.getItem(id);
-        ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(new UpdateItemModel(item), "itemUpdate");
-        return mv;
+        ModelAndView mav = null;
+
+        if (id != null && !id.isEmpty()) {
+            AuctionItem item = manager.lookupById(id);
+            mav = new ModelAndView(new UpdateItemModel(item), "itemForm");
+        }
+        return mav;
+//        AuctionItem item = manager.getItem(id);
+//        ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(new UpdateItemModel(item), "itemUpdate");
+//        return mv;
     }
 
     public ModelAndView getAllItems() {
-        List<AuctionItem> itemIds = manager.getItems();
-        ModelAndView mv = new ModelAndView(itemIds, "itemList");
+        List<AuctionItem> items = manager.listItems();
+        ModelAndView mv = new ModelAndView(items, "itemList");
         return mv;
     }
 
     public ModelAndView retrieveItem(String id) {
-        AuctionItem item = manager.getItem(id);
+        AuctionItem item = manager.lookupById(id);
         ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemView");
         return mv;
     }
 
     public ModelAndView retrieveItemJSON(String id) {
-        AuctionItem item = manager.getItem(id);
+        AuctionItem item = manager.lookupById(id);
         ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item.toJSON(), "itemJson");
         return mv;
     }

@@ -1,7 +1,7 @@
 package edu.neumont.csc280.lab4.web;
 
-import edu.neumont.csc280.lab4.item.HashMapItemService;
 import edu.neumont.csc280.lab4.item.ItemService;
+import edu.neumont.csc280.lab4.item.ItemServiceHashMapImpl;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -21,7 +21,7 @@ public class ServiceLoader implements ServletContextListener {
             manager = (ItemService) t.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
-            manager = new HashMapItemService();
+            manager = new ItemServiceHashMapImpl();
         }
 
         ctx.setAttribute("manager", manager);

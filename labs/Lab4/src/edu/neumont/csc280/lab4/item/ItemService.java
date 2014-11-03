@@ -4,37 +4,15 @@ import java.util.List;
 
 public interface ItemService {
 
-    /**
-     * Creates an AuctionItem and returns the ID
-     *
-     * @return the ID of the created item
-     */
-    public AuctionItem createItem();
+    AuctionItem lookupById(String id);
 
-    /**
-     * Gets the AuctionItem with the specified ID
-     *
-     * @param id The ID of the item
-     * @return The item
-     */
-    public AuctionItem getItem(String id);
+    void addItem(String title, String description, String imageUrl, String startPrice, String startDate, String endDate);
 
-    /**
-     * Gets a List of all the item ids
-     *
-     * @return
-     */
-    public List<AuctionItem> getItems();
+    void updateItem(String id, String title, String description, String imageUrl, String startPrice, String startDate, String endDate);
 
-    public void updateItemDescription(String itemId, String newValue);
+    void removeItem(String id);
 
-    public void updateItemEndTime(String itemId, long newValue);
-
-    public void updateItemImageUrl(String itemId, String newValue);
-
-    public void updateItemStartTime(String itemId, long newValue);
-
-    public void updateItemTitle(String itemId, String newValue);
+    public List<AuctionItem> listItems();
 
     public void placeBid(String itemId, Bid bid);
 

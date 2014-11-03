@@ -1,18 +1,18 @@
-Date.prototype.addHours= function(h){
-    this.setHours(this.getHours()+h);
+Date.prototype.addHours = function (h) {
+    this.setHours(this.getHours() + h);
     return this;
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     loadPage2();
 });
 
 function updateMilliBoxes() {
-    var startDateTextBox = $('#item_start_time');
-    var startDateTextBoxLong = $('#item_start_time_long');
-    var endDateTextBox = $('#item_end_time');
-    var endDateTextBoxLong = $('#item_end_time_long');
+    var startDateTextBox = $('#start_time');
+    var startDateTextBoxLong = $('#start_time_long');
+    var endDateTextBox = $('#end_time');
+    var endDateTextBoxLong = $('#end_time_long');
 
     startDateTextBoxLong.val(new Date(startDateTextBox.datetimepicker('getDate')).getTime());
     endDateTextBoxLong.val(new Date(endDateTextBox.datetimepicker('getDate')).getTime());
@@ -20,12 +20,11 @@ function updateMilliBoxes() {
 }
 
 
-
 function updateDateBoxes() {
-    var startDateTextBox = $('#item_start_time');
-    var startDateTextBoxLong = $('#item_start_time_long');
-    var endDateTextBox = $('#item_end_time');
-    var endDateTextBoxLong = $('#item_end_time_long');
+    var startDateTextBox = $('#start_time');
+    var startDateTextBoxLong = $('#start_time_long');
+    var endDateTextBox = $('#end_time');
+    var endDateTextBoxLong = $('#end_time_long');
 
     startDateTextBox.datetimepicker('setDate', new Date(parseInt(startDateTextBoxLong.val(), 10)));
     endDateTextBox.datetimepicker('setDate', new Date(parseInt(endDateTextBoxLong.val(), 10)));
@@ -33,10 +32,9 @@ function updateDateBoxes() {
 }
 
 
-
 function loadPage2() {
-    var startDateTextBox = $('#item_start_time');
-    var endDateTextBox = $('#item_end_time');
+    var startDateTextBox = $('#start_time');
+    var endDateTextBox = $('#end_time');
 
     startDateTextBox.datetimepicker({
         minDate: new Date(),

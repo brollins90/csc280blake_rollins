@@ -3,7 +3,7 @@ package edu.neumont.csc280.lab4.item;
 import java.util.Date;
 import java.util.Stack;
 
-public class AuctionItem {
+public class AuctionItem implements Cloneable {
 
     private String description;
     private String id;
@@ -31,14 +31,26 @@ public class AuctionItem {
         this.bids = new Stack<>();
     }
 
+    public AuctionItem(String id, String title, String description, String imageUrl, Money startPrice, Date startTime, Date endTime) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.imageUrl = imageUrl;
+
+        this.startPrice = startPrice;
+        this.startTime = startTime.getTime();
+        this.endTime = endTime.getTime();
+        this.bids = new Stack<>();
+    }
+
     public String getId() {
         return this.id;
     }
 
-//    protected void setId(String id) {
-//        // TODO
-//        this.id = id;
-//    }
+    protected void setId(String id) {
+        // TODO
+        this.id = id;
+    }
 
     public ValidationResult validateId(String newValue) {
         // TODO
@@ -214,5 +226,13 @@ public class AuctionItem {
         json += "\"end_time\": \"" + this.endTime + "\" }";
 
         return json;
+    }
+
+    public AuctionItem clone() {
+        try {
+            return (AuctionItem) super.clone();
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
     }
 }
