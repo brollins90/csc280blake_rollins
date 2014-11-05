@@ -71,7 +71,8 @@ public class ItemServlet extends HttpServlet {
 
             String[] parts = pathInfo.split("/");
             String itemId = (parts.length > 1) ? parts[1] : "";
-            String action = (parts.length > 2) ? parts[2] : "";
+            String action = (parts.length > 1) ? parts[1] : ""; // for an update, the action is the first field
+            action = (parts.length > 2) ? parts[2] : action;
 
 
             System.out.println("post");
@@ -80,11 +81,11 @@ public class ItemServlet extends HttpServlet {
 
             if ("create".equalsIgnoreCase(action)) {
                 System.out.println("create");
-                mv = controller.createItem();
+                mv = controller.commitItemFormWorkflow(null);
 
             } else if ("update".equalsIgnoreCase(action)) {
                 System.out.println("update");
-                mv = controller.commitUpdateItemWorkflow(itemId);
+                mv = controller.commitItemFormWorkflow(itemId);
 
             } else if ("bid".equalsIgnoreCase(action)) {
                 System.out.println("bid");

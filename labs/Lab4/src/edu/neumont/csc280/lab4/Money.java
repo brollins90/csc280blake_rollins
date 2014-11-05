@@ -1,4 +1,4 @@
-package edu.neumont.csc280.lab4.item;
+package edu.neumont.csc280.lab4;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -44,7 +44,7 @@ public class Money {
 
     @Override
     public String toString() {
-        return getCurrency().getSymbol() + " " + getAmount();
+        return /*getCurrency().getSymbol() + " " + */ "" + getAmount();
     }
 
     public String toString(Locale locale) {

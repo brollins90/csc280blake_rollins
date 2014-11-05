@@ -6,23 +6,23 @@ package edu.neumont.csc280.lab4.item;
  */
 public class UpdateItemModel {
 
-    public AuctionItem item;
+    public AuctionItemDB item;
     public ValidationResult validationResult;
 
     public UpdateItemModel() {
         validationResult = new ValidationResult();
     }
 
-    public UpdateItemModel(AuctionItem item) {
+    public UpdateItemModel(AuctionItemDB item) {
         this();
         this.item = item;
     }
 
-    public AuctionItem getItem() {
+    public AuctionItemDB getItem() {
         return item;
     }
 
-    public void setItem(AuctionItem item) {
+    public void setItem(AuctionItemDB item) {
         this.item = item;
     }
 

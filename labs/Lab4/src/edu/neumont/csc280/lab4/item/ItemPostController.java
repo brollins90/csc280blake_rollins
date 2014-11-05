@@ -1,9 +1,12 @@
 package edu.neumont.csc280.lab4.item;
 
+import edu.neumont.csc280.lab4.Money;
 import edu.neumont.csc280.lab4.web.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.util.Date;
 
 public class ItemPostController {
 
@@ -28,132 +31,161 @@ public class ItemPostController {
     }
 
 
-    public ModelAndView commitUpdateItemWorkflow(String id) {
+    public ModelAndView commitItemFormWorkflow(String id) {
 
-        AuctionItem item = manager.lookupById(id);
+//        if (id == null || id.isEmpty()) {
+//            id = manager.addItemDefault();
+//        }
 
         UpdateItemModel model = new UpdateItemModel();
-        model.setItem(item);
+
+        AuctionItemDB item = new AuctionItemDB();
+        item.setId(request.getParameter("id"));
+        item.setTitle(request.getParameter("title"));
+        item.setDescription(request.getParameter("description"));
+        item.setImageUrl(request.getParameter("imageUrl"));
+        item.setStartPrice(Money.dollars(0.01d));
+        item.setStartTime(new Date().getTime());
+        item.setEndTime(item.getStartTime() + 1000 * 60 * 60 * 24 * 7);
+
+
+
+        // Title
+        {
+            String title = model.getItem().getTitle();
+            if (title == null || title.isEmpty()) {
+                model.addValidationResult(new ValidationResult("Title cannot be empty."));
+            }
+            item.setTitle(title);
+        }
+
+        // Description
+        {
+            String description = model.getItem().getDescription();
+            if (description == null || description.isEmpty()) {
+                model.addValidationResult(new ValidationResult("Description cannot be empty."));
+            }
+            item.setDescription(description);
+        }
+//            String title = model.getTitle();
 //
-//        // Title
-//        try {
-//            String updatedTitle = request.getParameter("item_title");
-//            if (hasValueChanged(item.getTitle(), updatedTitle)) {
-//                manager.updateItemTitle(id, updatedTitle);
-//            }
+//            manager.up
 //        } catch (Exception e) {
-//            model.addValidationResult(new ValidationResult(e.getMessage()));
-//            return new ModelAndView(model, "itemUpdate");
-//        }
 //
-//        // Description
+//            model.addValidationResult(new ValidationResult("Bad title"));
+////            model.addValidationResult(new ValidationResult(e.getMessage()));
+////            return new ModelAndView(model, "itemForm");
+//        }
+
+        // Description
+        if (model.getTitle() == null || model.getTitle().isEmpty()) {
+            model.addValidationResult(new ValidationResult("Title cannot be empty."));
+        }
+        try {
+            description = request.getParameter("description");
+            if (description == null || description.isEmpty()) {
+                model.addValidationResult(new ValidationResult("Bad desc"));
+            }
+        } catch (Exception e) {
+            model.addValidationResult(new ValidationResult("Bad desc"));
+//            model.addValidationResult(new ValidationResult(e.getMessage()));
+//            return new ModelAndView(model, "itemForm");
+        }
+
+        // Image URL
+        try {
+            imageUrl = request.getParameter("image_url");
+            if (imageUrl == null || imageUrl.isEmpty()) {
+                model.addValidationResult(new ValidationResult("Bad image"));
+            }
+        } catch (Exception e) {
+            model.addValidationResult(new ValidationResult("Bad image"));
+//            model.addValidationResult(new ValidationResult(e.getMessage()));
+//            return new ModelAndView(model, "itemForm");
+        }
+//
+//        // Start Price
 //        try {
-//            String updatedDescription = request.getParameter("item_description");
-//            if (hasValueChanged(item.getDescription(), updatedDescription)) {
-//                manager.updateItemDescription(id, updatedDescription);
-//            }
+//            startPrice = Money.dollars(new BigDecimal(request.getParameter("start_price")));
 //        } catch (Exception e) {
-//            model.addValidationResult(new ValidationResult(e.getMessage()));
-//            return new ModelAndView(model, "itemUpdate");
+//            model.addValidationResult(new ValidationResult("Bad price"));
+////            model.addValidationResult(new ValidationResult(e.getMessage()));
+////            return new ModelAndView(model, "itemForm");
 //        }
-//
 //
 //        // Start Time
 //        try {
-//            Long updatedStartTime = Long.parseLong(request.getParameter("item_start_time_long"));
-//            if (hasValueChanged(item.getStartTime(), updatedStartTime)) {
-//                ValidationResult validation = item.validateStartTime(updatedStartTime);
-//
-//                if (validation.getSuccess()) {
-//                    manager.updateItemStartTime(id, updatedStartTime);
-//
-//                    // To make sure that the end time is always after the start time, update the end time to 7
-//                    // days after the start time.  If they want to change the end time in the same instance
-//                    // of this POST then that will overwrite this change since it runs afterward anyway.
-//                    manager.updateItemEndTime(id, updatedStartTime + 7 * 24 * 60 * 60 * 1000);
-//                } else {
-//                    model.addValidationResult(validation);
-//                    return new ModelAndView(model, "itemUpdate");
-//                }
-//            }
-//        } catch (NumberFormatException e) {
-////todo
-//            model.addValidationResult(new ValidationResult("there was an error updating the item start time"));
-//            return new ModelAndView(model, "itemUpdate");
+//            startDate = Long.parseLong(request.getParameter("start_time_long"));
+//        } catch (Exception e) {
+//            model.addValidationResult(new ValidationResult("Bad start"));
+////            model.addValidationResult(new ValidationResult(e.getMessage()));
+////            return new ModelAndView(model, "itemForm");
 //        }
 //
 //        // End Time
 //        try {
-//            Long updatedEndTime = Long.parseLong(request.getParameter("item_end_time_long"));
-//            if (hasValueChanged(item.getEndTime(), updatedEndTime)) {
-//                ValidationResult validation = item.validateEndTime(updatedEndTime);
-//
-//                if (validation.getSuccess()) {
-//                    manager.updateItemEndTime(id, updatedEndTime);
-//                } else {
-//                    model.addValidationResult(validation);
-//                    return new ModelAndView(model, "itemUpdate");
-//                }
-//            }
-//        } catch (NumberFormatException e) {
-////todo
-//            model.addValidationResult(new ValidationResult("there was an error updating the item end time"));
-//            return new ModelAndView(model, "itemUpdate");
-//        }
-//
-//        // Image URL
-//        try {
-//            String updatedImageUrl = request.getParameter("item_image_url");
-//            if (hasValueChanged(item.getImageUrl(), updatedImageUrl)) {
-//
-//                ValidationResult validation = item.validateImageUrl(updatedImageUrl);
-//                if (validation.getSuccess()) {
-//                    manager.updateItemImageUrl(id, updatedImageUrl);
-//                } else {
-//                    model.addValidationResult(validation);
-//                    return new ModelAndView(model, "itemUpdate");
-//                }
-//            }
+//            endDate = Long.parseLong(request.getParameter("end_time_long"));
 //        } catch (Exception e) {
-////todo
-//            model.addValidationResult(new ValidationResult("there was an error updating the item image"));
-//            return new ModelAndView(model, "itemUpdate");
+//            model.addValidationResult(new ValidationResult("Bad end"));
+////            model.addValidationResult(new ValidationResult(e.getMessage()));
+////            return new ModelAndView(model, "itemForm");
 //        }
 
-        return new ModelAndView(item, "redirect:" + request.getServletContext().getContextPath() + "/item/" + item.getId());
+        // do it
+        try {
+            if (id == null || id.isEmpty()) {
+                id = manager.addItem(title, description, imageUrl, request.getParameter("start_price"), request.getParameter("start_time"), request.getParameter("end_time"));
+            } else {
+                manager.updateItem(id, title, description, imageUrl, request.getParameter("start_price"), request.getParameter("start_time"), request.getParameter("end_time"));
+            }
+        } catch (Exception e) {
+            model.addValidationResult(new ValidationResult("bad update"));
+        }
+
+        model.setItem(item);
+
+
+        AuctionItem item = manager.lookupById(id);
+        model.setItem(item);
+
+
+        if (model.getValidationResult().getSuccess()) {
+            return new ModelAndView(item, "redirect:" + request.getServletContext().getContextPath() + "/item/" + item.getId());
+        }
+        return new ModelAndView(model, "itemForm");
     }
 
     public ModelAndView placeBid(String id) {
         String itemID = id;
         String bidAmount = request.getParameter("bidAmount");
-//
-//        Money incAmount;
-//        try {
-//            switch (bidAmount) {
-//                default:
-//                case "one":
-//                    incAmount = Money.dollars(1.00d);
-//                    break;
-//                case "five":
-//                    incAmount = Money.dollars(5.00d);
-//                    break;
-//                case "ten":
-//                    incAmount = Money.dollars(10.00d);
-//                    break;
-//                case "custom":
-//                    incAmount = Money.dollars(new BigDecimal(request.getParameter("incrementBid")));
-//                    break;
-//            }
-//        } catch (Exception e) {
-//            incAmount = Money.dollars(0.01d);
-//        }
-////        BigDecimal current = manager.getItem(itemID).getCurrentPrice();
-//
-//        Money newAmount = Money.dollars(manager.lo(itemID).getCurrentPrice().getAmount().add(incAmount.getAmount()));
-//
+
+        Money incAmount;
+        try {
+            switch (bidAmount) {
+                default:
+                case "one":
+                    incAmount = Money.dollars(1.00d);
+                    break;
+                case "five":
+                    incAmount = Money.dollars(5.00d);
+                    break;
+                case "ten":
+                    incAmount = Money.dollars(10.00d);
+                    break;
+                case "custom":
+                    incAmount = Money.dollars(new BigDecimal(request.getParameter("incrementBid")));
+                    break;
+            }
+        } catch (Exception e) {
+            incAmount = Money.dollars(0.01d);
+        }
+//        BigDecimal current = manager.getItem(itemID).getCurrentPrice();
+
+        Money newAmount = Money.dollars(manager.lookupById(itemID).getCurrentPrice().getAmount().add(incAmount.getAmount()));
+
         AuctionItem item = manager.lookupById(itemID);
-//
-//        item.placeBid(new Bid(itemID, newAmount, "Blake"));
+
+        item.placeBid(new Bid(itemID, newAmount, "Blake"));
 
         return new ModelAndView(item, "redirect:" + request.getServletContext().getContextPath() + "/item/" + item.getId());
     }

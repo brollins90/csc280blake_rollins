@@ -1,229 +1,240 @@
 package edu.neumont.csc280.lab4.item;
 
+import edu.neumont.csc280.lab4.Money;
+
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Stack;
 
 public class AuctionItem implements Cloneable {
 
-    private String description;
-    private String id;
-    private String imageUrl;
-    private String title;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+    private AuctionItemDB item;
 
-    private Money startPrice;
+    public AuctionItem(String id, String title, String description, String imageUrl, String startPriceIn, String startTimeIn, String endTimeIn) {
 
-    private long endTime;
-    private long startTime;
+        Date startDate = null;
+        Date endDate = null;
+        Money startPrice = null;
 
-    private Stack<Bid> bids;
+        try {
+            startDate = dateFormat.parse(startTimeIn);
+        } catch (Exception e) {
+            throw new AuctionException("invalid start date");
+        }
 
-    public AuctionItem(String id) {
-        this.id = id;
-        this.description = "Default description.";
-        this.imageUrl = "/img/default.png";
-        this.title = "Default title";
+        try {
+            endDate = dateFormat.parse(endTimeIn);
+        } catch (Exception e) {
+            throw new AuctionException("invalid end date");
+        }
 
-        this.startPrice = Money.dollars(0.01d);
+        try {
+            startPrice = Money.dollars(new BigDecimal(startPriceIn));
+        } catch (Exception e) {
+            throw new AuctionException("invalid start price");
+        }
 
-        this.startTime = new Date().getTime();
-        this.endTime = startTime + 7 * 24 * 60 * 60 * 1000;
 
-        this.bids = new Stack<>();
+        this.item = new AuctionItemDB(id, "", "", "",
+                Money.dollars(Double.parseDouble("0.01")), new Date().getTime(), new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
+
+        item.setTitle(title);
+        item.setDescription(description);
+        item.setImageUrl(imageUrl);
+
+        item.setStartPrice(startPrice);
+
+        item.setStartTime(startDate.getTime());
+        item.setEndTime(endDate.getTime());
     }
 
-    public AuctionItem(String id, String title, String description, String imageUrl, Money startPrice, Date startTime, Date endTime) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.imageUrl = imageUrl;
-
-        this.startPrice = startPrice;
-        this.startTime = startTime.getTime();
-        this.endTime = endTime.getTime();
-        this.bids = new Stack<>();
-    }
+//    public AuctionItem(String id, String title, String description, String imageUrl, Money startPrice, long startTime, long endTime) {
+//
+//        this.item = new AuctionItemDB(id, "", "", "",
+//                Money.dollars(Double.parseDouble("0.01")), new Date().getTime(), new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
+//        //this.item = new AuctionItemDB(id, title, description, imageUrl, startPrice, startTime, endTime);
+//
+//        item.setTitle(title);
+//        item.setDescription(description);
+//        item.setImageUrl(imageUrl);
+//
+//        item.setStartPrice(startPrice);
+//
+//        item.setStartTime(startTime);
+//        item.setEndTime(endTime);
+//    }
 
     public String getId() {
-        return this.id;
+        return this.item.getId();
     }
 
     protected void setId(String id) {
-        // TODO
-        this.id = id;
+        if (id == null || id.isEmpty()) {
+            throw new AuctionException("The id cannot be null.");
+        }
+        this.item.setId(id);
     }
-
-    public ValidationResult validateId(String newValue) {
-        // TODO
-        ValidationResult result = new ValidationResult();
-//        result.setSuccess(false);
-//        result.addMessage("Changing the Id is not implemented.");
-        return result;
-    }
-
-
-    public String getImageUrl() {
-        return this.imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public ValidationResult validateImageUrl(String newValue) {
-        // TODO
-        ValidationResult result = new ValidationResult();
-//        result.setSuccess(false);
-//        result.addMessage("Changing the ImageUrl is not implemented.");
-        return result;
-    }
-
 
     public String getTitle() {
-        return this.title;
+        return this.item.getTitle();
     }
 
     protected void setTitle(String title) {
-        this.title = title;
+        if (title == null || title.isEmpty()) {
+            throw new AuctionException("The title cannot be null.");
+        }
+        this.item.setTitle(title);
     }
 
-    public ValidationResult validateTitle(String newValue) {
-        // TODO
-        ValidationResult result = new ValidationResult();
-//        result.setSuccess(false);
-//        result.addMessage("Changing the title is not implemented.");
-        return result;
+    public String getImageUrl() {
+        return this.item.getImageUrl();
     }
 
+    public void setImageUrl(String imageUrl) {
+        if (imageUrl == null || imageUrl.isEmpty()) {
+            throw new AuctionException("The imageUrl cannot be null.");
+        }
+        this.item.setImageUrl(imageUrl);
+    }
 
     public String getDescription() {
-        return this.description;
+        return this.item.getDescription();
     }
 
     protected void setDescription(String description) {
-        this.description = description;
+        if (description == null || description.isEmpty()) {
+            throw new AuctionException("The description cannot be null.");
+        }
+        this.item.setDescription(description);
     }
-
-    public ValidationResult validateDescription(String newValue) {
-        // TODO
-        ValidationResult result = new ValidationResult();
-//        result.setSuccess(false);
-//        result.addMessage("Changing the description is not implemented.");
-        return result;
-    }
-
 
     public long getStartTime() {
-        return this.startTime;
+        return this.item.getStartTime();
     }
 
-    protected void setStartTime(long startTime) {
-        this.startTime = startTime;
-    }
-
-
-    public ValidationResult validateStartTime(long newValue) {
-        ValidationResult result = new ValidationResult();
+    protected void setStartTime(long newValue) {
         Date now = new Date();
 
         if (newValue + 1 < now.getTime()) {
-            result.setSuccess(false);
-            result.addMessage("Start Time must be later than Now.");
+            throw new AuctionException("Start Time must be later than Now.");
         }
 
-        if (this.bids.size() > 0) {
-            result.setSuccess(false);
-            result.addMessage("Start time cannot change since bids have been placed");
+        if (this.item.getBids().size() > 0) {
+            throw new AuctionException("Start time cannot change since bids have been placed");
         }
-
-        System.out.println("validateStartTime: " + result.toJSON());
-        return result;
+        this.item.setStartTime(newValue);
     }
-
 
     public Money getStartPrice() {
-        return this.startPrice;
+        return this.item.getStartPrice();
     }
 
-    protected void setStartPrice(Money startPrice) {
-        this.startPrice = startPrice;
-    }
+    protected void setStartPrice(Money newValue) {
 
-
-    public ValidationResult validateStartPrice(long newValue) {
-        ValidationResult result = new ValidationResult();
-
-        if (this.bids.size() > 0) {
-            result.setSuccess(false);
-            result.addMessage("You cannot change the start price if there are bids");
+        if (this.item.getBids().size() > 0) {
+            throw new AuctionException("You cannot change the start price if there are bids");
         }
 
-        if (newValue <= 0) {
-            result.setSuccess(false);
-            result.addMessage("The starting price must be greater than 0");
-        }
-
-        return result;
+//        if (newValue <= 0) {
+//            throw new AuctionException("The starting price must be greater than 0");
+//        }
+        this.item.setStartPrice(newValue);
     }
+
+//
+//    public ValidationResult validateStartPrice(long newValue) {
+//        ValidationResult result = new ValidationResult();
+//
+//        if (this.item.getBids().size() > 0) {
+//            result.setSuccess(false);
+//            result.addMessage("You cannot change the start price if there are bids");
+//        }
+//
+//        if (newValue <= 0) {
+//            result.setSuccess(false);
+//            result.addMessage("The starting price must be greater than 0");
+//        }
+//
+//        return result;
+//    }
 
 
     public long getEndTime() {
-        return this.endTime;
+        return this.item.getEndTime();
     }
 
-    protected void setEndTime(long endTime) {
-        this.endTime = endTime;
-    }
-
-
-    public ValidationResult validateEndTime(long newValue) {
-        ValidationResult result = new ValidationResult();
+    protected void setEndTime(long newValue) {
         Date now = new Date();
 
-        if (newValue + 1 < this.startTime + 1000 + 60 + 60) {
-            result.setSuccess(false);
-            result.addMessage("End Time must be more than one hour after the start time.");
+        if (newValue + 1 < this.item.getStartTime() + 1000 + 60 + 60) {
+            throw new AuctionException("End Time must be more than one hour after the start time.");
         }
 
         if (newValue + 1 < now.getTime()) {
-            result.setSuccess(false);
-            result.addMessage("End Time must be later than Now.");
+            throw new AuctionException("End Time must be later than Now.");
         }
 
-        if (this.bids.size() > 0) {
-            result.setSuccess(false);
-            result.addMessage("End time cannot change since bids have been placed");
+        if (this.item.getBids().size() > 0) {
+            throw new AuctionException("End time cannot change since bids have been placed");
         }
 
-        System.out.println("validateEndTime: " + result.toJSON());
-        return result;
+        this.item.setEndTime(newValue);
     }
+
+//
+//    public ValidationResult validateEndTime(long newValue) {
+//        ValidationResult result = new ValidationResult();
+//        Date now = new Date();
+//
+//        if (newValue + 1 < this.item.getStartTime() + 1000 + 60 + 60) {
+//            result.setSuccess(false);
+//            result.addMessage("End Time must be more than one hour after the start time.");
+//        }
+//
+//        if (newValue + 1 < now.getTime()) {
+//            result.setSuccess(false);
+//            result.addMessage("End Time must be later than Now.");
+//        }
+//
+//        if (this.item.getBids().size() > 0) {
+//            result.setSuccess(false);
+//            result.addMessage("End time cannot change since bids have been placed");
+//        }
+//
+//        System.out.println("validateEndTime: " + result.toJSON());
+//        return result;
+//    }
+
+
 
 
     public int getNumBids() {
-        return this.bids.size();
+        return this.item.getBids().size();
     }
 
     public void placeBid(Bid newBid) {
 
-        if (getNumBids() == 0 || bids.peek().getAmount().getAmount().compareTo(newBid.getAmount().getAmount()) < 1) {
-            bids.push(newBid);
+        if (getNumBids() == 0 || item.getBids().peek().getAmount().getAmount().compareTo(newBid.getAmount().getAmount()) < 1) {
+            item.getBids().push(newBid);
         }
     }
 
     public Money getCurrentPrice() {
 
-        return (getNumBids() > 0) ? bids.peek().getAmount() : startPrice;
+        return (getNumBids() > 0) ? item.getBids().peek().getAmount() : this.item.getStartPrice();
     }
 
     public String toJSON() {
 
-        String json = "{ \"id\": \"" + this.id + "\", ";
-        json += "\"title\": \"" + this.title + "\", ";
-        json += "\"description\": \"" + this.description + "\", ";
+        String json = "{ \"id\": \"" + this.getId() + "\", ";
+        json += "\"title\": \"" + this.getTitle() + "\", ";
+        json += "\"description\": \"" + this.getDescription() + "\", ";
         json += "\"current_bid\": \"" + this.getCurrentPrice() + "\", ";
         json += "\"num_bids\": \"" + this.getNumBids() + "\", ";
-        json += "\"start_time\": \"" + this.startTime + "\", ";
-        json += "\"end_time\": \"" + this.endTime + "\" }";
+        json += "\"start_time\": \"" + this.getStartTime() + "\", ";
+        json += "\"end_time\": \"" + this.getEndTime() + "\" }";
 
         return json;
     }
@@ -235,4 +246,15 @@ public class AuctionItem implements Cloneable {
             return null;
         }
     }
+//
+//    private <T extends Comparable<T>> boolean hasValueChanged(T one, T two) {
+//        System.out.println("hasValueChanged(" + one + ", " + two + ")");
+//        if (one.compareTo(two) == 0) {
+//
+//            System.out.println("no");
+//            return false;
+//        }
+//        System.out.println("yes");
+//        return true;
+//    }
 }

@@ -6,8 +6,14 @@
     ${model.validationResult.toHTML()}
 </c:if>
 
-<form method="post"
-      action="${pageContext.request.contextPath}/item/${model.item.id}/update">
+<c:choose>
+    <c:when test="${not empty model.item.id}">
+        <form method="post" action="${pageContext.request.contextPath}/item/${model.item.id}/update">
+    </c:when>
+    <c:otherwise>
+        <form method="post" action="${pageContext.request.contextPath}/item/create">
+    </c:otherwise>
+</c:choose>
     <fieldset>
         <legend>
             <c:choose>
