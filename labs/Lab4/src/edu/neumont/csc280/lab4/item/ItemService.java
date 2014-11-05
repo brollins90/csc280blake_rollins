@@ -8,9 +8,9 @@ public interface ItemService {
 
     AuctionItem lookupById(String id);
 
-    String addItem(String title, String description, String imageUrl, String startPrice, String startDate, String endDate);
+//    String addItem(String title, String description, String imageUrl, String startPrice, String startDate, String endDate);
 
-//    String addItem(String title, String description, String imageUrl, Money startPrice, long startDate, long endDate);
+    String addItem(String title, String description, String imageUrl, Money startPrice, long startDate, long endDate);
 
 //    String addItemDefault();
 
@@ -23,7 +23,7 @@ public interface ItemService {
     void updateItemStartTime(String id, long startTime);
     void updateItemEndTime(String id, long endTime);
 
-//    void updateItem(String id, String title, String description, String imageUrl, Money startPrice, long startDate, long endDate);
+    void updateItem(String id, String title, String description, String imageUrl, Money startPrice, long startDate, long endDate);
 
     void removeItem(String id);
 

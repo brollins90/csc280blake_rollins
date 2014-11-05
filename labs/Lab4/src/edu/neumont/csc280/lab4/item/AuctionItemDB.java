@@ -19,7 +19,7 @@ public class AuctionItemDB {
     private long endTime;
     private long startTime;
 
-    private Stack<Bid> bids;
+    protected Stack<Bid> bids;
 
     public AuctionItemDB() {
         this.bids = new Stack<>();
@@ -100,5 +100,9 @@ public class AuctionItemDB {
 
     public void setBids(Stack<Bid> bids) {
         this.bids = bids;
+    }
+
+    public int getNumBids() {
+        return bids.size();
     }
 }

@@ -67,42 +67,30 @@ public class ItemPostController {
             }
             item.setDescription(description);
         }
-//            String title = model.getTitle();
-//
-//            manager.up
-//        } catch (Exception e) {
-//
-//            model.addValidationResult(new ValidationResult("Bad title"));
-////            model.addValidationResult(new ValidationResult(e.getMessage()));
-////            return new ModelAndView(model, "itemForm");
-//        }
 
-        // Description
-        if (model.getTitle() == null || model.getTitle().isEmpty()) {
-            model.addValidationResult(new ValidationResult("Title cannot be empty."));
-        }
-        try {
-            description = request.getParameter("description");
-            if (description == null || description.isEmpty()) {
-                model.addValidationResult(new ValidationResult("Bad desc"));
-            }
-        } catch (Exception e) {
-            model.addValidationResult(new ValidationResult("Bad desc"));
-//            model.addValidationResult(new ValidationResult(e.getMessage()));
-//            return new ModelAndView(model, "itemForm");
-        }
-
-        // Image URL
-        try {
-            imageUrl = request.getParameter("image_url");
+        // Image Url
+        {
+            String imageUrl = model.getItem().getImageUrl();
             if (imageUrl == null || imageUrl.isEmpty()) {
-                model.addValidationResult(new ValidationResult("Bad image"));
+                model.addValidationResult(new ValidationResult("imageUrl cannot be empty."));
             }
-        } catch (Exception e) {
-            model.addValidationResult(new ValidationResult("Bad image"));
-//            model.addValidationResult(new ValidationResult(e.getMessage()));
-//            return new ModelAndView(model, "itemForm");
+            item.setImageUrl(imageUrl);
         }
+
+        // Start price
+        try {
+            String startPriceString = request.getParameter("start_price");
+            if (startPriceString == null || startPriceString.isEmpty()) {
+                model.addValidationResult(new ValidationResult("start price cannot be empty."));
+            }
+            Money startPrice = Money.dollars(new BigDecimal(request.getParameter("start_price")));
+            item.setStartPrice(startPrice);
+        } catch (AuctionException e) {
+            model.addValidationResult(new ValidationResult("start price was not valid."));
+        }
+
+
+
 //
 //        // Start Price
 //        try {
@@ -131,27 +119,40 @@ public class ItemPostController {
 ////            return new ModelAndView(model, "itemForm");
 //        }
 
+
+
+
+
         // do it
         try {
-            if (id == null || id.isEmpty()) {
-                id = manager.addItem(title, description, imageUrl, request.getParameter("start_price"), request.getParameter("start_time"), request.getParameter("end_time"));
+
+            if (model.getValidationResult().getSuccess()) {
+                if (id == null || id.isEmpty()) {
+                    id = manager.addItem(item.getTitle(), item.getDescription(), item.getImageUrl(), item.getStartPrice(), item.getStartTime(), item.getEndTime());
+                } else {
+                    manager.updateItem(id, item.getTitle(), item.getDescription(), item.getImageUrl(), item.getStartPrice(), item.getStartTime(), item.getEndTime());
+                }
+
+                AuctionItem changedItem = manager.lookupById(id);
+                model.setItem(changedItem);
+
+                return new ModelAndView(item, "redirect:" + request.getServletContext().getContextPath() + "/item/" + item.getId());
             } else {
-                manager.updateItem(id, title, description, imageUrl, request.getParameter("start_price"), request.getParameter("start_time"), request.getParameter("end_time"));
+                model.setItem(item);
+                return new ModelAndView(model, "itemForm");
             }
+
+
         } catch (Exception e) {
             model.addValidationResult(new ValidationResult("bad update"));
         }
 
-        model.setItem(item);
-
-
-        AuctionItem item = manager.lookupById(id);
-        model.setItem(item);
-
-
-        if (model.getValidationResult().getSuccess()) {
-            return new ModelAndView(item, "redirect:" + request.getServletContext().getContextPath() + "/item/" + item.getId());
-        }
+//
+//
+//
+//        if (model.getValidationResult().getSuccess()) {
+//            return new ModelAndView(item, "redirect:" + request.getServletContext().getContextPath() + "/item/" + item.getId());
+//        }
         return new ModelAndView(model, "itemForm");
     }
 

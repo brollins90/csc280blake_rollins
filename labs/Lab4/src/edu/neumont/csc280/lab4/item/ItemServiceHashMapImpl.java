@@ -15,8 +15,8 @@ public class ItemServiceHashMapImpl implements ItemService {
 
     public ItemServiceHashMapImpl() {
 
-        doAddItem(item("Item 1 title", "Item 1 description", "http://localhost:8080/lab4/img/item_1.png", "0.01", dateFormat.format(new Date()), dateFormat.format(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)));
-        doAddItem(item("Item 2 title", "Item 2 description", "http://localhost:8080/lab4/img/item_2.png", "0.01", dateFormat.format(new Date()), dateFormat.format(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)));
+        doAddItem(item("Item 1 title", "Item 1 description", "http://localhost:8080/lab4/img/item_1.png", "0.01", dateFormat.format(new Date().getTime() + 60 * 60 * 1000), dateFormat.format(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)));
+        doAddItem(item("Item 2 title", "Item 2 description", "http://localhost:8080/lab4/img/item_2.png", "0.01", dateFormat.format(new Date().getTime() + 60 * 60 * 1000), dateFormat.format(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)));
     }
 
     private AuctionItem item(String title, String description, String imageUrl, String startPriceIn, String startDateIn, String endDateIn) {
@@ -50,9 +50,9 @@ public class ItemServiceHashMapImpl implements ItemService {
 //        return new AuctionItem("" + (nextItemId++), title, description, imageUrl, startPrice, startDate.getTime(), endDate.getTime());
     }
 
-//    private AuctionItem item(String title, String description, String imageUrl, Money startPrice, long startDate, long endDate) {
-//        return new AuctionItem("" + (nextItemId++), title, description, imageUrl, startPrice, startDate, endDate);
-//    }
+    private AuctionItem item(String title, String description, String imageUrl, Money startPrice, long startDate, long endDate) {
+        return new AuctionItem("" + (nextItemId++), title, description, imageUrl, startPrice, startDate, endDate);
+    }
 
     @Override
     public AuctionItem lookupById(String id) {
@@ -76,21 +76,21 @@ public class ItemServiceHashMapImpl implements ItemService {
         return id;
     }
 
-    @Override
-    public String addItem(String title, String description, String imageUrl, String startPrice, String startDate, String endDate) {
-
-        AuctionItem item = item(title, description, imageUrl, startPrice, startDate, endDate);
-        //here todo
-        return doAddItem(item);
-    }
-
 //    @Override
-//    public String addItem(String title, String description, String imageUrl, Money startPrice, long startDate, long endDate) {
+//    public String addItem(String title, String description, String imageUrl, String startPrice, String startDate, String endDate) {
 //
 //        AuctionItem item = item(title, description, imageUrl, startPrice, startDate, endDate);
 //        //here todo
 //        return doAddItem(item);
 //    }
+
+    @Override
+    public String addItem(String title, String description, String imageUrl, Money startPrice, long startDate, long endDate) {
+
+        AuctionItem item = item(title, description, imageUrl, startPrice, startDate, endDate);
+        //here todo
+        return doAddItem(item);
+    }
 
 //    @Override
 //    public String addItemDefault() {
@@ -168,17 +168,18 @@ public class ItemServiceHashMapImpl implements ItemService {
 
     }
 
-//    @Override
-//    public void updateItem(String id, String title, String description, String imageUrl, Money startPrice, long startDate, long endDate) {
-//        AuctionItem item = item(title, description, imageUrl, startPrice, startDate, endDate);
-//        item.setId(id);
-//        synchronized (this) {
-//            if (!this.idToItemMap.containsKey(item.getId())) {
-//                throw new AuctionException("The item id does not already exist.");
-//            }
-//            this.idToItemMap.put(item.getId(), item);
-//        }
-//    }
+
+    @Override
+    public void updateItem(String id, String title, String description, String imageUrl, Money startPrice, long startDate, long endDate) {
+        AuctionItem item = item(title, description, imageUrl, startPrice, startDate, endDate);
+        item.setId(id);
+        synchronized (this) {
+            if (!this.idToItemMap.containsKey(item.getId())) {
+                throw new AuctionException("The item id does not already exist.");
+            }
+            this.idToItemMap.put(item.getId(), item);
+        }
+    }
 
     @Override
     public void removeItem(String id) {
