@@ -8,26 +8,11 @@
     </c:forEach>
 </c:if>
 
-<c:choose>
-    <c:when test="${not empty model.item.id}">
-        <form method="post" action="${pageContext.request.contextPath}/item/${model.item.id}/update">
-    </c:when>
-    <c:otherwise>
-        <form method="post" action="${pageContext.request.contextPath}/item/create">
-    </c:otherwise>
-</c:choose>
+<form method="post" action="${pageContext.request.contextPath}/item/${model.item.id}/update">
 <fieldset>
     <legend>
-        <c:choose>
-            <c:when test="${not empty model.item.id}">
-                Updating Item
-            </c:when>
-            <c:otherwise>
-                Adding Item
-            </c:otherwise>
-        </c:choose>
+        Updating Item
     </legend>
-
 
     <div>
         <label for="title">Title</label>
@@ -74,17 +59,13 @@
         <span id="image_url_validation" class="validation"></span>
     </div>
 
-    <c:if test="${not empty model.item.id}">
-        <input type="hidden" name="id" value="${model.item.id}"/>
-    </c:if>
-    <%--style="display:none;"--%>
-    <input name="start_time_long" value="${model.item.startTime}" id="start_time_long"/>
-    <input name="end_time_long" value="${model.item.endTime}" id="end_time_long"/>
-
+    <input type="hidden" name="id" value="${model.item.id}"/>
+    <input type="hidden" name="start_time_long" id="start_time_long" value="${model.item.startTime}"/>
+    <input type="hidden" name="end_time_long" id="end_time_long" value="${model.item.endTime}"/>
 </fieldset>
 
 <div class="button-row">
-    <a href="${pageContext.request.contextPath}/item/">Cancel</a> or <input type="submit" value="Submit"/>
+    <a href="${pageContext.request.contextPath}/item/${model.item.id}">Cancel</a> or <input type="submit" value="Submit"/>
 </div>
 </form>
 
