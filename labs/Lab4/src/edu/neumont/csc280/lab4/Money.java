@@ -3,7 +3,6 @@ package edu.neumont.csc280.lab4;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Currency;
-import java.util.Locale;
 
 // found at http://stackoverflow.com/questions/1359817/using-bigdecimal-to-work-with-currencies
 
@@ -42,12 +41,17 @@ public class Money {
         return currency;
     }
 
+//    @Override
+//    public String toString() {
+//        return getCurrency().getSymbol() + " " + getAmount();
+//    }
+//
+//    public String toString(Locale locale) {
+//        return getCurrency().getSymbol(locale) + " " + getAmount();
+//    }
+
     @Override
     public String toString() {
-        return getCurrency().getSymbol() + " " + getAmount();
-    }
-
-    public String toString(Locale locale) {
-        return getCurrency().getSymbol(locale) + " " + getAmount();
+        return getAmount().toString();
     }
 }

@@ -8,6 +8,10 @@ public class ValidationResult {
     private boolean success;
     private List<String> messages;
 
+    public List<String> getMessages() {
+        return messages;
+    }
+
     public ValidationResult() {
         success = true;
         messages = new ArrayList<>();
@@ -20,14 +24,14 @@ public class ValidationResult {
     }
 
     public boolean getSuccess() {
-        return  this.success;
+        return this.success;
     }
 
     public void setSuccess(boolean success) {
         this.success = success;
     }
 
-    public void addMessage(String message){
+    public void addMessage(String message) {
         this.messages.add(message);
     }
 
@@ -42,7 +46,7 @@ public class ValidationResult {
         }
 
         // combine the messages
-        for(String m : other.messages) {
+        for (String m : other.messages) {
             addMessage(m);
         }
     }
@@ -51,11 +55,11 @@ public class ValidationResult {
         String retVal = "{ \"success\": " + success + ",";
         retVal += " \"messages\": [ ";
         retVal += (success) ? "succeeded" : "failed";
-        for(String m : messages) {
+        for (String m : messages) {
             retVal += ", " + m;
         }
         retVal += " ] }";
 
-        return  retVal;
+        return retVal;
     }
 }

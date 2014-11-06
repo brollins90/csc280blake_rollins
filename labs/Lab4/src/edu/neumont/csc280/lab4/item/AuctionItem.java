@@ -42,7 +42,7 @@ public class AuctionItem {
         this.id = id;
     }
 
-    public ValidationResult validateId(String newValue){
+    public ValidationResult validateId(String newValue) {
         // TODO
         ValidationResult result = new ValidationResult();
         result.setSuccess(false);
@@ -59,7 +59,7 @@ public class AuctionItem {
         this.title = title;
     }
 
-    public ValidationResult validateTitle(String newValue){
+    public ValidationResult validateTitle(String newValue) {
         return new ValidationResult();
     }
 
@@ -72,7 +72,7 @@ public class AuctionItem {
         this.description = description;
     }
 
-    public ValidationResult validateDescription(String newValue){
+    public ValidationResult validateDescription(String newValue) {
         return new ValidationResult();
     }
 
@@ -85,7 +85,7 @@ public class AuctionItem {
         this.imageUrl = imageUrl;
     }
 
-    public ValidationResult validateImageUrl(String newValue){
+    public ValidationResult validateImageUrl(String newValue) {
         return new ValidationResult();
     }
 
@@ -98,7 +98,7 @@ public class AuctionItem {
         this.startPrice = startPrice;
     }
 
-    public ValidationResult validateStartPrice(String newValue){
+    public ValidationResult validateStartPrice(Money newValue) {
         return new ValidationResult();
     }
 
@@ -110,17 +110,16 @@ public class AuctionItem {
     protected void setStartTime(long startTime) {
         this.startTime = startTime;
     }
+
     protected void setStartTime(String startTime) throws NumberFormatException {
         setStartTime(Long.parseLong(startTime));
     }
 
     public ValidationResult validateStartTime(String newValue) {
         ValidationResult result = new ValidationResult();
-        try
-        {
+        try {
             result.combine(validateStartTime(Long.parseLong(newValue)));
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             result.setSuccess(false);
             result.addMessage(e.getMessage());
         }
@@ -153,17 +152,16 @@ public class AuctionItem {
     protected void setEndTime(long endTime) {
         this.endTime = endTime;
     }
+
     protected void setEndTime(String endTime) throws NumberFormatException {
         setEndTime(Long.parseLong(endTime));
     }
 
     public ValidationResult validateEndTime(String newValue) {
         ValidationResult result = new ValidationResult();
-        try
-        {
+        try {
             result.combine(validateEndTime(Long.parseLong(newValue)));
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             result.setSuccess(false);
             result.addMessage(e.getMessage());
         }
@@ -179,7 +177,7 @@ public class AuctionItem {
             result.addMessage("End Time must be more than one hour after the start time.");
         }
 
-         if (newValue + 1 < now.getTime()) {
+        if (newValue + 1 < now.getTime()) {
             result.setSuccess(false);
             result.addMessage("End Time must be later than Now.");
         }

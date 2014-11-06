@@ -1,5 +1,7 @@
 package edu.neumont.csc280.lab4.item;
 
+import edu.neumont.csc280.lab4.Money;
+
 import java.util.List;
 
 public interface ItemService {
@@ -23,13 +25,13 @@ public interface ItemService {
      */
     public List<AuctionItem> getItems();
 
-    public void updateItemDescription(String itemId, String newValue);
-    public void updateItemEndTime(String itemId, long newValue);
-//    public void updateItemEndTime(String itemId, String newValue);
-    public void updateItemImageUrl(String itemId, String newValue);
-    public void updateItemStartTime(String itemId, long newValue);
-//    public void updateItemStartTime(String itemId, String newValue);
     public void updateItemTitle(String itemId, String newValue);
+    public void updateItemDescription(String itemId, String newValue);
+    public void updateItemImageUrl(String itemId, String newValue);
+
+    public void updateItemStartPrice(String itemId, Money newValue);
+    public void updateItemStartTime(String itemId, long newValue);
+    public void updateItemEndTime(String itemId, long newValue);
 
     public void placeBid(String itemId, Bid bid);
 

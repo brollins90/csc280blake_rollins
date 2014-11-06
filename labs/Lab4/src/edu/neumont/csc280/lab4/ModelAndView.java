@@ -10,13 +10,11 @@ public class ModelAndView {
         this.view = view;
     }
 
-    public Object getModel()
-    {
+    public Object getModel() {
         return this.model;
     }
 
-    public String getViewName()
-    {
+    public String getViewName() {
         return this.view;
     }
 }

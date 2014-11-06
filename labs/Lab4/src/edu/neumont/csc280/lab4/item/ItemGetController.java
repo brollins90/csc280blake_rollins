@@ -1,8 +1,6 @@
 package edu.neumont.csc280.lab4.item;
 
 import edu.neumont.csc280.lab4.ModelAndView;
-import edu.neumont.csc280.lab4.item.AuctionItem;
-import edu.neumont.csc280.lab4.item.ItemService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,11 +12,10 @@ public class ItemGetController {
     private HttpServletResponse response;
     private ItemService manager;
 
-    public ItemGetController(HttpServletRequest request, HttpServletResponse response)
-    {
+    public ItemGetController(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
-        manager = (ItemService)request.getServletContext().getAttribute("manager");
+        manager = (ItemService) request.getServletContext().getAttribute("manager");
     }
 
     public ModelAndView getAllItems() {
@@ -60,19 +57,6 @@ public class ItemGetController {
         }
         return mav;
     }
-//
-//    public ModelAndView validateItem(String id) {
-//        AuctionItem item = manager.getItem(id);
-//
-//        String action = this.request.getParameter("action");
-//        if ("validate_item_start_time".equals(action)) {
-//            String check_value = this.request.getParameter("check_value");
-//            long check_value_long = 0;
-//            try { check_value_long = Long.parseLong(check_value); } catch (Exception e) {}
-//            String validated = item.validateStartTime(check_value_long);
-//
-//        }
-//    }
 }
 
 

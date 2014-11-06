@@ -3,7 +3,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:if test="${!model.validationResult.success}">
-    ${model.validationResult.toHTML()}
+    <c:forEach var="m" items="${model.validationResult.messages}">
+        <div class="validationError">${m}</div>
+    </c:forEach>
 </c:if>
 
 <c:choose>
