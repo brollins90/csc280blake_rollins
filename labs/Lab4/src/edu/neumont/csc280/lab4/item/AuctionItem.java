@@ -1,14 +1,17 @@
-package edu.neumont.csc280.lab4.auction;
+package edu.neumont.csc280.lab4.item;
+
+import edu.neumont.csc280.lab4.Money;
+import edu.neumont.csc280.lab4.ValidationResult;
 
 import java.util.Date;
 import java.util.Stack;
 
 public class AuctionItem {
 
-    private String description;
     private String id;
-    private String imageUrl;
     private String title;
+    private String description;
+    private String imageUrl;
 
     private Money startPrice;
 
@@ -35,34 +38,15 @@ public class AuctionItem {
         return this.id;
     }
 
-//    protected void setId(String id) {
-//        // TODO
-//        this.id = id;
-//    }
+    protected void setId(String id) {
+        this.id = id;
+    }
 
     public ValidationResult validateId(String newValue){
         // TODO
         ValidationResult result = new ValidationResult();
         result.setSuccess(false);
         result.addMessage("Changing the Id is not implemented.");
-        return result;
-    }
-
-
-
-    public String getImageUrl() {
-        return this.imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public ValidationResult validateImageUrl(String newValue){
-        // TODO
-        ValidationResult result = new ValidationResult();
-        result.setSuccess(false);
-        result.addMessage("Changing the ImageUrl is not implemented.");
         return result;
     }
 
@@ -76,11 +60,7 @@ public class AuctionItem {
     }
 
     public ValidationResult validateTitle(String newValue){
-        // TODO
-        ValidationResult result = new ValidationResult();
-        result.setSuccess(false);
-        result.addMessage("Changing the title is not implemented.");
-        return result;
+        return new ValidationResult();
     }
 
 
@@ -93,11 +73,33 @@ public class AuctionItem {
     }
 
     public ValidationResult validateDescription(String newValue){
-        // TODO
-        ValidationResult result = new ValidationResult();
-        result.setSuccess(false);
-        result.addMessage("Changing the description is not implemented.");
-        return result;
+        return new ValidationResult();
+    }
+
+
+    public String getImageUrl() {
+        return this.imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public ValidationResult validateImageUrl(String newValue){
+        return new ValidationResult();
+    }
+
+
+    public Money getStartPrice() {
+        return this.startPrice;
+    }
+
+    public void setStartPrice(Money startPrice) {
+        this.startPrice = startPrice;
+    }
+
+    public ValidationResult validateStartPrice(String newValue){
+        return new ValidationResult();
     }
 
 

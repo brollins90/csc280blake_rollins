@@ -1,9 +1,8 @@
-package edu.neumont.csc280.lab4.auction;
+package edu.neumont.csc280.lab4.item;
 
-import java.util.Iterator;
 import java.util.List;
 
-public interface AuctionManager {
+public interface ItemService {
 
     /**
      * Creates an AuctionItem and returns the ID
@@ -26,10 +25,10 @@ public interface AuctionManager {
 
     public void updateItemDescription(String itemId, String newValue);
     public void updateItemEndTime(String itemId, long newValue);
-    public void updateItemEndTime(String itemId, String newValue);
+//    public void updateItemEndTime(String itemId, String newValue);
     public void updateItemImageUrl(String itemId, String newValue);
     public void updateItemStartTime(String itemId, long newValue);
-    public void updateItemStartTime(String itemId, String newValue);
+//    public void updateItemStartTime(String itemId, String newValue);
     public void updateItemTitle(String itemId, String newValue);
 
     public void placeBid(String itemId, Bid bid);

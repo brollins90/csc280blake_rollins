@@ -1,4 +1,4 @@
-package edu.neumont.csc280.lab4.auction;
+package edu.neumont.csc280.lab4;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,12 @@ public class ValidationResult {
     public ValidationResult() {
         success = true;
         messages = new ArrayList<>();
+    }
+
+    public ValidationResult(String message) {
+        this();
+        success = false;
+        addMessage(message);
     }
 
     public boolean getSuccess() {

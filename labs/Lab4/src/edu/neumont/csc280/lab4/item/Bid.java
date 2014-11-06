@@ -1,4 +1,6 @@
-package edu.neumont.csc280.lab4.auction;
+package edu.neumont.csc280.lab4.item;
+
+import edu.neumont.csc280.lab4.Money;
 
 import java.util.Date;
 

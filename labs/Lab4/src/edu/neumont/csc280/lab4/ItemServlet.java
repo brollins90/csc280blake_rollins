@@ -1,5 +1,8 @@
 package edu.neumont.csc280.lab4;
 
+import edu.neumont.csc280.lab4.item.ItemGetController;
+import edu.neumont.csc280.lab4.item.ItemPostController;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,7 +24,6 @@ public class ItemServlet extends HttpServlet {
             String action = (parts.length > 2) ? parts[2] : "";
 
 
-
             System.out.println("get");
 
             ItemGetController controller = new ItemGetController(request, response);
@@ -32,23 +34,17 @@ public class ItemServlet extends HttpServlet {
             System.out.println(action);
             if ("create".equalsIgnoreCase(action)) {
                 mv = controller.createItem();
-            }
-            else if ("delete".equalsIgnoreCase(action)) {
+            } else if ("delete".equalsIgnoreCase(action)) {
                 mv = controller.deleteItem(itemId);
-            }
-            else if ("json".equalsIgnoreCase(action)) {
+            } else if ("json".equalsIgnoreCase(action)) {
                 mv = controller.retrieveItemJSON(itemId);
-            }
-            else if ("retrieve".equalsIgnoreCase(action)) {
+            } else if ("retrieve".equalsIgnoreCase(action)) {
                 mv = controller.retrieveItem(itemId);
-            }
-            else if ("update".equalsIgnoreCase(action)) {
+            } else if ("update".equalsIgnoreCase(action)) {
                 mv = controller.updateItem(itemId);
-            }
-            else if ("list".equalsIgnoreCase(action)) {
+            } else if ("list".equalsIgnoreCase(action)) {
                 mv = controller.getAllItems();
-            }
-            else {
+            } else {
                 System.out.println("bad action");
                 mv = new ModelAndView(null, "500");
             }
@@ -60,25 +56,25 @@ public class ItemServlet extends HttpServlet {
             mv = new ModelAndView(null, "500");
         } finally {
 
-            String viewLocation = "/WEB-INF/" + mv.getViewName() + ".jsp";
-            System.out.println("viewLocation: " + viewLocation);
-            RequestDispatcher rd = request.getRequestDispatcher(viewLocation);
-            rd.forward(request, response);
+            forwardOrRedirect(request, response, mv);
 
         }
 
     }
 
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        ModelAndView mv = null;
         try {
             String pathInfo = request.getPathInfo();
             pathInfo = (pathInfo == null) ? "/" : pathInfo;
 
             String[] parts = pathInfo.split("/");
             String itemId = (parts.length > 1) ? parts[1] : "";
-            String action = (parts.length > 2) ? parts[2] : "";
+            String action = (parts.length > 1) ? parts[1] : ""; // for an update, the action is the first field
+            action = (parts.length > 2) ? parts[2] : action;
 
-            ModelAndView mv = null;
 
             System.out.println("post");
 
@@ -102,14 +98,30 @@ public class ItemServlet extends HttpServlet {
                 doGet(request, response);
             }
 
-            String redirectLocation = request.getRequestURI();
-            redirectLocation = redirectLocation.substring(0, redirectLocation.lastIndexOf('/'));
-            System.out.println("redirectLocation: " + redirectLocation);
-            response.sendRedirect(redirectLocation);
 
         } catch (Exception e) {
             System.out.println("Exception");
             e.printStackTrace();
+        } finally {
+
+            forwardOrRedirect(request, response, mv);
+        }
+    }
+
+    private void forwardOrRedirect(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) throws ServletException, IOException {
+        request.setAttribute("model", mav.getModel());
+        String viewName = mav.getViewName();
+        System.out.println("viewName: " + viewName);
+
+        if (viewName.startsWith("redirect:")) {
+            String redirectLocation = viewName.substring(9, viewName.length());
+            System.out.println("redirectLocation: " + redirectLocation);
+            response.sendRedirect(redirectLocation);
+
+        } else {
+            String viewLocation = "/WEB-INF/" + viewName + ".jsp";
+            RequestDispatcher rd = request.getRequestDispatcher(viewLocation);
+            rd.forward(request, response);
         }
     }
 

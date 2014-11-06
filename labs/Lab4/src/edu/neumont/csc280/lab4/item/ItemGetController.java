@@ -1,24 +1,24 @@
-package edu.neumont.csc280.lab4;
+package edu.neumont.csc280.lab4.item;
 
-import edu.neumont.csc280.lab4.auction.AuctionItem;
-import edu.neumont.csc280.lab4.auction.AuctionManager;
+import edu.neumont.csc280.lab4.ModelAndView;
+import edu.neumont.csc280.lab4.item.AuctionItem;
+import edu.neumont.csc280.lab4.item.ItemService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Iterator;
 import java.util.List;
 
 public class ItemGetController {
 
     private HttpServletRequest request;
     private HttpServletResponse response;
-    private AuctionManager manager;
+    private ItemService manager;
 
     public ItemGetController(HttpServletRequest request, HttpServletResponse response)
     {
         this.request = request;
         this.response = response;
-        manager = (AuctionManager)request.getServletContext().getAttribute("manager");
+        manager = (ItemService)request.getServletContext().getAttribute("manager");
     }
 
     public ModelAndView getAllItems() {
@@ -52,9 +52,13 @@ public class ItemGetController {
     }
 
     public ModelAndView updateItem(String id) {
-        AuctionItem item = manager.getItem(id);
-        ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemUpdate");
-        return mv;
+        ModelAndView mav = null;
+
+        if (id != null && !id.isEmpty()) {
+            AuctionItem item = manager.getItem(id);
+            mav = new ModelAndView(new UpdateItemModel(item), "itemForm");
+        }
+        return mav;
     }
 //
 //    public ModelAndView validateItem(String id) {
