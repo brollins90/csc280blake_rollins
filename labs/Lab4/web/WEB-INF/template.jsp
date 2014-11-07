@@ -23,7 +23,7 @@
     </c:if>
 </head>
 <body>
-<jsp:include page="/WEB-INF/header2.jsp"/>
+<jsp:include page="/WEB-INF/header.jsp"/>
 <h1>${param.title}</h1>
 <jsp:include page="/WEB-INF/${param.content}.jsp"/>
 <jsp:include page="/WEB-INF/footer.jsp"/>

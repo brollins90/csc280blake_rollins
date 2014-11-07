@@ -26,14 +26,19 @@ public class ItemPostController {
     }
 
     public ModelAndView deleteItem(String id) {
-        //TODO
-        return null;
+
+        try {
+            manager.deleteItem(id);
+        } catch (Exception e) {
+
+        }
+        return new ModelAndView(null, "redirect:" + request.getServletContext().getContextPath() + "/item");
     }
 
     public ModelAndView updateItem(String id) {
 
 
-        UpdateItemModel model = new UpdateItemModel();
+        ModelItemForm model = new ModelItemForm();
         AuctionItem item = manager.getItem(id);
 
         // Title

@@ -12,6 +12,9 @@ public interface ItemService {
      */
     public String createItem();
 
+    public void deleteItem(String id);
+
+
     /**
      * Gets the AuctionItem with the specified ID
      * @param id The ID of the item

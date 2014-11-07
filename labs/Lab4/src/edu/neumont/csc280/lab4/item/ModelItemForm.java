@@ -5,16 +5,16 @@ import edu.neumont.csc280.lab4.ValidationResult;
 /**
  * Created by blakerollins on 11/5/14.
  */
-public class UpdateItemModel {
+public class ModelItemForm {
 
     private AuctionItem item;
     private ValidationResult validationResult;
 
-    public UpdateItemModel() {
+    public ModelItemForm() {
         validationResult = new ValidationResult();
     }
 
-    public UpdateItemModel(AuctionItem item) {
+    public ModelItemForm(AuctionItem item) {
         this();
         this.item = item;
     }

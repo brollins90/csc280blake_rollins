@@ -38,6 +38,13 @@ public class ItemServiceHashMapImpl implements ItemService {
     }
 
     @Override
+    public void deleteItem(String id) {
+        synchronized (this) {
+            this.idToItemMap.remove(id);
+        }
+    }
+
+    @Override
     public AuctionItem getItem(String id) {
         return this.idToItemMap.get(id);
     }

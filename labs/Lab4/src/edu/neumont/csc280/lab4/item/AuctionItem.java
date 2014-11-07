@@ -3,6 +3,7 @@ package edu.neumont.csc280.lab4.item;
 import edu.neumont.csc280.lab4.Money;
 import edu.neumont.csc280.lab4.ValidationResult;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Stack;
 
@@ -99,7 +100,19 @@ public class AuctionItem {
     }
 
     public ValidationResult validateStartPrice(Money newValue) {
-        return new ValidationResult();
+        ValidationResult result = new ValidationResult();
+
+        if (this.bids.size() > 0) {
+            result.setSuccess(false);
+            result.addMessage("Start price cannot change since bids have been placed");
+        }
+
+        if (newValue.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
+            result.setSuccess(false);
+            result.addMessage("Start price must be greater than 0.0.");
+        }
+
+        return result;
     }
 
 
@@ -109,21 +122,6 @@ public class AuctionItem {
 
     protected void setStartTime(long startTime) {
         this.startTime = startTime;
-    }
-
-    protected void setStartTime(String startTime) throws NumberFormatException {
-        setStartTime(Long.parseLong(startTime));
-    }
-
-    public ValidationResult validateStartTime(String newValue) {
-        ValidationResult result = new ValidationResult();
-        try {
-            result.combine(validateStartTime(Long.parseLong(newValue)));
-        } catch (NumberFormatException e) {
-            result.setSuccess(false);
-            result.addMessage(e.getMessage());
-        }
-        return result;
     }
 
     public ValidationResult validateStartTime(long newValue) {

@@ -5,7 +5,7 @@
 <a href="${pageContext.request.contextPath}/item/${model.id}/json">View item json</a><br/>
 <a href="${pageContext.request.contextPath}/item/${model.id}/update">Update this item</a><br/>
 <a href="${pageContext.request.contextPath}/item/${model.id}/delete">Delete this item</a><br/>
-<a href="${pageContext.request.contextPath}/item/0/create">Create a new item</a><br/>
+<%--<a href="${pageContext.request.contextPath}/item/0/create">Create a new item</a><br/>--%>
 
 <form method="post" action="${pageContext.request.contextPath}/item/${model.id}/bid">
     <h1>Auction Item #${model.id}</h1>

@@ -21,6 +21,7 @@ public class ItemServlet extends HttpServlet {
 
             String[] parts = pathInfo.split("/");
             String itemId = (parts.length > 1) ? parts[1] : "";
+//            String action = (parts.length > 1) ? parts[1] : "";
             String action = (parts.length > 2) ? parts[2] : "";
 
 
@@ -34,16 +35,22 @@ public class ItemServlet extends HttpServlet {
             System.out.println(action);
             if ("create".equalsIgnoreCase(action)) {
                 mv = controller.createItem();
+
             } else if ("delete".equalsIgnoreCase(action)) {
                 mv = controller.deleteItem(itemId);
+
             } else if ("json".equalsIgnoreCase(action)) {
                 mv = controller.retrieveItemJSON(itemId);
+
             } else if ("retrieve".equalsIgnoreCase(action)) {
                 mv = controller.retrieveItem(itemId);
+
             } else if ("update".equalsIgnoreCase(action)) {
                 mv = controller.updateItem(itemId);
+
             } else if ("list".equalsIgnoreCase(action)) {
                 mv = controller.getAllItems();
+
             } else {
                 System.out.println("bad action");
                 mv = new ModelAndView(null, "500");
@@ -83,6 +90,10 @@ public class ItemServlet extends HttpServlet {
             if ("create".equalsIgnoreCase(action)) {
                 System.out.println("create");
                 mv = controller.createItem();
+
+            } else if ("delete".equalsIgnoreCase(action)) {
+                System.out.println("delete");
+                mv = controller.deleteItem(itemId);
 
             } else if ("update".equalsIgnoreCase(action)) {
                 System.out.println("update");

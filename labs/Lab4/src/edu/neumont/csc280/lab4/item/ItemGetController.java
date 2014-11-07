@@ -25,8 +25,8 @@ public class ItemGetController {
     }
 
     public ModelAndView createItem() {
-        AuctionItem item = manager.getItem(manager.createItem());
-        ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemCreate");
+//        AuctionItem item = manager.getItem(manager.createItem());
+        ModelAndView mv = new ModelAndView(null, "itemForm");
         return mv;
     }
 
@@ -53,7 +53,7 @@ public class ItemGetController {
 
         if (id != null && !id.isEmpty()) {
             AuctionItem item = manager.getItem(id);
-            mav = new ModelAndView(new UpdateItemModel(item), "itemForm");
+            mav = new ModelAndView(new ModelItemForm(item), "itemForm");
         }
         return mav;
     }

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="header1.jsp"%>
-Internal Server Error
-<%@ include file="footer.jsp"%>
+<jsp:include page="/WEB-INF/template.jsp">
+  <jsp:param name="title" value="500 page"/>
+  <jsp:param name="content" value="500Content"/>
+</jsp:include>
