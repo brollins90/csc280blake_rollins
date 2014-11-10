@@ -20,10 +20,15 @@ public class ItemPostController {
         manager = (ItemService) request.getServletContext().getAttribute("manager");
     }
 
-    public ModelAndView createItem() {
-        //TODO
-        return null;
-    }
+//    public ModelAndView createItem() {
+//
+//        ModelItemForm model = new ModelItemForm();
+//        String id = manager.createItem();
+//        AuctionItem item = manager.getItem(id);
+//
+//        model.setItem(item);
+//        return new ModelAndView(model, "itemForm");
+//    }
 
     public ModelAndView deleteItem(String id) {
 
@@ -78,59 +83,69 @@ public class ItemPostController {
         }
 
         // Start price
-        try {
-            Money startPrice = Money.dollars(BigDecimal.valueOf(Double.parseDouble(request.getParameter("start_price"))));
-            if (hasValueChanged(item.getStartPrice().getAmount(), startPrice.getAmount())) {
+        String startPriceString = request.getParameter("start_price");
+        if (startPriceString != null && !startPriceString.isEmpty()) {
+            try {
+                Money startPrice = Money.dollars(BigDecimal.valueOf(Double.parseDouble(startPriceString)));
+                if (hasValueChanged(item.getStartPrice().getAmount(), startPrice.getAmount())) {
 
-                ValidationResult validation = item.validateStartPrice(startPrice);
-                if (validation.getSuccess()) {
-                    manager.updateItemStartPrice(id, startPrice);
-                } else {
-                    model.addValidationResult(validation);
+                    ValidationResult validation = item.validateStartPrice(startPrice);
+                    if (validation.getSuccess()) {
+                        manager.updateItemStartPrice(id, startPrice);
+                    } else {
+                        model.addValidationResult(validation);
+                    }
                 }
+            } catch (Exception e) {
+                model.addValidationResult(new ValidationResult("Start price is not in the correct format."));
             }
-        } catch (Exception e) {
-            model.addValidationResult(new ValidationResult("Start price is not in the correct format."));
         }
 
+
         // Start Time
-        try {
-            long startTime = Long.parseLong(request.getParameter("start_time_long"));
-            if (hasValueChanged(item.getStartTime(), startTime)) {
+        String startTimeString = request.getParameter("start_time_long");
+        if (startTimeString != null && !startTimeString.isEmpty()) {
+            try {
+                long startTime = Long.parseLong(startTimeString);
+                if (hasValueChanged(item.getStartTime(), startTime)) {
 
-                ValidationResult validation = item.validateStartTime(startTime);
-                if (validation.getSuccess()) {
-                    manager.updateItemStartTime(id, startTime);
+                    ValidationResult validation = item.validateStartTime(startTime);
+                    if (validation.getSuccess()) {
+                        manager.updateItemStartTime(id, startTime);
 
-                    // To make sure that the end time is always after the start time, update the end time to 7
-                    // days after the start time.  If they want to change the end time in the same instance
-                    // of this POST then that will overwrite this change since it runs afterward anyway.
-                    manager.updateItemEndTime(id, startTime + 7 * 24 * 60 * 60 * 1000);
+                        // To make sure that the end time is always after the start time, update the end time to 7
+                        // days after the start time.  If they want to change the end time in the same instance
+                        // of this POST then that will overwrite this change since it runs afterward anyway.
+                        manager.updateItemEndTime(id, startTime + 7 * 24 * 60 * 60 * 1000);
+                    }
                 }
+            } catch (Exception e) {
+                model.addValidationResult(new ValidationResult("Start time is not in the correct format."));
             }
-        } catch (Exception e) {
-            model.addValidationResult(new ValidationResult("Start time is not in the correct format."));
         }
 
         // End time
-        try {
-            long endTime = Long.parseLong(request.getParameter("end_time_long"));
-            if (hasValueChanged(item.getEndTime(), endTime)) {
+        String endTimeString = request.getParameter("end_time_long");
+        if (endTimeString != null && !endTimeString.isEmpty()) {
+            try {
+                long endTime = Long.parseLong(endTimeString);
+                if (hasValueChanged(item.getEndTime(), endTime)) {
 
-                ValidationResult validation = item.validateEndTime(endTime);
-                if (validation.getSuccess()) {
-                    manager.updateItemEndTime(id, endTime);
+                    ValidationResult validation = item.validateEndTime(endTime);
+                    if (validation.getSuccess()) {
+                        manager.updateItemEndTime(id, endTime);
+                    }
                 }
+            } catch (Exception e) {
+                model.addValidationResult(new ValidationResult("End time is not in the correct format."));
             }
-        } catch (Exception e) {
-            model.addValidationResult(new ValidationResult("End time is not in the correct format."));
         }
 
         if (model.getValidationResult().getSuccess()) {
             return new ModelAndView(item, "redirect:" + request.getServletContext().getContextPath() + "/item/" + item.getId());
         }
         model.setItem(item);
-        return new ModelAndView(model, "itemUpdateForm");
+        return new ModelAndView(model, "itemForm");
     }
 
     public ModelAndView placeBid(String id) {

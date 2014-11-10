@@ -87,11 +87,12 @@ public class ItemServlet extends HttpServlet {
 
             ItemPostController controller = new ItemPostController(request, response);
 
-            if ("create".equalsIgnoreCase(action)) {
-                System.out.println("create");
-                mv = controller.createItem();
-
-            } else if ("delete".equalsIgnoreCase(action)) {
+//            if ("create".equalsIgnoreCase(action)) {
+//                System.out.println("create");
+//                mv = controller.createItem();
+//
+//            } else
+            if ("delete".equalsIgnoreCase(action)) {
                 System.out.println("delete");
                 mv = controller.deleteItem(itemId);
 

@@ -25,9 +25,13 @@ public class ItemGetController {
     }
 
     public ModelAndView createItem() {
-//        AuctionItem item = manager.getItem(manager.createItem());
-        ModelAndView mv = new ModelAndView(null, "itemForm");
-        return mv;
+
+        ModelItemForm model = new ModelItemForm();
+        String id = manager.createItem();
+        AuctionItem item = manager.getItem(id);
+
+        model.setItem(item);
+        return new ModelAndView(model, "itemForm");
     }
 
     public ModelAndView deleteItem(String id) {

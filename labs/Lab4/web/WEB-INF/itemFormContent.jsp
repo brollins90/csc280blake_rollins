@@ -8,25 +8,18 @@
     </c:forEach>
 </c:if>
 
-<c:choose>
-    <c:when test="${not empty model.item.id}">
-        <form name="myForm" method="post" action="${pageContext.request.contextPath}/item/${model.item.id}/update">
-    </c:when>
-    <c:otherwise>
-        <form name="myForm" method="post" action="${pageContext.request.contextPath}/item/0/create">
-    </c:otherwise>
-</c:choose>
-<fieldset>
-    <legend>
-        <c:choose>
-            <c:when test="${not empty model.item.id}">
-                Updating Item
-            </c:when>
-            <c:otherwise>
-                Adding Item
-            </c:otherwise>
-        </c:choose>
-    </legend>
+<form name="myForm" method="post" action="${pageContext.request.contextPath}/item/${model.item.id}/update">
+    <fieldset>
+        <legend>
+            <c:choose>
+                <c:when test="${not empty model.item.id}">
+                    Updating Item
+                </c:when>
+                <c:otherwise>
+                    Adding Item
+                </c:otherwise>
+            </c:choose>
+        </legend>
 
         <div>
             <label for="title">Title</label>
@@ -43,33 +36,32 @@
             <span id="description_validation" class="validation"></span>
         </div>
 
-        <div>
-            <label for="start_price">Start price</label>
-            <c:choose>
+        <c:choose>
             <c:when test="${model.item.numBids > 0}">
-                <input type="text" name="start_price" id="start_price" value="${model.item.startPrice}" disabled="disabled">
             </c:when>
             <c:otherwise>
-                <input type="text" name="start_price" id="start_price" value="${model.item.startPrice}"/>
+                <div>
+                    <label for="start_price">Start price</label>
+                    <input type="text" name="start_price" id="start_price" value="${model.item.startPrice}"/>
+                    <span id="start_price_notice" class="notice"></span>
+                    <span id="start_price_validation" class="validation"></span>
+                </div>
+
+                <div>
+                    <label for="start_time">Start time:</label>
+                    <input type="text" name="start_time" id="start_time"/>
+                    <span id="start_time_notice" class="notice">If you edit the start time, the end time will automatically be set to 7 days later than the new start time</span>
+                    <span id="start_time_validation" class="validation"></span>
+                </div>
+
+                <div>
+                    <label for="end_time">End time:</label>
+                    <input type="text" name="end_time" id="end_time"/>
+                    <span id="end_time_notice" class="notice"></span>
+                    <span id="end_time_validation" class="validation"></span>
+                </div>
             </c:otherwise>
-            </c:choose>
-            <span id="start_price_notice" class="notice"></span>
-            <span id="start_price_validation" class="validation"></span>
-        </div>
-
-        <div>
-            <label for="start_time">Start time:</label>
-            <input type="text" name="start_time" id="start_time"/>
-            <span id="start_time_notice" class="notice">If you edit the start time, the end time will automatically be set to 7 days later than the new start time</span>
-            <span id="start_time_validation" class="validation"></span>
-        </div>
-
-        <div>
-            <label for="end_time">End time:</label>
-            <input type="text" name="end_time" id="end_time"/>
-            <span id="end_time_notice" class="notice"></span>
-            <span id="end_time_validation" class="validation"></span>
-        </div>
+        </c:choose>
 
         <div>
             <label for="image_url">Image url:</label>

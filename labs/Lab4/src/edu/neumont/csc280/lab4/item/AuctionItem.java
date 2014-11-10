@@ -35,6 +35,17 @@ public class AuctionItem {
         CreateBids();
     }
 
+    public AuctionItem(String id, String title, String description, String imageUrl, Money startPrice, long endTime, long startTime) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.imageUrl = imageUrl;
+        this.startPrice = startPrice;
+        this.endTime = endTime;
+        this.startTime = startTime;
+        CreateBids();
+    }
+
     public String getId() {
         return this.id;
     }
