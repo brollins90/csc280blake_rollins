@@ -35,6 +35,13 @@ public class ValidationResult {
         this.messages.add(message);
     }
 
+    public String getFirstMessage() {
+        if (this.messages.size() > 0) {
+            return this.messages.get(0);
+        }
+        return "";
+    }
+
     public void combine(ValidationResult other) {
 
         // Combine the successes

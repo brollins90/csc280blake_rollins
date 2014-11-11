@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="Lab3:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/Lab3_war</output-path>
+    <root id="archive" name="Lab3_war.war">
+      <element id="artifact" artifact-name="Lab3:war exploded" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/labs/Lab3/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="dir-copy" path="$PROJECT_DIR$/labs/Lab3/src" />
+    </root>
+  </artifact>
+</component>

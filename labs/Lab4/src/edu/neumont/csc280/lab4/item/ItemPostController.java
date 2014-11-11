@@ -20,16 +20,6 @@ public class ItemPostController {
         manager = (ItemService) request.getServletContext().getAttribute("manager");
     }
 
-//    public ModelAndView createItem() {
-//
-//        ModelItemForm model = new ModelItemForm();
-//        String id = manager.createItem();
-//        AuctionItem item = manager.getItem(id);
-//
-//        model.setItem(item);
-//        return new ModelAndView(model, "itemForm");
-//    }
-
     public ModelAndView deleteItem(String id) {
 
         try {
@@ -42,105 +32,56 @@ public class ItemPostController {
 
     public ModelAndView updateItem(String id) {
 
-
         ModelItemForm model = new ModelItemForm();
         AuctionItem item = manager.getItem(id);
 
-        // Title
-        String title = request.getParameter("title");
-        if (hasValueChanged(item.getTitle(), title)) {
+        String updatedTitle = request.getParameter("title");
+        String updatedDescription = request.getParameter("description");
+        String updatedImageUrl = request.getParameter("image_url");
+        Money updatedStartPrice = null;
+        Long updatedStartTime = null;
+        Long updatedEndTime = null;
 
-            ValidationResult validation = item.validateTitle(title);
-            if (validation.getSuccess()) {
-                manager.updateItemTitle(id, title);
-            } else {
-                model.addValidationResult(validation);
-            }
-        }
-
-        // Description
-        String description = request.getParameter("description");
-        if (hasValueChanged(item.getDescription(), description)) {
-
-            ValidationResult validation = item.validateDescription(description);
-            if (validation.getSuccess()) {
-                manager.updateItemDescription(id, description);
-            } else {
-                model.addValidationResult(validation);
-            }
-        }
-
-        // Image Url
-        String imageUrl = request.getParameter("image_url");
-        if (hasValueChanged(item.getImageUrl(), imageUrl)) {
-
-            ValidationResult validation = item.validateImageUrl(imageUrl);
-            if (validation.getSuccess()) {
-                manager.updateItemImageUrl(id, imageUrl);
-            } else {
-                model.addValidationResult(validation);
-            }
-        }
-
-        // Start price
         String startPriceString = request.getParameter("start_price");
         if (startPriceString != null && !startPriceString.isEmpty()) {
             try {
-                Money startPrice = Money.dollars(BigDecimal.valueOf(Double.parseDouble(startPriceString)));
-                if (hasValueChanged(item.getStartPrice().getAmount(), startPrice.getAmount())) {
-
-                    ValidationResult validation = item.validateStartPrice(startPrice);
-                    if (validation.getSuccess()) {
-                        manager.updateItemStartPrice(id, startPrice);
-                    } else {
-                        model.addValidationResult(validation);
-                    }
-                }
+                updatedStartPrice = Money.dollars(BigDecimal.valueOf(Double.parseDouble(startPriceString)));
             } catch (Exception e) {
                 model.addValidationResult(new ValidationResult("Start price is not in the correct format."));
             }
         }
 
-
-        // Start Time
         String startTimeString = request.getParameter("start_time_long");
         if (startTimeString != null && !startTimeString.isEmpty()) {
             try {
-                long startTime = Long.parseLong(startTimeString);
-                if (hasValueChanged(item.getStartTime(), startTime)) {
-
-                    ValidationResult validation = item.validateStartTime(startTime);
-                    if (validation.getSuccess()) {
-                        manager.updateItemStartTime(id, startTime);
-
-                        // To make sure that the end time is always after the start time, update the end time to 7
-                        // days after the start time.  If they want to change the end time in the same instance
-                        // of this POST then that will overwrite this change since it runs afterward anyway.
-                        manager.updateItemEndTime(id, startTime + 7 * 24 * 60 * 60 * 1000);
-                    }
-                }
+                updatedStartTime = Long.parseLong(startTimeString);
             } catch (Exception e) {
                 model.addValidationResult(new ValidationResult("Start time is not in the correct format."));
             }
         }
 
-        // End time
         String endTimeString = request.getParameter("end_time_long");
         if (endTimeString != null && !endTimeString.isEmpty()) {
             try {
-                long endTime = Long.parseLong(endTimeString);
-                if (hasValueChanged(item.getEndTime(), endTime)) {
-
-                    ValidationResult validation = item.validateEndTime(endTime);
-                    if (validation.getSuccess()) {
-                        manager.updateItemEndTime(id, endTime);
-                    }
-                }
+                updatedEndTime = Long.parseLong(endTimeString);
             } catch (Exception e) {
                 model.addValidationResult(new ValidationResult("End time is not in the correct format."));
             }
         }
 
+
+        // Do the update
+        try {
+            if (id != null && !id.isEmpty()) {
+                manager.updateItem(id, updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime);
+            } else {
+                manager.createItem(updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime);
+            }
+        } catch (Exception e) {
+            model.addValidationResult(new ValidationResult(e.getMessage()));
+        }
+
+        // set the view
         if (model.getValidationResult().getSuccess()) {
             return new ModelAndView(item, "redirect:" + request.getServletContext().getContextPath() + "/item/" + item.getId());
         }
@@ -182,16 +123,4 @@ public class ItemPostController {
 
         return new ModelAndView(item, "itemView");
     }
-
-    private <T extends Comparable<T>> boolean hasValueChanged(T one, T two) {
-        System.out.println("hasValueChanged(" + one + ", " + two + ")");
-        if (one.compareTo(two) == 0) {
-
-            System.out.println("no");
-            return false;
-        }
-        System.out.println("yes");
-        return true;
-    }
-
 }

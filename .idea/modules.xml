@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/examples/Bookstore/Bookstore.iml" filepath="$PROJECT_DIR$/examples/Bookstore/Bookstore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exercises/Exercise2/Exercise2.iml" filepath="$PROJECT_DIR$/exercises/Exercise2/Exercise2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exercises/Exercise3/Exercise3.iml" filepath="$PROJECT_DIR$/exercises/Exercise3/Exercise3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/labs/Lab1Client/Lab1Client.iml" filepath="$PROJECT_DIR$/labs/Lab1Client/Lab1Client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/labs/Lab1Server/Lab1Server.iml" filepath="$PROJECT_DIR$/labs/Lab1Server/Lab1Server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/labs/Lab2WebServer/Lab2WebServer.iml" filepath="$PROJECT_DIR$/labs/Lab2WebServer/Lab2WebServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/labs/Lab3/Lab3.iml" filepath="$PROJECT_DIR$/labs/Lab3/Lab3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/labs/Lab4/Lab4.iml" filepath="$PROJECT_DIR$/labs/Lab4/Lab4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/labs/Lab5/Lab5.iml" filepath="$PROJECT_DIR$/labs/Lab5/Lab5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/labs/Lab6/Lab6.iml" filepath="$PROJECT_DIR$/labs/Lab6/Lab6.iml" />
+      <module fileurl="file://$PROJECT_DIR$/csc280blake_rollins.iml" filepath="$PROJECT_DIR$/csc280blake_rollins.iml" />
+      <module fileurl="file://$PROJECT_DIR$/examples/webcam/webcam.iml" filepath="$PROJECT_DIR$/examples/webcam/webcam.iml" />
+    </modules>
+  </component>
+</project>

@@ -6,7 +6,7 @@ import java.util.Currency;
 
 // found at http://stackoverflow.com/questions/1359817/using-bigdecimal-to-work-with-currencies
 
-public class Money {
+public class Money implements Comparable {
 
     private static final Currency USD = Currency.getInstance("USD");
     private static final RoundingMode DEFAULT_ROUNDING = RoundingMode.HALF_EVEN;
@@ -53,5 +53,10 @@ public class Money {
     @Override
     public String toString() {
         return getAmount().toString();
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return getAmount().compareTo(((Money)o).getAmount());
     }
 }

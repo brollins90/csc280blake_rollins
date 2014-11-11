@@ -12,6 +12,9 @@ public interface ItemService {
      */
     public String createItem();
 
+    public String createItem(String title, String description, String imageUrl, Money startPrice, long endTime, long startTime);
+
+
     public void deleteItem(String id);
 
 
@@ -28,13 +31,7 @@ public interface ItemService {
      */
     public List<AuctionItem> getItems();
 
-    public void updateItemTitle(String itemId, String newValue);
-    public void updateItemDescription(String itemId, String newValue);
-    public void updateItemImageUrl(String itemId, String newValue);
-
-    public void updateItemStartPrice(String itemId, Money newValue);
-    public void updateItemStartTime(String itemId, long newValue);
-    public void updateItemEndTime(String itemId, long newValue);
+    public void updateItem(String id, String title, String description, String imageUrl, Money startPrice, long startTime, long endTime);
 
     public void placeBid(String itemId, Bid bid);
 

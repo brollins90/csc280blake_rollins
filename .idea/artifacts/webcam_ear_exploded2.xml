@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ear" name="webcam:ear exploded2">
+    <output-path>$PROJECT_DIR$/out/artifacts/webcam_ear_exploded2</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="webcam/javaeeApplication/javaEEApplication" />
+      <element id="directory" name="web.war">
+        <element id="artifact" artifact-name="webcam:war exploded" />
+      </element>
+      <element id="directory" name="lib">
+        <element id="library" level="project" name="javax.websocket:javax.websocket-api:1.0-b14" />
+      </element>
+    </root>
+  </artifact>
+</component>

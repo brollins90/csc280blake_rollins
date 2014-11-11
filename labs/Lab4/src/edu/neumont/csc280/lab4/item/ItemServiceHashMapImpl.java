@@ -1,7 +1,9 @@
 package edu.neumont.csc280.lab4.item;
 
 import edu.neumont.csc280.lab4.Money;
+import edu.neumont.csc280.lab4.ValidationResult;
 
+import javax.swing.undo.AbstractUndoableEdit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +29,13 @@ public class ItemServiceHashMapImpl implements ItemService {
 
     }
 
+    private AuctionItem item(String title, String description, String imageUrl,Money startPrice, long startTime, long endTime) {
+
+        AuctionItem item = new AuctionItem("0", title, description, imageUrl, startPrice, startTime, endTime);
+
+        return item;
+    }
+
     @Override
     public String createItem() {
         String thisItemId = "" + nextItemId++;
@@ -36,6 +45,17 @@ public class ItemServiceHashMapImpl implements ItemService {
         this.idToItemMap.put(thisItemId, new AuctionItem(thisItemId));
         return thisItemId;
     }
+
+    @Override
+    public String createItem(String title, String description, String imageUrl, Money startPrice, long startTime, long endTime) {
+
+        AuctionItem item = item(title, description, imageUrl, startPrice, startTime, endTime);
+        String thisItemId = "" + nextItemId++;
+        item.setId(thisItemId);
+        this.idToItemMap.put(thisItemId, item);
+        return thisItemId;
+    }
+
 
     @Override
     public void deleteItem(String id) {
@@ -55,33 +75,92 @@ public class ItemServiceHashMapImpl implements ItemService {
     }
 
     @Override
-    public void updateItemTitle(String itemId, String newValue) {
-        this.idToItemMap.get(itemId).setTitle(newValue);
+    public void updateItem(String id, String title, String description, String imageUrl, Money startPrice, long startTime, long endTime) {
+
+        updateItemTitle(id, title);
+        updateItemDescription(id, description);
+        updateItemImageUrl(id, imageUrl);
+        updateItemStartPrice(id, startPrice);
+        updateItemStartTime(id, startTime);
+        updateItemEndTime(id, endTime);
     }
 
-    @Override
-    public void updateItemDescription(String itemId, String newValue) {
-        this.idToItemMap.get(itemId).setDescription(newValue);
+    private void updateItemTitle(String itemId, String newValue) {
+        AuctionItem item = getItem(itemId);
+
+        if (item.hasValueChanged(item.getTitle(),newValue)) {
+            ValidationResult validationResult = item.validateTitle(newValue);
+            if (validationResult.getSuccess()) {
+                item.setTitle(newValue);
+            } else {
+                throw new AuctionException(validationResult.getFirstMessage());
+            }
+        }
     }
 
-    @Override
-    public void updateItemImageUrl(String itemId, String newValue) {
-        this.idToItemMap.get(itemId).setImageUrl(newValue);
+    private void updateItemDescription(String itemId, String newValue) {
+        AuctionItem item = getItem(itemId);
+
+        if (item.hasValueChanged(item.getDescription(),newValue)) {
+            ValidationResult validationResult = item.validateDescription(newValue);
+            if (validationResult.getSuccess()) {
+                item.setDescription(newValue);
+            } else {
+                throw new AuctionException(validationResult.getFirstMessage());
+            }
+        }
     }
 
-    @Override
-    public void updateItemStartPrice(String itemId, Money newValue) {
-        this.idToItemMap.get(itemId).setStartPrice(newValue);
+    private void updateItemImageUrl(String itemId, String newValue) {
+        AuctionItem item = getItem(itemId);
+
+        if (item.hasValueChanged(item.getImageUrl(),newValue)) {
+            ValidationResult validationResult = item.validateImageUrl(newValue);
+            if (validationResult.getSuccess()) {
+                item.setImageUrl(newValue);
+            } else {
+                throw new AuctionException(validationResult.getFirstMessage());
+            }
+        }
     }
 
-    @Override
-    public void updateItemStartTime(String itemId, long newValue) {
-        this.idToItemMap.get(itemId).setStartTime(newValue);
+    private void updateItemStartPrice(String itemId, Money newValue) {
+        AuctionItem item = getItem(itemId);
+
+        if (item.hasValueChanged(item.getStartPrice(),newValue)) {
+            ValidationResult validationResult = item.validateStartPrice(newValue);
+            if (validationResult.getSuccess()) {
+                item.setStartPrice(newValue);
+            } else {
+                throw new AuctionException(validationResult.getFirstMessage());
+            }
+        }
     }
 
-    @Override
-    public void updateItemEndTime(String itemId, long newValue) {
-        this.idToItemMap.get(itemId).setEndTime(newValue);
+    private void updateItemStartTime(String itemId, long newValue) {
+        AuctionItem item = getItem(itemId);
+
+        if (item.hasValueChanged(item.getStartTime(),newValue)) {
+            ValidationResult validationResult = item.validateStartTime(newValue);
+            if (validationResult.getSuccess()) {
+                item.setStartTime(newValue);
+            } else {
+                throw new AuctionException(validationResult.getFirstMessage());
+            }
+        }
+    }
+
+    private void updateItemEndTime(String itemId, long newValue) {
+        AuctionItem item = getItem(itemId);
+
+        if (item.hasValueChanged(item.getEndTime(),newValue)) {
+            ValidationResult validationResult = item.validateEndTime(newValue);
+            if (validationResult.getSuccess()) {
+                item.setEndTime(newValue);
+            } else {
+                throw new AuctionException(validationResult.getFirstMessage());
+            }
+        }
     }
 
     @Override

@@ -259,4 +259,15 @@ public class AuctionItem {
 
         return json;
     }
+
+    protected  <T extends Comparable<T>> boolean hasValueChanged(T one, T two) {
+        System.out.println("hasValueChanged(" + one + ", " + two + ")");
+        if (one.compareTo(two) == 0) {
+
+            System.out.println("no");
+            return false;
+        }
+        System.out.println("yes");
+        return true;
+    }
 }
