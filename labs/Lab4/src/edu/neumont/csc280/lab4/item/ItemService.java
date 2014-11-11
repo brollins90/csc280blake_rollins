@@ -7,12 +7,16 @@ import java.util.List;
 public interface ItemService {
 
     /**
-     * Creates an AuctionItem and returns the ID
-     * @return the ID of the created item
+     * Create a new AuctionItem with the specified parameters
+     * @param title Item title
+     * @param description   Item description
+     * @param imageUrl  Item image Url
+     * @param startPrice    Item start price
+     * @param startTime Item start time
+     * @param endTime   Item end time
+     * @return  The new AuctionItem
      */
-//    public String createItem();
-
-    public AuctionItem createItem(String title, String description, String imageUrl, Money startPrice, long endTime, long startTime);
+    public AuctionItem createItem(String title, String description, String imageUrl, Money startPrice, long startTime, long endTime);
 
 
     public void deleteItem(String id);

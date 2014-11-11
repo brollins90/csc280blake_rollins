@@ -19,11 +19,53 @@ public class ItemServiceTest {
         item = is.createItem("title", "description", "imageUrl", Money.dollars(0.01d),new Date().getTime(),new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
         Assert.assertNotNull(item);
     }
-//
-//    @Test
-//    public void testGetItem() {
-//        //todo
-//    }
+
+    @Test
+    public void testCreateItemInvalidStartPrice() {
+        AuctionItem item = null;
+        Assert.assertNull(item);
+        try {
+            item = is.createItem("title", "description", "imageUrl", Money.dollars(0.00d), new Date().getTime(), new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
+            Assert.fail("Should have thrown an exception because of price.");
+        } catch (AuctionException e) {
+
+        }
+    }
+
+    @Test
+    public void testCreateItemInvalidStartTime() {
+        AuctionItem item = null;
+        Assert.assertNull(item);
+        try {
+            item = is.createItem("title", "description", "imageUrl", Money.dollars(0.00d), 100, new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
+            Assert.fail("Should have thrown an exception because of start time.");
+        } catch (AuctionException e) {
+
+        }
+    }
+
+    @Test
+    public void testCreateItemEndTimeBeforeStart() {
+        AuctionItem item = null;
+        Assert.assertNull(item);
+        try {
+            item = is.createItem("title", "description", "imageUrl", Money.dollars(0.00d), new Date().getTime() + 3 * 24 * 60 * 60 * 1000, new Date().getTime() + 2 * 24 * 60 * 60 * 1000);
+            Assert.fail("Should have thrown an exception because of end time.");
+        } catch (AuctionException e) {
+
+        }
+    }
+
+    @Test
+    public void testGetItem() {
+        AuctionItem item = null;
+        Assert.assertNull(item);
+        item = is.createItem("title", "description", "imageUrl", Money.dollars(0.01d),new Date().getTime(),new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
+        Assert.assertNotNull(item);
+
+        AuctionItem retrievedItem = is.getItem(item.getId());
+        Assert.assertEquals(retrievedItem, item);
+    }
 //
 //    @Test
 //    public void testGetItems() {
