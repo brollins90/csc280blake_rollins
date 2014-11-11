@@ -10,7 +10,7 @@ public interface ItemService {
      * Creates an AuctionItem and returns the ID
      * @return the ID of the created item
      */
-    public String createItem();
+//    public String createItem();
 
     public String createItem(String title, String description, String imageUrl, Money startPrice, long endTime, long startTime);
 

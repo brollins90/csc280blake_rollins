@@ -27,10 +27,8 @@ public class ItemGetController {
     public ModelAndView createItem() {
 
         ModelItemForm model = new ModelItemForm();
-        String id = manager.createItem();
-        AuctionItem item = manager.getItem(id);
 
-        model.setItem(item);
+        model.setItem(new AuctionItem(null));
         return new ModelAndView(model, "itemForm");
     }
 

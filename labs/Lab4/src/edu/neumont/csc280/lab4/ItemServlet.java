@@ -21,7 +21,6 @@ public class ItemServlet extends HttpServlet {
 
             String[] parts = pathInfo.split("/");
             String itemId = (parts.length > 1) ? parts[1] : "";
-//            String action = (parts.length > 1) ? parts[1] : "";
             String action = (parts.length > 2) ? parts[2] : "";
 
 
@@ -79,19 +78,15 @@ public class ItemServlet extends HttpServlet {
 
             String[] parts = pathInfo.split("/");
             String itemId = (parts.length > 1) ? parts[1] : "";
-            String action = (parts.length > 1) ? parts[1] : ""; // for an update, the action is the first field
+            String action = (parts.length > 1) ? parts[1] : ""; // for an update/create, the action is the first field because the id doesnt exist
             action = (parts.length > 2) ? parts[2] : action;
 
+            itemId = (itemId.equals(action)) ? null : itemId;
 
             System.out.println("post");
 
             ItemPostController controller = new ItemPostController(request, response);
 
-//            if ("create".equalsIgnoreCase(action)) {
-//                System.out.println("create");
-//                mv = controller.createItem();
-//
-//            } else
             if ("delete".equalsIgnoreCase(action)) {
                 System.out.println("delete");
                 mv = controller.deleteItem(itemId);

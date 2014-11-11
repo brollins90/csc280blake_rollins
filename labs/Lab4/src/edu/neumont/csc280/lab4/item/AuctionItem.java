@@ -35,7 +35,7 @@ public class AuctionItem {
         CreateBids();
     }
 
-    public AuctionItem(String id, String title, String description, String imageUrl, Money startPrice, long endTime, long startTime) {
+    public AuctionItem(String id, String title, String description, String imageUrl, Money startPrice, long startTime, long endTime) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -139,7 +139,7 @@ public class AuctionItem {
         ValidationResult result = new ValidationResult();
         Date now = new Date();
 
-        if (newValue + 1 < now.getTime()) {
+        if ((newValue + 10 * 60 * 1000) < now.getTime()) { // give a 10 minute buffer
             result.setSuccess(false);
             result.addMessage("Start Time must be later than Now.");
         }
@@ -199,33 +199,6 @@ public class AuctionItem {
         System.out.println("validateEndTime: " + result.toJSON());
         return result;
     }
-
-
-//
-//    public String getTimeLeft() {
-//
-//        String diffString = "";
-//
-//        Date start = new Date(this.getStartTime());
-//        Date end = new Date(this.getEndTime());
-//
-//        long diff = end.getTime() - new Date().getTime();
-//        if (diff > 1) {
-//
-//            long diffSeconds = diff / 1000 % 60;
-//            long diffMinutes = diff / (60 * 1000) % 60;
-//            long diffHours = diff / (60 * 60 * 1000) % 24;
-//            long diffDays = diff / (24 * 60 * 60 * 1000);
-//
-//            diffString += (diffDays == 0) ? "" : diffDays + " days, ";
-//            diffString += (diffHours == 0) ? "" : diffHours + " hours, ";
-//            diffString += (diffMinutes == 0) ? "" : diffMinutes + " minutes, ";
-//            diffString += (diffSeconds == 0) ? "" : diffSeconds + " seconds.";
-//        } else {
-//            diffString = "Time has passed.";
-//        }
-//        return diffString;
-//    }
 
     private void CreateBids() {
         this.bids = new Stack<>();

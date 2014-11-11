@@ -38,6 +38,7 @@
 
         <c:choose>
             <c:when test="${model.item.numBids > 0}">
+                <input type="hidden" name="start_price" id="start_price" value="${model.item.startPrice}"/>
             </c:when>
             <c:otherwise>
                 <div>

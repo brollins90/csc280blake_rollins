@@ -33,7 +33,6 @@ public class ItemPostController {
     public ModelAndView updateItem(String id) {
 
         ModelItemForm model = new ModelItemForm();
-        AuctionItem item = manager.getItem(id);
 
         String updatedTitle = request.getParameter("title");
         String updatedDescription = request.getParameter("description");
@@ -75,13 +74,16 @@ public class ItemPostController {
             if (id != null && !id.isEmpty()) {
                 manager.updateItem(id, updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime);
             } else {
-                manager.createItem(updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime);
+                id = manager.createItem(updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime);
             }
         } catch (Exception e) {
             model.addValidationResult(new ValidationResult(e.getMessage()));
         }
 
         // set the view
+        AuctionItem item = manager.getItem(id);
+        item = (item == null) ? new AuctionItem(null, updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime) : item;
+
         if (model.getValidationResult().getSuccess()) {
             return new ModelAndView(item, "redirect:" + request.getServletContext().getContextPath() + "/item/" + item.getId());
         }
