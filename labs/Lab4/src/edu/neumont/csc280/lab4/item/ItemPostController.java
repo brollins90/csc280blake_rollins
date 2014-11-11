@@ -74,7 +74,8 @@ public class ItemPostController {
             if (id != null && !id.isEmpty()) {
                 manager.updateItem(id, updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime);
             } else {
-                id = manager.createItem(updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime);
+
+                id = (manager.createItem(updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime)).getId();
             }
         } catch (Exception e) {
             model.addValidationResult(new ValidationResult(e.getMessage()));

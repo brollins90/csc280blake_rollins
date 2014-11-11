@@ -32,18 +32,27 @@ public class ItemServiceHashMapImpl implements ItemService {
         return item;
     }
 
+    private void doPutItem(AuctionItem item) {
+        synchronized (this) {
+
+            if (this.idToItemMap.containsKey(item.getId())) {
+                throw new AuctionException("The new ID aready exists.");
+            }
+
+            this.idToItemMap.put(item.getId(), item);
+        }
+    }
 
     @Override
-    public String createItem(String title, String description, String imageUrl, Money startPrice, long startTime, long endTime) {
+    public AuctionItem createItem(String title, String description, String imageUrl, Money startPrice, long startTime, long endTime) {
 
         AuctionItem item = item(title, description, imageUrl, startPrice, startTime, endTime);
         String thisItemId = "" + nextItemId++;
         item.setId(thisItemId);
 
-        assert !this.idToItemMap.containsKey(thisItemId);
+        doPutItem(item);
 
-        this.idToItemMap.put(thisItemId, item);
-        return thisItemId;
+        return item;
     }
 
 

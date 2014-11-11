@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 </head>
 <body>
 <a href="<%=application.getContextPath()%>/item/">

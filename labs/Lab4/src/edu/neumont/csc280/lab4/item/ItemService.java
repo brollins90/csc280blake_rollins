@@ -12,7 +12,7 @@ public interface ItemService {
      */
 //    public String createItem();
 
-    public String createItem(String title, String description, String imageUrl, Money startPrice, long endTime, long startTime);
+    public AuctionItem createItem(String title, String description, String imageUrl, Money startPrice, long endTime, long startTime);
 
 
     public void deleteItem(String id);

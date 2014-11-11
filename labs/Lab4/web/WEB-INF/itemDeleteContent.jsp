@@ -9,5 +9,4 @@
     <a href="${pageContext.request.contextPath}/item">Cancel</a> or <input type="submit" value="Submit"/>
   </div>
 </form>
-
 <%@ include file="footer.jsp" %>
