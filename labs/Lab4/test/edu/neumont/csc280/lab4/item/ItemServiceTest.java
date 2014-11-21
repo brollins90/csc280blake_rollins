@@ -21,6 +21,78 @@ public class ItemServiceTest {
     }
 
     @Test
+    public void testCreateItemEmptyTitle() {
+        AuctionItem item = null;
+        Assert.assertNull(item);
+        try {
+            item = is.createItem("", "description", "imageUrl", Money.dollars(0.00d), new Date().getTime(), new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
+            Assert.fail("Should have thrown an exception because of title.");
+        } catch (AuctionException e) {
+
+        }
+    }
+
+    @Test
+    public void testCreateItemNullTitle() {
+        AuctionItem item = null;
+        Assert.assertNull(item);
+        try {
+            item = is.createItem(null, "description", "imageUrl", Money.dollars(0.00d), new Date().getTime(), new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
+            Assert.fail("Should have thrown an exception because of title.");
+        } catch (AuctionException e) {
+
+        }
+    }
+
+    @Test
+    public void testCreateItemEmptyDescription() {
+        AuctionItem item = null;
+        Assert.assertNull(item);
+        try {
+            item = is.createItem("Title", "", "imageUrl", Money.dollars(0.00d), new Date().getTime(), new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
+            Assert.fail("Should have thrown an exception because of title.");
+        } catch (AuctionException e) {
+
+        }
+    }
+
+    @Test
+    public void testCreateItemNullDescription() {
+        AuctionItem item = null;
+        Assert.assertNull(item);
+        try {
+            item = is.createItem("Title", null, "imageUrl", Money.dollars(0.00d), new Date().getTime(), new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
+            Assert.fail("Should have thrown an exception because of title.");
+        } catch (AuctionException e) {
+
+        }
+    }
+
+    @Test
+    public void testCreateItemEmptyImageUrl() {
+        AuctionItem item = null;
+        Assert.assertNull(item);
+        try {
+            item = is.createItem("Title", "description", "", Money.dollars(0.00d), new Date().getTime(), new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
+            Assert.fail("Should have thrown an exception because of title.");
+        } catch (AuctionException e) {
+
+        }
+    }
+
+    @Test
+    public void testCreateItemNullImageUrl() {
+        AuctionItem item = null;
+        Assert.assertNull(item);
+        try {
+            item = is.createItem("Title", "description", null, Money.dollars(0.00d), new Date().getTime(), new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
+            Assert.fail("Should have thrown an exception because of title.");
+        } catch (AuctionException e) {
+
+        }
+    }
+
+    @Test
     public void testCreateItemInvalidStartPrice() {
         AuctionItem item = null;
         Assert.assertNull(item);

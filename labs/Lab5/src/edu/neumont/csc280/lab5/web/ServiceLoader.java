@@ -1,4 +1,4 @@
-package edu.neumont.csc280.lab5;
+package edu.neumont.csc280.lab5.web;
 
 
 import edu.neumont.csc280.lab5.item.ItemService;

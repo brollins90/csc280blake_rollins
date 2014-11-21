@@ -1,9 +1,8 @@
-package edu.neumont.csc280.lab5;
+package edu.neumont.csc280.lab5.web;
 
 import edu.neumont.csc280.lab5.item.ItemGetController;
 import edu.neumont.csc280.lab5.item.ItemPostController;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +23,7 @@ public class ItemServlet extends HttpServlet {
             String action = (parts.length > 2) ? parts[2] : "";
 
 
-            System.out.println("get");
+            System.out.println("get-item");
 
             ItemGetController controller = new ItemGetController(request, response);
 
@@ -62,7 +61,7 @@ public class ItemServlet extends HttpServlet {
             mv = new ModelAndView(null, "500");
         } finally {
 
-            forwardOrRedirect(request, response, mv);
+            ServletShared.forwardOrRedirect(request, response, mv);
 
         }
 
@@ -111,24 +110,7 @@ public class ItemServlet extends HttpServlet {
             e.printStackTrace();
         } finally {
 
-            forwardOrRedirect(request, response, mv);
-        }
-    }
-
-    private void forwardOrRedirect(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) throws ServletException, IOException {
-        request.setAttribute("model", mav.getModel());
-        String viewName = mav.getViewName();
-        System.out.println("viewName: " + viewName);
-
-        if (viewName.startsWith("redirect:")) {
-            String redirectLocation = viewName.substring(9, viewName.length());
-            System.out.println("redirectLocation: " + redirectLocation);
-            response.sendRedirect(redirectLocation);
-
-        } else {
-            String viewLocation = "/WEB-INF/" + viewName + ".jsp";
-            RequestDispatcher rd = request.getRequestDispatcher(viewLocation);
-            rd.forward(request, response);
+            ServletShared.forwardOrRedirect(request, response, mv);
         }
     }
 

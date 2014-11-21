@@ -1,6 +1,6 @@
 package edu.neumont.csc280.lab5.item;
 
-import edu.neumont.csc280.lab5.ValidationResult;
+import edu.neumont.csc280.lab5.web.ValidationResult;
 
 /**
  * Created by blakerollins on 11/5/14.

@@ -1,7 +1,7 @@
 package edu.neumont.csc280.lab5.item;
 
 import edu.neumont.csc280.lab5.Money;
-import edu.neumont.csc280.lab5.ValidationResult;
+import edu.neumont.csc280.lab5.web.ValidationResult;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -234,13 +234,13 @@ public class AuctionItem {
     }
 
     protected  <T extends Comparable<T>> boolean hasValueChanged(T one, T two) {
-        System.out.println("hasValueChanged(" + one + ", " + two + ")");
+//        System.out.println("hasValueChanged(" + one + ", " + two + ")");
         if (one.compareTo(two) == 0) {
 
-            System.out.println("no");
+//            System.out.println("no");
             return false;
         }
-        System.out.println("yes");
+//        System.out.println("yes");
         return true;
     }
 }

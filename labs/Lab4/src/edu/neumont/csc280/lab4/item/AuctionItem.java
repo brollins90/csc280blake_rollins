@@ -1,5 +1,6 @@
 package edu.neumont.csc280.lab4.item;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import edu.neumont.csc280.lab4.Money;
 import edu.neumont.csc280.lab4.ValidationResult;
 
@@ -234,13 +235,16 @@ public class AuctionItem {
     }
 
     protected  <T extends Comparable<T>> boolean hasValueChanged(T one, T two) {
-        System.out.println("hasValueChanged(" + one + ", " + two + ")");
+//        System.out.println("hasValueChanged(" + one + ", " + two + ")");
+        if (one == null || two == null) {
+            throw new AuctionException("one of the values is null");
+        }
         if (one.compareTo(two) == 0) {
 
-            System.out.println("no");
+//            System.out.println("no");
             return false;
         }
-        System.out.println("yes");
+//        System.out.println("yes");
         return true;
     }
 }

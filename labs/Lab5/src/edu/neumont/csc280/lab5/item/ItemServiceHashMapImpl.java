@@ -1,7 +1,8 @@
 package edu.neumont.csc280.lab5.item;
 
 import edu.neumont.csc280.lab5.Money;
-import edu.neumont.csc280.lab5.ValidationResult;
+import edu.neumont.csc280.lab5.search.SearchModel;
+import edu.neumont.csc280.lab5.web.ValidationResult;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -10,17 +11,20 @@ import java.util.*;
 public class ItemServiceHashMapImpl implements ItemService {
 
     private static long nextItemId = 1;
+    private static SearchCache searchCache;
     private final Map<String, AuctionItem> idToItemMap = new HashMap<>();
 
     public ItemServiceHashMapImpl() {
 
-        createItem("Item 1 Title.", "Item 1 description.", "http://localhost:8080/lab4/img/item_1.png",
-                Money.dollars(new BigDecimal(0.01d)), new Date().getTime(), new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
-        createItem("Item 2 Title.", "Item 2 description.", "http://localhost:8080/lab4/img/item_2.png",
-                Money.dollars(new BigDecimal(0.01d)), new Date().getTime(), new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
+        searchCache = new SearchCache();
+
+        for (int i = 1; i < 41; i++) {
+            createItem("Item " + i + " Title.", "Item " + i + " description.", "http://localhost:8080/lab5/img/item_" + i + ".png",
+                    Money.dollars(new BigDecimal(0.01d)), new Date().getTime(), new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
+        }
     }
 
-    private AuctionItem item(String title, String description, String imageUrl,Money startPrice, long startTime, long endTime) {
+    private AuctionItem item(String title, String description, String imageUrl, Money startPrice, long startTime, long endTime) {
 
         AuctionItem item = new AuctionItem("0");
         updateItemTitle(item, title);
@@ -74,6 +78,50 @@ public class ItemServiceHashMapImpl implements ItemService {
     }
 
     @Override
+    public SearchModel searchForItems(String searchTerm, int count, int offset) {
+
+        if (searchTerm == null) {
+            searchTerm = "";
+        }
+        searchTerm = searchTerm.toLowerCase();
+
+        SearchModel model = null;
+        model = searchCache.getFromCache(searchTerm, count, offset);
+
+        if (model == null) {
+            System.out.println("Search was not in the cache.");
+
+            List<AuctionItem> searchResults = new ArrayList<>();
+
+            for (AuctionItem i : this.idToItemMap.values()) {
+                if (i.getTitle().toLowerCase().contains(searchTerm)) {
+                    searchResults.add(i);
+                } else if (i.getDescription().toLowerCase().contains(searchTerm)) {
+                    searchResults.add(i);
+                }
+            }
+
+            Collections.sort(searchResults, new Comparator<AuctionItem>() {
+                @Override
+                public int compare(AuctionItem a, AuctionItem b) {
+                    return a.getTitle().compareTo(b.getTitle());
+                }
+            });
+
+            model = new SearchModel();
+            model.setItems(searchResults);
+            model.setSearchTerm(searchTerm);
+
+            searchCache.addToCache(model);
+        }
+        model.setCount(count);
+        model.setOffset(offset);
+
+        System.out.println("found " + model.getItems().size() + " items");
+        return model;//.getItems().subList(offset, offset + count);
+    }
+
+    @Override
     public void updateItem(String id, String title, String description, String imageUrl, Money startPrice, long startTime, long endTime) {
 
         AuctionItem item = this.getItem(id);
@@ -88,7 +136,7 @@ public class ItemServiceHashMapImpl implements ItemService {
 
     private void updateItemTitle(AuctionItem item, String newValue) {
 
-        if (item.hasValueChanged(item.getTitle(),newValue)) {
+        if (item.hasValueChanged(item.getTitle(), newValue)) {
             ValidationResult validationResult = item.validateTitle(newValue);
             if (validationResult.getSuccess()) {
                 item.setTitle(newValue);
@@ -100,7 +148,7 @@ public class ItemServiceHashMapImpl implements ItemService {
 
     private void updateItemDescription(AuctionItem item, String newValue) {
 
-        if (item.hasValueChanged(item.getDescription(),newValue)) {
+        if (item.hasValueChanged(item.getDescription(), newValue)) {
             ValidationResult validationResult = item.validateDescription(newValue);
             if (validationResult.getSuccess()) {
                 item.setDescription(newValue);
@@ -112,7 +160,7 @@ public class ItemServiceHashMapImpl implements ItemService {
 
     private void updateItemImageUrl(AuctionItem item, String newValue) {
 
-        if (item.hasValueChanged(item.getImageUrl(),newValue)) {
+        if (item.hasValueChanged(item.getImageUrl(), newValue)) {
             ValidationResult validationResult = item.validateImageUrl(newValue);
             if (validationResult.getSuccess()) {
                 item.setImageUrl(newValue);
@@ -124,7 +172,7 @@ public class ItemServiceHashMapImpl implements ItemService {
 
     private void updateItemStartPrice(AuctionItem item, Money newValue) {
 
-        if (item.hasValueChanged(item.getStartPrice(),newValue)) {
+        if (item.hasValueChanged(item.getStartPrice(), newValue)) {
             ValidationResult validationResult = item.validateStartPrice(newValue);
             if (validationResult.getSuccess()) {
                 item.setStartPrice(newValue);
@@ -136,7 +184,7 @@ public class ItemServiceHashMapImpl implements ItemService {
 
     private void updateItemStartTime(AuctionItem item, long newValue) {
 
-        if (item.hasValueChanged(item.getStartTime(),newValue)) {
+        if (item.hasValueChanged(item.getStartTime(), newValue)) {
             ValidationResult validationResult = item.validateStartTime(newValue);
             if (validationResult.getSuccess()) {
                 item.setStartTime(newValue);
@@ -148,7 +196,7 @@ public class ItemServiceHashMapImpl implements ItemService {
 
     private void updateItemEndTime(AuctionItem item, long newValue) {
 
-        if (item.hasValueChanged(item.getEndTime(),newValue)) {
+        if (item.hasValueChanged(item.getEndTime(), newValue)) {
             ValidationResult validationResult = item.validateEndTime(newValue);
             if (validationResult.getSuccess()) {
                 item.setEndTime(newValue);

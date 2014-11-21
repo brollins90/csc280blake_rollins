@@ -5,17 +5,25 @@
          version="3.1">
     <context-param>
         <param-name>managertype</param-name>
-        <param-value>edu.neumont.csc280.lab4.item.ItemServiceHashMapImpl</param-value>
+        <param-value>edu.neumont.csc280.lab5.item.ItemServiceHashMapImpl</param-value>
     </context-param>
     <listener>
-        <listener-class>edu.neumont.csc280.lab5.ServiceLoader</listener-class>
+        <listener-class>edu.neumont.csc280.lab5.web.ServiceLoader</listener-class>
     </listener>
     <servlet>
         <servlet-name>ItemServlet</servlet-name>
-        <servlet-class>edu.neumont.csc280.lab5.ItemServlet</servlet-class>
+        <servlet-class>edu.neumont.csc280.lab5.web.ItemServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ItemServlet</servlet-name>
         <url-pattern>/item/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SearchServlet</servlet-name>
+        <servlet-class>edu.neumont.csc280.lab5.web.SearchServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SearchServlet</servlet-name>
+        <url-pattern>/search/*</url-pattern>
     </servlet-mapping>
 </web-app>

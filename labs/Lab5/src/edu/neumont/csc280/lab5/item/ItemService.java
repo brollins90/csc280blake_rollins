@@ -1,6 +1,7 @@
 package edu.neumont.csc280.lab5.item;
 
 import edu.neumont.csc280.lab5.Money;
+import edu.neumont.csc280.lab5.search.SearchModel;
 
 import java.util.List;
 
@@ -34,6 +35,8 @@ public interface ItemService {
      * @return
      */
     public List<AuctionItem> getItems();
+
+    public SearchModel searchForItems(String searchTerm, int count, int offset);
 
     public void updateItem(String id, String title, String description, String imageUrl, Money startPrice, long startTime, long endTime);
 

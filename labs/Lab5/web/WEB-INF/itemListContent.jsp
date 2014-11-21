@@ -8,11 +8,10 @@
         <th>Title</th>
         <th>Description</th>
         <th>Price</th>
-        <%--<th>Start Date</th>--%>
         <th>Action</th>
     </tr>
 
-    <c:forEach var="item" items="${model}" varStatus="status">
+    <c:forEach var="item" items="${model.getItems()}" varStatus="status">
         <tr class="${status.index%2==0 ? 'alt' : ''}">
             <td><a href="${pageContext.request.contextPath}/item/${item.id}">${item.title}</a></td>
             <td>${item.description}</td>

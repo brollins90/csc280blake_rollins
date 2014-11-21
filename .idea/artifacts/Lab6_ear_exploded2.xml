@@ -8,6 +8,8 @@
       </element>
       <element id="directory" name="lib">
         <element id="library" level="project" name="JBoss Weld-2.0.3" />
+        <element id="library" level="module" name="JUnit4" module-name="Lab6" />
+        <element id="library" level="project" name="javax.enterprise:cdi-api:1.0" />
         <element id="library" level="project" name="JPA 2.0-2.0" />
       </element>
     </root>

@@ -35,8 +35,17 @@ public class ItemPostController {
         ModelItemForm model = new ModelItemForm();
 
         String updatedTitle = request.getParameter("title");
+        if (updatedTitle == null || updatedTitle.isEmpty()) {
+            model.addValidationResult(new ValidationResult("Title cannot be empty."));
+        }
         String updatedDescription = request.getParameter("description");
+        if (updatedDescription == null || updatedDescription.isEmpty()) {
+            model.addValidationResult(new ValidationResult("Description cannot be empty."));
+        }
         String updatedImageUrl = request.getParameter("image_url");
+        if (updatedImageUrl == null || updatedImageUrl.isEmpty()) {
+            model.addValidationResult(new ValidationResult("Image Url cannot be empty."));
+        }
         Money updatedStartPrice = null;
         Long updatedStartTime = null;
         Long updatedEndTime = null;

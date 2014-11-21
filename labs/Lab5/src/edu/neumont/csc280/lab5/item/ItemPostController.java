@@ -1,8 +1,8 @@
 package edu.neumont.csc280.lab5.item;
 
-import edu.neumont.csc280.lab5.ModelAndView;
+import edu.neumont.csc280.lab5.web.ModelAndView;
 import edu.neumont.csc280.lab5.Money;
-import edu.neumont.csc280.lab5.ValidationResult;
+import edu.neumont.csc280.lab5.web.ValidationResult;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

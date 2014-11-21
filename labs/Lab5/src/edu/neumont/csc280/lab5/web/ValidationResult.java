@@ -1,4 +1,4 @@
-package edu.neumont.csc280.lab5;
+package edu.neumont.csc280.lab5.web;
 
 import java.util.ArrayList;
 import java.util.List;

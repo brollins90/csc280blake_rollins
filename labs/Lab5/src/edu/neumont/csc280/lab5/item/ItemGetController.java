@@ -1,6 +1,7 @@
 package edu.neumont.csc280.lab5.item;
 
-import edu.neumont.csc280.lab5.ModelAndView;
+import edu.neumont.csc280.lab5.search.SearchModel;
+import edu.neumont.csc280.lab5.web.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,8 +20,8 @@ public class ItemGetController {
     }
 
     public ModelAndView getAllItems() {
-        List<AuctionItem> itemIds = manager.getItems();
-        ModelAndView mv = new ModelAndView(itemIds, "itemList");
+        SearchModel search = manager.searchForItems(null, 100, 0);
+        ModelAndView mv = new ModelAndView(search, "itemList");
         return mv;
     }
 
