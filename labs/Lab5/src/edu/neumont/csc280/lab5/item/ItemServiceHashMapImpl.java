@@ -89,12 +89,11 @@ public class ItemServiceHashMapImpl implements ItemService {
         if (searchTerm == null) {
             searchTerm = "";
         }
+
         searchTerm = searchTerm.toLowerCase();
 
-        SearchModel model = null;
-        model = searchCache.getFromCache(searchTerm, count, offset);
-
-        if (model == null) {
+        SearchResult searchResult = searchCache.getFromCache(searchTerm);
+        if (searchResult == null) {
             System.out.println("Search was not in the cache.");
 
             List<AuctionItem> searchResults = new ArrayList<>();
@@ -114,14 +113,14 @@ public class ItemServiceHashMapImpl implements ItemService {
                 }
             });
 
-            model = new SearchModel();
-            model.setItems(searchResults);
-            model.setSearchTerm(searchTerm);
+            searchResult = new SearchResult();
+            searchResult.setItems(searchResults);
+            searchResult.setSearchTerm(searchTerm);
 
-            searchCache.addToCache(model);
+            searchCache.addToCache(searchResult);
         }
-        model.setCount(count);
-        model.setOffset(offset);
+
+        SearchModel model = searchResult.getModel(count, offset);
 
         System.out.println("found " + model.getItems().size() + " items");
         return model;//.getItems().subList(offset, offset + count);

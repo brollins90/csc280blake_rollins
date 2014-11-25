@@ -26,13 +26,11 @@ public class SearchServlet extends HttpServlet {
 
             String[] parts = pathInfo.split("/");
             String searchTermEncoded = (parts.length > 1) ? parts[1] : "";
-            String searchTerm = java.net.URLDecoder.decode(searchTermEncoded, "UTF-8");
 
             System.out.println("get-search");
 
             mv = searchGetController.search();
 
-            request.setAttribute("model", mv.getModel());
 
         } catch (Exception e) {
             System.out.println("Exception");
@@ -40,6 +38,7 @@ public class SearchServlet extends HttpServlet {
             mv = new ModelAndView(null, "500");
         } finally {
 
+            request.setAttribute("model", mv.getModel());
             DispatchServlet.forwardOrRedirect(request, response, mv);
 
         }

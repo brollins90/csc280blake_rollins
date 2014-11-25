@@ -3,6 +3,15 @@
 
 <a href="${pageContext.request.contextPath}/item/0/create">Add Item</a>
 
+<br/>
+<c:if test="${model.offset > 0}">
+    <a href="${pageContext.request.contextPath}/search/?s=${model.searchTerm}&c=${model.count}&o=${model.offset - model.count}">Previous page</a>
+</c:if>
+Showing results ${model.offset + 1} - ${model.offset + model.count} out of ${model.itemsCountFound}
+<c:if test="${model.itemsCountFound > model.offset + model.count}">
+    <a href="${pageContext.request.contextPath}/search/?s=${model.searchTerm}&c=${model.count}&o=${model.offset + model.count}">Next page</a>
+</c:if>
+
 <table class="listing">
     <tr>
         <th>Title</th>

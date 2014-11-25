@@ -11,19 +11,19 @@ import java.util.List;
  */
 public class SearchCache {
 
-    private List<SearchModel> searches;
+    private List<SearchResult> searchResults;
 
     public SearchCache() {
-        searches = new ArrayList<>();
+        searchResults = new ArrayList<>();
     }
 
-    public SearchModel getFromCache(String searchTerm, int count, int offset) {
+    public SearchResult getFromCache(String searchTerm) {
 
-        if (searches.size() == 0) {
+        if (searchResults.size() == 0) {
             return null;
         }
 
-        for (SearchModel s : searches) {
+        for (SearchResult s : searchResults) {
             if (s.getSearchTerm().toLowerCase().equals(searchTerm.toLowerCase())) {
                 long now = new Date().getTime();
                 if (s.getExpireTime() > now) {
@@ -31,19 +31,19 @@ public class SearchCache {
                     return s;
                 } else {
                     System.out.println("found in cache, but expired.");
-                    searches.remove(s);
+                    searchResults.remove(s);
                     break;
                 }
             } else {
                 return null;
             }
         }
-        return getFromCache(searchTerm, count, offset);
+        return getFromCache(searchTerm);
     }
 
-    public void addToCache(SearchModel model) {
+    public void addToCache(SearchResult result) {
         long now = new Date().getTime();
-        model.setExpireTime(now + 1);//1 * 24 * 60 * 60 * 1000);
-        searches.add(model);
+        result.setExpireTime(now + 1);//1 * 24 * 60 * 60 * 1000);
+        searchResults.add(result);
     }
 }

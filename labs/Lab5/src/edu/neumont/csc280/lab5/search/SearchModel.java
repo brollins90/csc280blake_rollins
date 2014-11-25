@@ -14,6 +14,7 @@ public class SearchModel {
     private List<AuctionItem> items;
     private int count;
     private int offset;
+    private int itemsCountFound;
 
     public SearchModel() {
     }
@@ -35,14 +36,7 @@ public class SearchModel {
     }
 
     public List<AuctionItem> getItems() {
-
-        int start = (offset > items.size() - 1) ? items.size() - 1 : offset;
-        int end = (start + count > items.size()) ? items.size() : start + count;
-        return items.subList(start, end);
-    }
-
-    public List<AuctionItem> getAllItems() {
-        return items;
+        return this.items;
     }
 
     public void setItems(List<AuctionItem> items) {
@@ -67,5 +61,13 @@ public class SearchModel {
 
     public int getSize() {
         return items.size();
+    }
+
+    public int getItemsCountFound() {
+        return itemsCountFound;
+    }
+
+    public void setItemsCountFound(int itemsFound) {
+        this.itemsCountFound = itemsFound;
     }
 }
