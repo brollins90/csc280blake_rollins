@@ -23,7 +23,7 @@ public class SearchCache {
             if (searchResults.size() == 0) {
                 return null;
             }
-
+            boolean removedOne = false;
             for (SearchResult s : searchResults) {
                 if (s.getSearchTerm().toLowerCase().equals(searchTerm.toLowerCase())) {
                     long now = new Date().getTime();
@@ -33,20 +33,23 @@ public class SearchCache {
                     } else {
                         System.out.println("found in cache, but expired.");
                         searchResults.remove(s);
+                        removedOne = true;
                         break;
                     }
-                } else {
-                    return null;
                 }
+
             }
-            return getFromCache(searchTerm);
+            if (removedOne) {
+                return getFromCache(searchTerm);
+            }
+            return null;
         }
     }
 
     public void addToCache(SearchResult result) {
         synchronized (this) {
             long now = new Date().getTime();
-            result.setExpireTime(now + 1);//1 * 24 * 60 * 60 * 1000);
+            result.setExpireTime(now + 1 * 1 * 60 * 60 * 1000);
             searchResults.add(result);
         }
     }

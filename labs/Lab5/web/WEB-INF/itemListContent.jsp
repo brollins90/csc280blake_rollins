@@ -11,7 +11,7 @@
         <th>Time left</th>
         <th>Number of bids</th>
         <th>Price</th>
-        <th>Action</th>
+        <%--<th>Action</th>--%>
     </tr>
 
     <c:forEach var="item" items="${model.getItems()}" varStatus="status">
@@ -27,9 +27,9 @@
             <%--<td>--%>
                 <%--<fmt:formatDate value="${item.startDate}" type="both" dateStyle="short" timeStyle="short"/>--%>
             <%--</td>--%>
-            <td>
-                <a href="${pageContext.request.contextPath}/item/${item.id}/delete">delete</a>
-            </td>
+            <%--<td>--%>
+                <%--<a href="${pageContext.request.contextPath}/item/${item.id}/delete">delete</a>--%>
+            <%--</td>--%>
         </tr>
     </c:forEach>
 </table>
