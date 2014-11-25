@@ -5,7 +5,7 @@
     <a href="${pageContext.request.contextPath}/item/">
         Blake's NuBay Auction Site!</a>
 </div>
-<div>
+<div class="search">
     <form name="searchForm" id="searchForm" action="${pageContext.request.contextPath}/search/" method="get">
         <input type="text" name="s" id="s" value=""/>
         <input type="hidden" name="c" id="c" value="10"/>

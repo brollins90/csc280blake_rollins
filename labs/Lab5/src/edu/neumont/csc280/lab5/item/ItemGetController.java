@@ -7,8 +7,6 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 @Stateless
 @LocalBean
@@ -21,13 +19,6 @@ public class ItemGetController {
 
     public ItemGetController() {
     }
-
-    //    public ItemGetController(HttpServletRequest request, HttpServletResponse response) {
-//        this.request = request;
-//        this.response = response;
-//        manager = (ItemService) request.getServletContext().getAttribute("manager");
-//    }
-
 
     public ModelAndView getAllItems() {
         SearchModel search = itemService.searchForItems(null, 100, 0);

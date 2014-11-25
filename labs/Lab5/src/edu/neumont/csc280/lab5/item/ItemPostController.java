@@ -1,14 +1,13 @@
 package edu.neumont.csc280.lab5.item;
 
-import edu.neumont.csc280.lab5.web.ModelAndView;
 import edu.neumont.csc280.lab5.Money;
+import edu.neumont.csc280.lab5.web.ModelAndView;
 import edu.neumont.csc280.lab5.web.ValidationResult;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 
 @Stateless
@@ -22,12 +21,6 @@ public class ItemPostController {
 
     public ItemPostController() {
     }
-
-    //    public ItemPostController(HttpServletRequest request, HttpServletResponse response) {
-//        this.request = request;
-//        this.response = response;
-//        manager = (ItemService) request.getServletContext().getAttribute("manager");
-//    }
 
     public ModelAndView deleteItem(String id) {
 

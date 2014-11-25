@@ -1,6 +1,5 @@
 package edu.neumont.csc280.lab5.search;
 
-import edu.neumont.csc280.lab5.item.AuctionItem;
 import edu.neumont.csc280.lab5.item.ItemService;
 import edu.neumont.csc280.lab5.web.ModelAndView;
 
@@ -8,8 +7,6 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * Created by blakerollins on 11/12/14.
@@ -25,12 +22,6 @@ public class SearchGetController {
 
     public SearchGetController() {
     }
-
-    //    public SearchGetController(HttpServletRequest request, HttpServletResponse response) {
-//        this.request = request;
-//        this.response = response;
-//        manager = (ItemService) request.getServletContext().getAttribute("manager");
-//    }
 
     public ModelAndView search() {
         String searchTerm = request.getParameter("s");
@@ -56,7 +47,6 @@ public class SearchGetController {
         SearchModel search = itemService.searchForItems(searchTerm, count, offset);
 
         ModelAndView mv = new ModelAndView(search, "itemList");
-//        mv.setSearch(search);
         return mv;
     }
 }

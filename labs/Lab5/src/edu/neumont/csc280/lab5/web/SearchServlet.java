@@ -1,7 +1,6 @@
 package edu.neumont.csc280.lab5.web;
 
 
-import edu.neumont.csc280.lab5.item.ItemGetController;
 import edu.neumont.csc280.lab5.search.SearchGetController;
 
 import javax.inject.Inject;

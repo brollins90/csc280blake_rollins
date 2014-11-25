@@ -57,6 +57,6 @@ public class Money implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-        return getAmount().compareTo(((Money)o).getAmount());
+        return getAmount().compareTo(((Money) o).getAmount());
     }
 }

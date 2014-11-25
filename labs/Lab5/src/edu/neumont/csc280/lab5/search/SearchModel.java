@@ -2,7 +2,6 @@ package edu.neumont.csc280.lab5.search;
 
 import edu.neumont.csc280.lab5.item.AuctionItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

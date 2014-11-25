@@ -7,6 +7,7 @@ import edu.neumont.csc280.lab5.web.ValidationResult;
 import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -17,12 +18,11 @@ import java.util.*;
 public class ItemServiceHashMapImpl implements ItemService {
 
     private static long nextItemId = 1;
-    private static SearchCache searchCache;
+    @Inject
+    private SearchCache searchCache;
     private final Map<String, AuctionItem> idToItemMap = new HashMap<>();
 
     public ItemServiceHashMapImpl() {
-
-        searchCache = new SearchCache();
 
         for (int i = 1; i < 41; i++) {
             createItem("Item " + i + " Title.", "Item " + i + " description.", "http://localhost:8080/lab5/img/item_" + i + ".png",

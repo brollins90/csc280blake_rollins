@@ -7,7 +7,7 @@ $(document).ready(function() {
 function updateItem() {
 
     var id = $('#item_id').val();
-    $.get('/lab4/item/' + id + '/json', function(data) {
+    $.get('/lab5/item/' + id + '/json', function(data) {
 
         var json = $.parseJSON(data);
 

@@ -220,6 +220,41 @@ public class AuctionItem {
         return (getNumBids() > 0) ? bids.peek().getAmount() : startPrice;
     }
 
+    public String getTimeLeft() {
+
+        String diffString = "";
+        Date now = new Date();
+        Date start = new Date(this.getStartTime());
+        Date end = new Date(this.getEndTime());
+
+        long diff = 0;
+        if (start.getTime() > now.getTime()) {
+            diff = start.getTime() - now.getTime();
+        } else {
+            diff = end.getTime() - now.getTime();
+        }
+        if (diff > 1) {
+
+            long diffSeconds = diff / 1000 % 60;
+            long diffMinutes = diff / (60 * 1000) % 60;
+            long diffHours = diff / (60 * 60 * 1000) % 24;
+            long diffDays = diff / (24 * 60 * 60 * 1000);
+
+            diffString += (diffDays == 0) ? "" : diffDays + " days, ";
+            diffString += (diffHours == 0) ? "" : diffHours + " hours, ";
+            diffString += (diffMinutes == 0) ? "" : diffMinutes + " minutes, ";
+            diffString += (diffSeconds == 0) ? "" : diffSeconds + " seconds";
+        } else {
+            diffString = "Auction has ended.";
+        }
+        if (start.getTime() > now.getTime()) {
+            diffString += " until auction starts.";
+        } else {
+            diffString += " left in auction.";
+        }
+        return diffString;
+    }
+
     public String toJSON() {
 
         String json = "{ \"id\": \"" + this.id + "\", ";
@@ -233,7 +268,7 @@ public class AuctionItem {
         return json;
     }
 
-    protected  <T extends Comparable<T>> boolean hasValueChanged(T one, T two) {
+    protected <T extends Comparable<T>> boolean hasValueChanged(T one, T two) {
 //        System.out.println("hasValueChanged(" + one + ", " + two + ")");
         if (one.compareTo(two) == 0) {
 
