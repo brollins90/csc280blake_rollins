@@ -7,6 +7,10 @@
         <element id="directory" name="classes">
           <element id="module-output" name="Lab5" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="org.slf4j:slf4j-api:1.6.2" />
+          <element id="library" level="project" name="TomEE7" />
+        </element>
       </element>
     </root>
   </artifact>

@@ -8,9 +8,7 @@
           <element id="module-output" name="Lab6b" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="JPA 2.0-2.0" />
           <element id="library" level="module" name="JUnit4" module-name="Lab6b" />
-          <element id="library" level="project" name="Hibernate 4.2.2-4.2.2" />
         </element>
       </element>
     </root>

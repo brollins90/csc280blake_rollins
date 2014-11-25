@@ -4,10 +4,16 @@ import edu.neumont.csc280.lab5.Money;
 import edu.neumont.csc280.lab5.search.SearchModel;
 import edu.neumont.csc280.lab5.web.ValidationResult;
 
+import javax.ejb.Local;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import java.math.BigDecimal;
 import java.util.*;
 
 
+@Stateless
+@LocalBean
+@Local(ItemService.class)
 public class ItemServiceHashMapImpl implements ItemService {
 
     private static long nextItemId = 1;

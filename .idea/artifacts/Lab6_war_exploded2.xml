@@ -7,9 +7,7 @@
         <element id="directory" name="classes">
           <element id="module-output" name="Lab6" />
         </element>
-        <element id="directory" name="lib">
-          <element id="library" level="project" name="JBoss Weld-2.0.3" />
-        </element>
+        <element id="directory" name="lib" />
       </element>
     </root>
   </artifact>

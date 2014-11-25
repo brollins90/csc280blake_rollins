@@ -46,7 +46,5 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="JBoss Weld-2.0.3" level="project" />
   </component>
 </module>
-

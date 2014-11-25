@@ -4,26 +4,35 @@ import edu.neumont.csc280.lab5.web.ModelAndView;
 import edu.neumont.csc280.lab5.Money;
 import edu.neumont.csc280.lab5.web.ValidationResult;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 
+@Stateless
+@LocalBean
 public class ItemPostController {
 
-    private HttpServletRequest request;
-    private HttpServletResponse response;
-    private ItemService manager;
+    @Inject
+    ItemService itemService;
+    @Inject
+    HttpServletRequest request;
 
-    public ItemPostController(HttpServletRequest request, HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
-        manager = (ItemService) request.getServletContext().getAttribute("manager");
+    public ItemPostController() {
     }
+
+    //    public ItemPostController(HttpServletRequest request, HttpServletResponse response) {
+//        this.request = request;
+//        this.response = response;
+//        manager = (ItemService) request.getServletContext().getAttribute("manager");
+//    }
 
     public ModelAndView deleteItem(String id) {
 
         try {
-            manager.deleteItem(id);
+            itemService.deleteItem(id);
         } catch (Exception e) {
 
         }
@@ -72,17 +81,17 @@ public class ItemPostController {
         // Do the update
         try {
             if (id != null && !id.isEmpty()) {
-                manager.updateItem(id, updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime);
+                itemService.updateItem(id, updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime);
             } else {
 
-                id = (manager.createItem(updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime)).getId();
+                id = (itemService.createItem(updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime)).getId();
             }
         } catch (Exception e) {
             model.addValidationResult(new ValidationResult(e.getMessage()));
         }
 
         // set the view
-        AuctionItem item = manager.getItem(id);
+        AuctionItem item = itemService.getItem(id);
         item = (item == null) ? new AuctionItem(null, updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime) : item;
 
         if (model.getValidationResult().getSuccess()) {
@@ -118,9 +127,9 @@ public class ItemPostController {
         }
 //        BigDecimal current = manager.getItem(itemID).getCurrentPrice();
 
-        Money newAmount = Money.dollars(manager.getItem(itemID).getCurrentPrice().getAmount().add(incAmount.getAmount()));
+        Money newAmount = Money.dollars(itemService.getItem(itemID).getCurrentPrice().getAmount().add(incAmount.getAmount()));
 
-        AuctionItem item = manager.getItem(itemID);
+        AuctionItem item = itemService.getItem(itemID);
 
         item.placeBid(new Bid(itemID, newAmount, "Blake"));
 

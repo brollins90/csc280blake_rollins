@@ -3,12 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
-    <context-param>
-        <param-name>managertype</param-name>
-        <param-value>edu.neumont.csc280.lab5.item.ItemServiceHashMapImpl</param-value>
-    </context-param>
     <listener>
-        <listener-class>edu.neumont.csc280.lab5.web.ServiceLoader</listener-class>
+        <listener-class>edu.neumont.csc280.lab5.web.RequestInjectingServletRequestListener</listener-class>
     </listener>
     <servlet>
         <servlet-name>ItemServlet</servlet-name>

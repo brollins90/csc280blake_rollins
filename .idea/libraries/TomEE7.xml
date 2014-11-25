@@ -1,10 +1,13 @@
 <component name="libraryTable">
   <library name="TomEE7">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/jsp-api.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/servlet-api.jar!/" />
+      <root url="file://$TOMEE7$/lib" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="file://$TOMEE7$/lib" />
+    </SOURCES>
+    <jarDirectory url="file://$TOMEE7$/lib" recursive="false" />
+    <jarDirectory url="file://$TOMEE7$/lib" recursive="false" type="SOURCES" />
   </library>
 </component>

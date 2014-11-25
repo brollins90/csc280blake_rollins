@@ -35,7 +35,10 @@ public class SearchModel {
     }
 
     public List<AuctionItem> getItems() {
-        return items.subList(offset, offset + count);
+
+        int start = (offset > items.size() - 1) ? items.size() - 1 : offset;
+        int end = (start + count > items.size()) ? items.size() : start + count;
+        return items.subList(start, end);
     }
 
     public List<AuctionItem> getAllItems() {
@@ -51,7 +54,7 @@ public class SearchModel {
     }
 
     public void setCount(int count) {
-        this.count = count;
+        this.count = count > items.size() ? items.size() : count;
     }
 
     public int getOffset() {

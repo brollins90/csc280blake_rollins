@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * Created by blakerollins on 11/12/14.
  */
-public class ServletShared {
+public class DispatchServlet {
 
     protected static void forwardOrRedirect(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) throws ServletException, IOException {
         request.setAttribute("model", mav.getModel());

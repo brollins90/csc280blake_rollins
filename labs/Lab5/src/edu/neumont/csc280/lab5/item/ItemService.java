@@ -3,8 +3,10 @@ package edu.neumont.csc280.lab5.item;
 import edu.neumont.csc280.lab5.Money;
 import edu.neumont.csc280.lab5.search.SearchModel;
 
+import javax.ejb.Local;
 import java.util.List;
 
+@Local
 public interface ItemService {
 
     /**

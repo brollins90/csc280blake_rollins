@@ -1,8 +1,10 @@
 package edu.neumont.csc280.lab5.web;
 
 
+import edu.neumont.csc280.lab5.item.ItemGetController;
 import edu.neumont.csc280.lab5.search.SearchGetController;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,10 @@ import java.io.IOException;
 
 
 public class SearchServlet extends HttpServlet {
+
+    @Inject
+    SearchGetController searchGetController;
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         ModelAndView mv = null;
@@ -24,10 +30,7 @@ public class SearchServlet extends HttpServlet {
 
             System.out.println("get-search");
 
-            SearchGetController controller = new SearchGetController(request, response);
-
-
-            mv = controller.search();
+            mv = searchGetController.search();
 
             request.setAttribute("model", mv.getModel());
 
@@ -37,7 +40,7 @@ public class SearchServlet extends HttpServlet {
             mv = new ModelAndView(null, "500");
         } finally {
 
-            ServletShared.forwardOrRedirect(request, response, mv);
+            DispatchServlet.forwardOrRedirect(request, response, mv);
 
         }
 

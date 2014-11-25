@@ -13,6 +13,7 @@
       <module fileurl="file://$PROJECT_DIR$/labs/Lab5/Lab5.iml" filepath="$PROJECT_DIR$/labs/Lab5/Lab5.iml" />
       <module fileurl="file://$PROJECT_DIR$/labs/Lab6/Lab6.iml" filepath="$PROJECT_DIR$/labs/Lab6/Lab6.iml" />
       <module fileurl="file://$PROJECT_DIR$/labs/Lab6b/Lab6b.iml" filepath="$PROJECT_DIR$/labs/Lab6b/Lab6b.iml" />
+      <module fileurl="file://$PROJECT_DIR$/examples/University/University.iml" filepath="$PROJECT_DIR$/examples/University/University.iml" />
       <module fileurl="file://$PROJECT_DIR$/csc280blake_rollins.iml" filepath="$PROJECT_DIR$/csc280blake_rollins.iml" />
       <module fileurl="file://$PROJECT_DIR$/examples/webcam/webcam.iml" filepath="$PROJECT_DIR$/examples/webcam/webcam.iml" />
     </modules>

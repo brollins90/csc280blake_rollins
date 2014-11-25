@@ -3,6 +3,7 @@ package edu.neumont.csc280.lab5.web;
 import edu.neumont.csc280.lab5.item.ItemGetController;
 import edu.neumont.csc280.lab5.item.ItemPostController;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ItemServlet extends HttpServlet {
+
+    @Inject
+    ItemGetController itemGetController;
+    @Inject
+    ItemPostController itemPostController;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -25,29 +31,27 @@ public class ItemServlet extends HttpServlet {
 
             System.out.println("get-item");
 
-            ItemGetController controller = new ItemGetController(request, response);
-
             action = ("".equalsIgnoreCase(itemId)) ? "list" : action;
             action = ("".equalsIgnoreCase(action) && !"".equalsIgnoreCase(itemId)) ? "retrieve" : action;
 
             System.out.println(action);
             if ("create".equalsIgnoreCase(action)) {
-                mv = controller.createItem();
+                mv = itemGetController.createItem();
 
             } else if ("delete".equalsIgnoreCase(action)) {
-                mv = controller.deleteItem(itemId);
+                mv = itemGetController.deleteItem(itemId);
 
             } else if ("json".equalsIgnoreCase(action)) {
-                mv = controller.retrieveItemJSON(itemId);
+                mv = itemGetController.retrieveItemJSON(itemId);
 
             } else if ("retrieve".equalsIgnoreCase(action)) {
-                mv = controller.retrieveItem(itemId);
+                mv = itemGetController.retrieveItem(itemId);
 
             } else if ("update".equalsIgnoreCase(action)) {
-                mv = controller.updateItem(itemId);
+                mv = itemGetController.updateItem(itemId);
 
             } else if ("list".equalsIgnoreCase(action)) {
-                mv = controller.getAllItems();
+                mv = itemGetController.getAllItems();
 
             } else {
                 System.out.println("bad action");
@@ -61,7 +65,7 @@ public class ItemServlet extends HttpServlet {
             mv = new ModelAndView(null, "500");
         } finally {
 
-            ServletShared.forwardOrRedirect(request, response, mv);
+            DispatchServlet.forwardOrRedirect(request, response, mv);
 
         }
 
@@ -84,19 +88,17 @@ public class ItemServlet extends HttpServlet {
 
             System.out.println("post");
 
-            ItemPostController controller = new ItemPostController(request, response);
-
             if ("delete".equalsIgnoreCase(action)) {
                 System.out.println("delete");
-                mv = controller.deleteItem(itemId);
+                mv = itemPostController.deleteItem(itemId);
 
             } else if ("update".equalsIgnoreCase(action)) {
                 System.out.println("update");
-                mv = controller.updateItem(itemId);
+                mv = itemPostController.updateItem(itemId);
 
             } else if ("bid".equalsIgnoreCase(action)) {
                 System.out.println("bid");
-                mv = controller.placeBid(itemId);
+                mv = itemPostController.placeBid(itemId);
 
             } else {
                 System.out.println("bad action, doing get");
@@ -110,7 +112,7 @@ public class ItemServlet extends HttpServlet {
             e.printStackTrace();
         } finally {
 
-            ServletShared.forwardOrRedirect(request, response, mv);
+            DispatchServlet.forwardOrRedirect(request, response, mv);
         }
     }
 

@@ -3,24 +3,34 @@ package edu.neumont.csc280.lab5.item;
 import edu.neumont.csc280.lab5.search.SearchModel;
 import edu.neumont.csc280.lab5.web.ModelAndView;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+@Stateless
+@LocalBean
 public class ItemGetController {
 
-    private HttpServletRequest request;
-    private HttpServletResponse response;
-    private ItemService manager;
+    @Inject
+    ItemService itemService;
+    @Inject
+    HttpServletRequest request;
 
-    public ItemGetController(HttpServletRequest request, HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
-        manager = (ItemService) request.getServletContext().getAttribute("manager");
+    public ItemGetController() {
     }
 
+    //    public ItemGetController(HttpServletRequest request, HttpServletResponse response) {
+//        this.request = request;
+//        this.response = response;
+//        manager = (ItemService) request.getServletContext().getAttribute("manager");
+//    }
+
+
     public ModelAndView getAllItems() {
-        SearchModel search = manager.searchForItems(null, 100, 0);
+        SearchModel search = itemService.searchForItems(null, 100, 0);
         ModelAndView mv = new ModelAndView(search, "itemList");
         return mv;
     }
@@ -34,19 +44,19 @@ public class ItemGetController {
     }
 
     public ModelAndView deleteItem(String id) {
-        AuctionItem item = manager.getItem(id);
+        AuctionItem item = itemService.getItem(id);
         ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemDelete");
         return mv;
     }
 
     public ModelAndView retrieveItem(String id) {
-        AuctionItem item = manager.getItem(id);
+        AuctionItem item = itemService.getItem(id);
         ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item, "itemView");
         return mv;
     }
 
     public ModelAndView retrieveItemJSON(String id) {
-        AuctionItem item = manager.getItem(id);
+        AuctionItem item = itemService.getItem(id);
         ModelAndView mv = (item == null) ? new ModelAndView(null, "404") : new ModelAndView(item.toJSON(), "itemJson");
         return mv;
     }
@@ -55,7 +65,7 @@ public class ItemGetController {
         ModelAndView mav = null;
 
         if (id != null && !id.isEmpty()) {
-            AuctionItem item = manager.getItem(id);
+            AuctionItem item = itemService.getItem(id);
             mav = new ModelAndView(new ModelItemForm(item), "itemForm");
         }
         return mav;
