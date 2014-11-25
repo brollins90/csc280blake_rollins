@@ -1,4 +1,4 @@
-package edu.neumont.csc280.lab6;
+package edu.neumont.csc280.lab6.web;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

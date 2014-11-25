@@ -3,9 +3,28 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    <listener>
+        <listener-class>edu.neumont.csc280.lab6.web.RequestInjectingServletRequestListener</listener-class>
+    </listener>
+    <servlet>
+        <servlet-name>ItemServlet</servlet-name>
+        <servlet-class>edu.neumont.csc280.lab6.web.ItemServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ItemServlet</servlet-name>
+        <url-pattern>/item/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SearchServlet</servlet-name>
+        <servlet-class>edu.neumont.csc280.lab6.web.SearchServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SearchServlet</servlet-name>
+        <url-pattern>/search/*</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>UserService</servlet-name>
-        <servlet-class>edu.neumont.csc280.lab6.UserServlet</servlet-class>
+        <servlet-class>edu.neumont.csc280.lab6.web.UserServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserService</servlet-name>
