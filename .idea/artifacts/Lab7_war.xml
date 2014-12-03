@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="Lab7:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/Lab7_war</output-path>
+    <root id="archive" name="Lab7_war.war">
+      <element id="artifact" artifact-name="Lab7:war exploded" />
+      <element id="dir-copy" path="$PROJECT_DIR$/labs/Lab7" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="mysql:mysql-connector-java:5.1.34" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

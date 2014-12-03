@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <Resource id="lab7DataSource" type="DataSource">
+        jdbcDriver com.mysql.jdbc.Driver
+        JdbcUrl jdbc:mysql://localhost:3306/lab7
+        UserName root
+        Password password
+    </Resource>
+</resources>
