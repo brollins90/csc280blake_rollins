@@ -27,6 +27,8 @@ public class AuctionServiceHsqlImpl implements AuctionService {
     @Inject
     private SearchCache searchCache;
 
+    private static boolean built = false;
+
     public AuctionServiceHsqlImpl() {
 //        build();
     }
@@ -34,15 +36,19 @@ public class AuctionServiceHsqlImpl implements AuctionService {
     @Override
     public void build() {
 
-        for (int i = 1; i < 41; i++) {
-            Auction a = new Auction();
-            a.setTitle("Item " + i + " Title.");
-            a.setDescription("Item " + i + " description.");
-            a.setImageUrl("http://localhost:8080/lab6/img/item_" + i + ".png");
-            a.setPrice(Money.dollars(new BigDecimal(0.01d)).getAmount().doubleValue());
-            a.setStartTime(new Date());
-            a.setEndTime(new Date(a.getStartTime().getTime() + 7 * 24 * 60 * 60 * 1000));
-            create(a);
+        if (!built) {
+            for (int i = 1; i < 41; i++) {
+                Auction a = new Auction();
+                a.setTitle("Item " + i + " Title.");
+                a.setDescription("Item " + i + " description.");
+                a.setImageUrl("http://localhost:8080/lab6/img/item_" + i + ".png");
+                a.setPrice(Money.dollars(new BigDecimal(0.01d)));
+                a.setStartTime(new Date());
+                a.setEndTime(new Date(a.getStartTime().getTime() + 7 * 24 * 60 * 60 * 1000));
+                create(a);
+            }
+
+            built = true;
         }
     }
 
@@ -157,7 +163,7 @@ public class AuctionServiceHsqlImpl implements AuctionService {
 
             if (bidAmount > 0.01) {
                 auction.setNumBids(auction.getNumBids() + 1);
-                auction.setPrice(newAmount.getAmount().doubleValue());
+                auction.setPrice(newAmount);
             }
 //            Double currentBidValue = (Double) entityManager.createQuery("SELECT MAX(b.amount) FROM Bid b WHERE b.auction = :auction")
 //                    .setParameter("auction", auction)

@@ -46,7 +46,7 @@ public class ItemPostController {
         a.setImageUrl(request.getParameter("image_url"));
 
         try {
-            a.setPrice(Money.dollars(new BigDecimal(request.getParameter("price"))).getAmount().doubleValue());
+            a.setPrice(Money.dollars(new BigDecimal(request.getParameter("price"))));
         } catch (Exception e) {
             model.addValidationResult(new ValidationResult("Price is not in the correct format."));
         }
@@ -117,7 +117,7 @@ public class ItemPostController {
             incAmount = Money.dollars(0.01d);
         }
 
-        Money newAmount = Money.dollars(auctionService.retreive(itemId).getPrice() + incAmount.getAmount().doubleValue());
+        Money newAmount = Money.dollars(auctionService.retreive(itemId).getPrice().getAmount().add(incAmount.getAmount()));
 
         auctionService.placeBid(itemId, newAmount.getAmount().doubleValue());
         Auction item = auctionService.retreive(itemId);

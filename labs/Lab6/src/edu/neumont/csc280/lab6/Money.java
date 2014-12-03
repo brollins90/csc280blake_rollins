@@ -1,16 +1,20 @@
 package edu.neumont.csc280.lab6;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Currency;
 
 // found at http://stackoverflow.com/questions/1359817/using-bigdecimal-to-work-with-currencies
 
+@Embeddable
 public class Money implements Comparable {
 
     private static final Currency USD = Currency.getInstance("USD");
     private static final RoundingMode DEFAULT_ROUNDING = RoundingMode.HALF_EVEN;
 
+    @Column(precision = 2)
     private BigDecimal amount;
     private Currency currency;
 
@@ -31,6 +35,9 @@ public class Money implements Comparable {
         this.currency = currency;
 
         this.amount = amount.setScale(currency.getDefaultFractionDigits(), rounding);
+    }
+
+    public Money() {
     }
 
     public BigDecimal getAmount() {

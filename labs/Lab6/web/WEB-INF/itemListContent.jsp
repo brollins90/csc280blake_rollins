@@ -22,7 +22,7 @@
             <td>${item.getTimeLeft()}</td>
             <td>${item.getNumBids()}</td>
             <td>
-                <fmt:formatNumber value="${item.price}" type="currency"/>
+                <fmt:formatNumber value="${item.price.amount}" type="currency"/>
             </td>
             <%--<td>--%>
                 <%--<fmt:formatDate value="${item.startDate}" type="both" dateStyle="short" timeStyle="short"/>--%>

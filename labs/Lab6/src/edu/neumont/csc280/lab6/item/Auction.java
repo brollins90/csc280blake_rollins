@@ -36,7 +36,7 @@ public class Auction {
     private String imageUrl;
 
     @Column
-    private Double price;
+    private Money price;
 
     @Column
     private int numBids;
@@ -82,11 +82,11 @@ public class Auction {
         this.imageUrl = imageUrl;
     }
 
-    public Double getPrice() {
+    public Money getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Money price) {
         this.price = price;
     }
 

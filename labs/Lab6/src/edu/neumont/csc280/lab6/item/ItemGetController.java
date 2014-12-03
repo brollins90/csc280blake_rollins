@@ -31,7 +31,7 @@ public class ItemGetController {
 
     public ModelAndView build() {
         auctionService.build();
-        return getAllItems();
+        return new ModelAndView(null, "redirect:" + request.getServletContext().getContextPath() + "/item/");
     }
 
     public ModelAndView createItem() {

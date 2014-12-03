@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="2962276257">
+  <component name="DataSourceManagerImpl" format="xml" hash="3805774921">
     <data-source source="LOCAL" name="HSQLDB -lab6" uuid="405ffa7c-4df1-4530-82e6-0ab0392b73bc">
       <driver-ref>hsqldb.in-memory</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.hsqldb.jdbc.JDBCDriver</jdbc-driver>
       <jdbc-url>jdbc:hsqldb:mem:lab6</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="HSQLDB -2" uuid="dd747eb2-3fee-46e0-91df-acde2766319a">
+      <driver-ref>hsqldb.embedded</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.hsqldb.jdbc.JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:hsqldb:file:/abc</jdbc-url>
       <libraries />
     </data-source>
   </component>
