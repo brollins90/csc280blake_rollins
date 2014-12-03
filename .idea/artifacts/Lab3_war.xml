@@ -8,7 +8,9 @@
       </element>
       <element id="dir-copy" path="$PROJECT_DIR$/labs/Lab3/src" />
       <element id="directory" name="WEB-INF">
-        <element id="directory" name="lib" />
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="TomEE7" />
+        </element>
       </element>
     </root>
   </artifact>

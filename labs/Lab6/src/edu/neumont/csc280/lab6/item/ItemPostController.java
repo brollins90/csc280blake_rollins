@@ -9,93 +9,91 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 @Stateless
 @LocalBean
 public class ItemPostController {
 
     @Inject
-    ItemService itemService;
+    AuctionService auctionService;
     @Inject
     HttpServletRequest request;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 
     public ItemPostController() {
     }
 
-    public ModelAndView deleteItem(String id) {
+    public ModelAndView deleteItem(Long id) {
 
         try {
-            itemService.deleteItem(id);
+            auctionService.delete(id);
         } catch (Exception e) {
 
         }
         return new ModelAndView(null, "redirect:" + request.getServletContext().getContextPath() + "/item");
     }
 
-    public ModelAndView updateItem(String id) {
+    public ModelAndView processAuctionForm(Long id) {
 
         ModelItemForm model = new ModelItemForm();
+        Auction a = new Auction();
 
-        String updatedTitle = request.getParameter("title");
-        String updatedDescription = request.getParameter("description");
-        String updatedImageUrl = request.getParameter("image_url");
-        Money updatedStartPrice = null;
-        Long updatedStartTime = null;
-        Long updatedEndTime = null;
+        a.setTitle(request.getParameter("title"));
+        a.setDescription(request.getParameter("description"));
+        a.setImageUrl(request.getParameter("image_url"));
 
-        String startPriceString = request.getParameter("start_price");
-        if (startPriceString != null && !startPriceString.isEmpty()) {
-            try {
-                updatedStartPrice = Money.dollars(BigDecimal.valueOf(Double.parseDouble(startPriceString)));
-            } catch (Exception e) {
-                model.addValidationResult(new ValidationResult("Start price is not in the correct format."));
-            }
+        try {
+            a.setPrice(Money.dollars(new BigDecimal(request.getParameter("price"))));
+        } catch (Exception e) {
+            model.addValidationResult(new ValidationResult("Price is not in the correct format."));
         }
 
-        String startTimeString = request.getParameter("start_time_long");
-        if (startTimeString != null && !startTimeString.isEmpty()) {
-            try {
-                updatedStartTime = Long.parseLong(startTimeString);
-            } catch (Exception e) {
-                model.addValidationResult(new ValidationResult("Start time is not in the correct format."));
-            }
+        Calendar calendar = Calendar.getInstance();
+
+        try {
+            String startTimeString = request.getParameter("start_time");
+            calendar.setTime(dateFormat.parse(startTimeString));
+            a.setStartTime(new Date(calendar.getTimeInMillis()));
+        } catch (Exception e) {
+            model.addValidationResult(new ValidationResult("Start time is not in the correct format."));
         }
 
-        String endTimeString = request.getParameter("end_time_long");
-        if (endTimeString != null && !endTimeString.isEmpty()) {
-            try {
-                updatedEndTime = Long.parseLong(endTimeString);
-            } catch (Exception e) {
-                model.addValidationResult(new ValidationResult("End time is not in the correct format."));
-            }
+        try {
+            String endTimeString = request.getParameter("end_time");
+            calendar.setTime(dateFormat.parse(endTimeString));
+            a.setEndTime(new Date(calendar.getTimeInMillis()));
+        } catch (Exception e) {
+            model.addValidationResult(new ValidationResult("End time is not in the correct format."));
         }
-
 
         // Do the update
         try {
-            if (id != null && !id.isEmpty()) {
-                itemService.updateItem(id, updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime);
+            if (id != null && id > 0) {
+                a.setId(id);
+                auctionService.update(a);
             } else {
-
-                id = (itemService.createItem(updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime)).getId();
+                a = auctionService.create(a);
+                id = a.getId();
             }
         } catch (Exception e) {
             model.addValidationResult(new ValidationResult(e.getMessage()));
         }
 
         // set the view
-        AuctionItem item = itemService.getItem(id);
-        item = (item == null) ? new AuctionItem(null, updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime) : item;
+//        Auction item = auctionService.retreive(id);
+//        item = (item == null) ? new Auction(null, updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime) : item;
 
         if (model.getValidationResult().getSuccess()) {
-            return new ModelAndView(item, "redirect:" + request.getServletContext().getContextPath() + "/item/" + item.getId());
+            return new ModelAndView(a, "redirect:" + request.getServletContext().getContextPath() + "/item/" + a.getId());
         }
-        model.setItem(item);
+        model.setItem(a);
         return new ModelAndView(model, "itemForm");
     }
 
-    public ModelAndView placeBid(String id) {
-        String itemID = id;
+    public ModelAndView placeBid(Long itemId) {
         String bidAmount = request.getParameter("bidAmount");
 
         Money incAmount;
@@ -118,14 +116,15 @@ public class ItemPostController {
         } catch (Exception e) {
             incAmount = Money.dollars(0.01d);
         }
-//        BigDecimal current = manager.getItem(itemID).getCurrentPrice();
 
-        Money newAmount = Money.dollars(itemService.getItem(itemID).getCurrentPrice().getAmount().add(incAmount.getAmount()));
+        Money newAmount = Money.dollars(auctionService.retreive(itemId).getPrice().getAmount().add(incAmount.getAmount()));
 
-        AuctionItem item = itemService.getItem(itemID);
+        auctionService.placeBid(itemId, newAmount.getAmount().doubleValue());
+        Auction item = auctionService.retreive(itemId);
 
-        item.placeBid(new Bid(itemID, newAmount, "Blake"));
+//        item.placeBid(new Bid(itemID, newAmount, "Blake"));
 
+//        return new ModelAndView(null, "itemView");
         return new ModelAndView(item, "itemView");
     }
 }

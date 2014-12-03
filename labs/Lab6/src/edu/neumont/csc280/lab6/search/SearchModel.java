@@ -1,16 +1,13 @@
 package edu.neumont.csc280.lab6.search;
 
-import edu.neumont.csc280.lab6.item.AuctionItem;
+import edu.neumont.csc280.lab6.item.Auction;
 
 import java.util.List;
 
-/**
- * Created by blakerollins on 11/18/14.
- */
 public class SearchModel {
     private long expireTime;
     private String searchTerm;
-    private List<AuctionItem> items;
+    private List<Auction> items;
     private int count;
     private int offset;
     private int itemsCountFound;
@@ -34,11 +31,11 @@ public class SearchModel {
         this.searchTerm = searchTerm;
     }
 
-    public List<AuctionItem> getItems() {
+    public List<Auction> getItems() {
         return this.items;
     }
 
-    public void setItems(List<AuctionItem> items) {
+    public void setItems(List<Auction> items) {
         this.items = items;
     }
 

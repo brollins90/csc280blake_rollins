@@ -25,7 +25,7 @@
 
         <div>
             <label for="item_current_bid">Current Bid:</label>
-            <label id="item_current_bid">${model.currentPrice}</label>
+            <label id="item_current_bid"><fmt:formatNumber value="${model.price.amount}" type="currency"/></label>
         </div>
 
         <div>

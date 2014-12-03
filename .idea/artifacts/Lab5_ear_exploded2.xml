@@ -6,6 +6,10 @@
       <element id="directory" name="web.war">
         <element id="artifact" artifact-name="Lab5:war exploded2" />
       </element>
+      <element id="directory" name="lib">
+        <element id="library" level="project" name="org.slf4j:slf4j-api:1.6.2" />
+        <element id="library" level="project" name="TomEE7" />
+      </element>
     </root>
   </artifact>
 </component>

@@ -2,28 +2,25 @@ package edu.neumont.csc280.lab6.item;
 
 import edu.neumont.csc280.lab6.web.ValidationResult;
 
-/**
- * Created by blakerollins on 11/5/14.
- */
 public class ModelItemForm {
 
-    private AuctionItem item;
+    private Auction item;
     private ValidationResult validationResult;
 
     public ModelItemForm() {
         validationResult = new ValidationResult();
     }
 
-    public ModelItemForm(AuctionItem item) {
+    public ModelItemForm(Auction item) {
         this();
         this.item = item;
     }
 
-    public AuctionItem getItem() {
+    public Auction getItem() {
         return item;
     }
 
-    public void setItem(AuctionItem item) {
+    public void setItem(Auction item) {
         this.item = item;
     }
 

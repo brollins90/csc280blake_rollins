@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by blakerollins on 11/20/14.
- */
 @ApplicationScoped
 public class SearchCache {
 

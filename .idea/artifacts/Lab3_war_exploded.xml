@@ -7,7 +7,9 @@
         <element id="directory" name="classes">
           <element id="module-output" name="Lab3" />
         </element>
-        <element id="directory" name="lib" />
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="TomEE7" />
+        </element>
       </element>
     </root>
   </artifact>

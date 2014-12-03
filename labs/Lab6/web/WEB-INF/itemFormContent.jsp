@@ -24,56 +24,81 @@
         <div>
             <label for="title">Title</label>
             <input type="text" name="title" id="title" value="${model.item.title}"/>
-            <span id="title_notice" class="notice"></span>
-            <span id="title_validation" class="validation"></span>
         </div>
 
         <div>
             <label for="description">Description</label>
             <textarea type="text" name="description" id="description" rows="2"
                       cols="60">${model.item.description}</textarea>
-            <span id="description_notice" class="notice"></span>
-            <span id="description_validation" class="validation"></span>
         </div>
 
         <c:choose>
             <c:when test="${model.item.numBids > 0}">
-                <input type="hidden" name="start_price" id="start_price" value="${model.item.startPrice}"/>
+                <input type="hidden" name="price" id="price" value="${model.item.price}"/>
+                <input type="hidden" name="start_time" id="start_time" value="${model.item.startTime}"/>
+                <input type="hidden" name="end_time" id="end_time" value="${model.item.endTime}"/>
             </c:when>
             <c:otherwise>
                 <div>
-                    <label for="start_price">Start price</label>
-                    <input type="text" name="start_price" id="start_price" value="${model.item.startPrice}"/>
-                    <span id="start_price_notice" class="notice"></span>
-                    <span id="start_price_validation" class="validation"></span>
+                    <label for="price">Start price</label>
+                    <input type="text" name="price" id="price" value="${model.item.price}"/>
                 </div>
 
                 <div>
                     <label for="start_time">Start time:</label>
-                    <input type="text" name="start_time" id="start_time"/>
+                    <input type="text" name="start_time" id="start_time" value="${model.item.getPrettyStart()}"/> (MM/dd/yyyy HH:mm)
                     <span id="start_time_notice" class="notice">If you edit the start time, the end time will automatically be set to 7 days later than the new start time</span>
-                    <span id="start_time_validation" class="validation"></span>
                 </div>
 
                 <div>
                     <label for="end_time">End time:</label>
-                    <input type="text" name="end_time" id="end_time"/>
-                    <span id="end_time_notice" class="notice"></span>
-                    <span id="end_time_validation" class="validation"></span>
+                    <input type="text" name="end_time" id="end_time" value="${model.item.getPrettyEnd()}"/> (MM/dd/yyyy HH:mm)
                 </div>
+
+                <script type="text/javascript">
+
+
+                    function loadPage2() {
+                        var startDateTextBox = $('#start_time');
+                        var endDateTextBox = $('#end_time');
+
+                        startDateTextBox.datetimepicker({
+                            minDate: new Date(),
+                            showOn: 'button',
+                            buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+                            buttonImageOnly: true,
+                            onClose: function (dateText, inst) {
+
+                            },
+                            onSelect: function (selectedDateTime) {
+                                endDateTextBox.datetimepicker('option', 'minDate', startDateTextBox.datetimepicker('getDate'));
+                            }
+                        }).next('button').text('').button({ icons: { primary: 'ui-icon-calendar' } });
+
+                        endDateTextBox.datetimepicker({
+                            showOn: "button",
+                            buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+                            buttonImageOnly: true,
+                            onClose: function (dateText, inst) {
+
+                            },
+                            onSelect: function (selectedDateTime) {
+                            }
+                        }).next('button').text('').button({ icons: { primary: 'ui-icon-calendar' } });
+
+
+
+                    }
+                </script>
             </c:otherwise>
         </c:choose>
 
         <div>
             <label for="image_url">Image url:</label>
             <input type="text" name="image_url" value="${model.item.imageUrl}" id="image_url"/>
-            <span id="image_url_notice" class="notice"></span>
-            <span id="image_url_validation" class="validation"></span>
         </div>
 
         <input type="hidden" name="id" value="${model.item.id}"/>
-        <input type="hidden" name="start_time_long" id="start_time_long" value="${model.item.startTime}"/>
-        <input type="hidden" name="end_time_long" id="end_time_long" value="${model.item.endTime}"/>
     </fieldset>
 
     <div class="button-row">

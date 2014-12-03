@@ -25,14 +25,20 @@ public class ItemServlet extends HttpServlet {
             pathInfo = (pathInfo == null) ? "/" : pathInfo;
 
             String[] parts = pathInfo.split("/");
-            String itemId = (parts.length > 1) ? parts[1] : "";
+            String itemIdString = (parts.length > 1) ? parts[1] : "";
             String action = (parts.length > 2) ? parts[2] : "";
-
 
             System.out.println("get-item");
 
-            action = ("".equalsIgnoreCase(itemId)) ? "list" : action;
-            action = ("".equalsIgnoreCase(action) && !"".equalsIgnoreCase(itemId)) ? "retrieve" : action;
+            action = ("".equalsIgnoreCase(itemIdString)) ? "list" : action;
+            action = ("".equalsIgnoreCase(action) && !"".equalsIgnoreCase(itemIdString)) ? "retrieve" : action;
+
+            Long itemId = null;
+            try {
+                itemId = Long.parseLong(itemIdString);
+            } catch (Exception e) {
+
+            }
 
             System.out.println(action);
             if ("create".equalsIgnoreCase(action)) {
@@ -80,11 +86,18 @@ public class ItemServlet extends HttpServlet {
             pathInfo = (pathInfo == null) ? "/" : pathInfo;
 
             String[] parts = pathInfo.split("/");
-            String itemId = (parts.length > 1) ? parts[1] : "";
+            String itemIdString = (parts.length > 1) ? parts[1] : "";
             String action = (parts.length > 1) ? parts[1] : ""; // for an update/create, the action is the first field because the id doesnt exist
             action = (parts.length > 2) ? parts[2] : action;
 
-            itemId = (itemId.equals(action)) ? null : itemId;
+            itemIdString = (itemIdString.equals(action)) ? null : itemIdString;
+
+            Long itemId = null;
+            try {
+                itemId = Long.parseLong(itemIdString);
+            } catch (Exception e) {
+
+            }
 
             System.out.println("post");
 
@@ -94,7 +107,7 @@ public class ItemServlet extends HttpServlet {
 
             } else if ("update".equalsIgnoreCase(action)) {
                 System.out.println("update");
-                mv = itemPostController.updateItem(itemId);
+                mv = itemPostController.processAuctionForm(itemId);
 
             } else if ("bid".equalsIgnoreCase(action)) {
                 System.out.println("bid");

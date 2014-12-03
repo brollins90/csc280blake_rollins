@@ -22,12 +22,4 @@
         <servlet-name>SearchServlet</servlet-name>
         <url-pattern>/search/*</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>UserService</servlet-name>
-        <servlet-class>edu.neumont.csc280.lab6.web.UserServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UserService</servlet-name>
-        <url-pattern>/user/*</url-pattern>
-    </servlet-mapping>
 </web-app>

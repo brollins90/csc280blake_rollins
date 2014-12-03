@@ -4,13 +4,10 @@ import edu.neumont.csc280.lab6.search.SearchModel;
 
 import java.util.List;
 
-/**
- * Created by blakerollins on 11/24/14.
- */
 public class SearchResult {
     private long expireTime;
     private String searchTerm;
-    private List<AuctionItem> items;
+    private List<Auction> items;
 
     public SearchResult() {
     }
@@ -31,11 +28,11 @@ public class SearchResult {
         this.searchTerm = searchTerm;
     }
 
-    public List<AuctionItem> getItems() {
+    public List<Auction> getItems() {
         return items;
     }
 
-    public void setItems(List<AuctionItem> items) {
+    public void setItems(List<Auction> items) {
         this.items = items;
     }
 

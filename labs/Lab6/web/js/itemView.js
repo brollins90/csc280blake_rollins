@@ -20,10 +20,11 @@ function updateItem() {
     });
 }
 
-function formatStartTime(startTimeMillis) {
+function formatStartTime(startTime) {
     var nowDate = new Date();
     var nowMillis = nowDate.getTime();
-    var startDate = new Date(parseInt(startTimeMillis,10));
+    var startDate = new Date(startTime);
+    var startTimeMillis = startDate.getTime();
 
     if (nowMillis > startTimeMillis) {
         return "Auction started at " + startDate + " (" + dDiff(nowMillis, startTimeMillis) + " ago)";
@@ -36,10 +37,11 @@ function formatStartTime(startTimeMillis) {
 
 }
 
-function formatEndTime(endTimeMillis) {
+function formatEndTime(endTime) {
     var nowDate = new Date();
     var nowMillis = nowDate.getTime();
-    var endDate = new Date(parseInt(endTimeMillis,10));
+    var endDate = new Date(endTime);
+    var endTimeMillis = endDate.getTime();
 
     if (nowMillis < endTimeMillis) {
         return "Auction ends at " + endDate + " (in " + dDiff(endTimeMillis, nowMillis) + ")";
