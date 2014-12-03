@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-	<Resource id="auctionDataSource" type="DataSource">
-	    JdbcDriver org.hsqldb.jdbcDriver
-	    JdbcUrl jdbc:hsqldb:file:auctionDb
-	    UserName sa
-	    Password
-	</Resource>
+    <Resource id="lab6DataSource" type="DataSource">
+        jdbcDriver com.mysql.jdbc.Driver
+        JdbcUrl jdbc:mysql://localhost:3306/lab6
+        UserName root
+        Password password
+    </Resource>
 </resources>

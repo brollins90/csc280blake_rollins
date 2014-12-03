@@ -46,7 +46,10 @@ public class ItemPostController {
         a.setImageUrl(request.getParameter("image_url"));
 
         try {
-            a.setPrice(Money.dollars(new BigDecimal(request.getParameter("price"))));
+            String priceString = request.getParameter("price");
+            if (priceString != null && !priceString.isEmpty()) {
+                a.setPrice(Money.dollars(new BigDecimal(priceString)));
+            }
         } catch (Exception e) {
             model.addValidationResult(new ValidationResult("Price is not in the correct format."));
         }
@@ -55,43 +58,66 @@ public class ItemPostController {
 
         try {
             String startTimeString = request.getParameter("start_time");
-            calendar.setTime(dateFormat.parse(startTimeString));
-            a.setStartTime(new Date(calendar.getTimeInMillis()));
+            if (startTimeString != null && !startTimeString.isEmpty()) {
+                calendar.setTime(dateFormat.parse(startTimeString));
+                a.setStartTime(new Date(calendar.getTimeInMillis()));
+            }
         } catch (Exception e) {
             model.addValidationResult(new ValidationResult("Start time is not in the correct format."));
         }
 
         try {
             String endTimeString = request.getParameter("end_time");
-            calendar.setTime(dateFormat.parse(endTimeString));
-            a.setEndTime(new Date(calendar.getTimeInMillis()));
+            if (endTimeString != null && !endTimeString.isEmpty()) {
+                calendar.setTime(dateFormat.parse(endTimeString));
+                a.setEndTime(new Date(calendar.getTimeInMillis()));
+            }
         } catch (Exception e) {
             model.addValidationResult(new ValidationResult("End time is not in the correct format."));
         }
 
-        // Do the update
-        try {
-            if (id != null && id > 0) {
-                a.setId(id);
-                auctionService.update(a);
-            } else {
-                a = auctionService.create(a);
-                id = a.getId();
-            }
-        } catch (Exception e) {
-            model.addValidationResult(new ValidationResult(e.getMessage()));
-        }
 
-        // set the view
+    // Do the update
+    try
+
+    {
+        if (id != null && id > 0) {
+            a.setId(id);
+            auctionService.update(a);
+        } else {
+            a = auctionService.create(a);
+            id = a.getId();
+        }
+    }
+
+    catch(
+    Exception e
+    )
+
+    {
+        model.addValidationResult(new ValidationResult(e.getMessage()));
+    }
+
+    // set the view
 //        Auction item = auctionService.retreive(id);
 //        item = (item == null) ? new Auction(null, updatedTitle, updatedDescription, updatedImageUrl, updatedStartPrice, updatedStartTime, updatedEndTime) : item;
 
-        if (model.getValidationResult().getSuccess()) {
-            return new ModelAndView(a, "redirect:" + request.getServletContext().getContextPath() + "/item/" + a.getId());
-        }
-        model.setItem(a);
-        return new ModelAndView(model, "itemForm");
+    if(model.getValidationResult().
+
+    getSuccess()
+
+    )
+
+    {
+        return new ModelAndView(a, "redirect:" + request.getServletContext().getContextPath() + "/item/" + a.getId());
     }
+
+    model.setItem(a);
+    return new
+
+    ModelAndView(model, "itemForm");
+
+}
 
     public ModelAndView placeBid(Long itemId) {
         String bidAmount = request.getParameter("bidAmount");

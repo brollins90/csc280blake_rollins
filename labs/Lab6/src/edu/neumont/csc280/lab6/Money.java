@@ -14,7 +14,7 @@ public class Money implements Comparable {
     private static final Currency USD = Currency.getInstance("USD");
     private static final RoundingMode DEFAULT_ROUNDING = RoundingMode.HALF_EVEN;
 
-    @Column(precision = 2)
+    @Column(precision=10, scale=2)
     private BigDecimal amount;
     private Currency currency;
 

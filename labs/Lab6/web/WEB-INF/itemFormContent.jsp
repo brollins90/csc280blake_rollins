@@ -35,8 +35,8 @@
         <c:choose>
             <c:when test="${model.item.numBids > 0}">
                 <input type="hidden" name="price" id="price" value="${model.item.price}"/>
-                <input type="hidden" name="start_time" id="start_time" value="${model.item.startTime}"/>
-                <input type="hidden" name="end_time" id="end_time" value="${model.item.endTime}"/>
+                <input type="hidden" name="start_time" id="start_time" value="${model.item.getPrettyStart()}"/>
+                <input type="hidden" name="end_time" id="end_time" value="${model.item.getPrettyEnd()}"/>
             </c:when>
             <c:otherwise>
                 <div>

@@ -93,12 +93,19 @@ public class AuctionServiceHsqlImpl implements AuctionService {
         current.setImageUrl(auction.getImageUrl());
         if (current.getNumBids() < 1) {
             current.setPrice(auction.getPrice());
-            current.setStartTime(auction.getStartTime());
-            current.setEndTime(auction.getEndTime());
-        }
-//        entityManager.merge(auction);
-        return current;
 
+            long startMillis = auction.getStartTime().getTime();
+
+            if (startMillis > new Date().getTime()) {
+                current.setStartTime(auction.getStartTime());
+                if (startMillis < auction.getEndTime().getTime()) {
+                    current.setEndTime(auction.getEndTime());
+                } else {
+                    current.setEndTime(new Date(auction.getEndTime().getTime() + 7 * 24 * 60 * 60 * 1000));
+                }
+            }
+        }
+        return current;
     }
 
     @Override

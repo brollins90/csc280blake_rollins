@@ -1,7 +1,6 @@
 package edu.neumont.csc280.lab6.item;
 
 import edu.neumont.csc280.lab6.Money;
-import edu.neumont.csc280.lab6.MoneyToDoubleConverter;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
