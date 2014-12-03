@@ -23,22 +23,15 @@ public class ItemGetController {
     public ItemGetController() {
     }
 
-//    private SearchModel makeSearchModel(Set<Auction> auctions, String searchTerm, int count, int offset) {
-//        SearchModel search = new SearchModel();
-//        search.setCount(count);
-//        search.setExpireTime(1);
-//        search.setItems(new ArrayList<Auction>(auctions));
-//        search.setItemsCountFound(count);
-//        search.setOffset(offset);
-//        search.setSearchTerm(searchTerm);
-//
-//        return search;
-//    }
-
     public ModelAndView getAllItems() {
         SearchModel search = auctionService.findByTextSearch(null, 100, 0);
         ModelAndView mv = new ModelAndView(search, "itemList");
         return mv;
+    }
+
+    public ModelAndView build() {
+        auctionService.build();
+        return getAllItems();
     }
 
     public ModelAndView createItem() {

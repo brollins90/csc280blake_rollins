@@ -1,6 +1,7 @@
 package edu.neumont.csc280.lab6.item;
 
 import edu.neumont.csc280.lab6.Money;
+import edu.neumont.csc280.lab6.MoneyToDoubleConverter;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -9,6 +10,7 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "Auction.all", query = "SELECT a FROM Auction a ORDER BY a.title"),
         @NamedQuery(name = "Auction.byId", query = "SELECT a FROM Auction a WHERE a.id = :id ORDER BY a.title"),
+        @NamedQuery(name = "Auction.byTitle", query = "SELECT a FROM Auction a WHERE a.title = :title ORDER BY a.title"),
         @NamedQuery(name = "Auction.like", query =
                 "SELECT a FROM Auction a WHERE UPPER(a.title) like :like or UPPER(a.description) like :like ORDER BY a.title"),
 })
@@ -34,7 +36,7 @@ public class Auction {
     private String imageUrl;
 
     @Column
-    private Money price;
+    private Double price;
 
     @Column
     private int numBids;
@@ -80,11 +82,11 @@ public class Auction {
         this.imageUrl = imageUrl;
     }
 
-    public Money getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Money price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

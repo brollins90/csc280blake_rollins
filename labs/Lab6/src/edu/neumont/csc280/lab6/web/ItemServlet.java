@@ -41,7 +41,10 @@ public class ItemServlet extends HttpServlet {
             }
 
             System.out.println(action);
-            if ("create".equalsIgnoreCase(action)) {
+            if ("build".equalsIgnoreCase(action)) {
+                mv = itemGetController.build();
+
+            } else if ("create".equalsIgnoreCase(action)) {
                 mv = itemGetController.createItem();
 
             } else if ("delete".equalsIgnoreCase(action)) {
