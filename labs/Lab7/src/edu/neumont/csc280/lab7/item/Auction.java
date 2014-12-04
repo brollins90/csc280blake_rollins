@@ -21,7 +21,7 @@ public class Auction {
     static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
 
     @Id
-    @Column
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
