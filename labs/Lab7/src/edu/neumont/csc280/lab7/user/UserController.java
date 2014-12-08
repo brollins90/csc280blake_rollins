@@ -17,11 +17,11 @@ public class UserController {
     HttpServletRequest request;
 
 
-    public ModelAndView getUserFormPage() {
-        return new ModelAndView(null, "/WEB-INF/account/edit.jsp");
+    public ModelAndView getUserLoginForm() {
+        return new ModelAndView(null, "/user/login.jsp");
     }
 
-    public ModelAndView executeUserForm() {
+    public ModelAndView exectureUserLoginForm() {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -30,6 +30,23 @@ public class UserController {
         user.setPassword(password);//passwordEncoder.encode(password));
 
         userService.updateUser(user);
+
+        return new ModelAndView(null, "redirect:" + request.getServletContext().getContextPath() + "/item");
+    }
+
+    public ModelAndView getUserLogoutForm() {
+        return new ModelAndView(null, "/user/logout.jsp");
+    }
+
+    public ModelAndView exectureUserLogoutForm() {
+//        String username = request.getParameter("username");
+//        String password = request.getParameter("password");
+//
+//        User user = new User();
+//        user.setUsername(username);
+//        user.setPassword(password);//passwordEncoder.encode(password));
+//
+//        userService.updateUser(user);
 
         return new ModelAndView(null, "redirect:" + request.getServletContext().getContextPath() + "/item");
     }

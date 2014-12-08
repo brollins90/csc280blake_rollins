@@ -43,7 +43,7 @@ public class SearchGetController {
 
         SearchModel search = auctionService.findByTextSearch(searchTerm, count, offset);
 
-        ModelAndView mv = new ModelAndView(search, "itemList");
+        ModelAndView mv = new ModelAndView(search, "/WEB-INF/itemList.jsp");
         return mv;
     }
 }

@@ -1,7 +1,7 @@
-package edu.neumont.csc280.lab7.web;
+package edu.neumont.csc280.lab7.item;
 
-import edu.neumont.csc280.lab7.item.ItemGetController;
-import edu.neumont.csc280.lab7.item.ItemPostController;
+import edu.neumont.csc280.lab7.web.DispatchServlet;
+import edu.neumont.csc280.lab7.web.ModelAndView;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -13,9 +13,7 @@ import java.io.IOException;
 public class ItemServlet extends HttpServlet {
 
     @Inject
-    ItemGetController itemGetController;
-    @Inject
-    ItemPostController itemPostController;
+    AuctionController auctionController;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -42,25 +40,25 @@ public class ItemServlet extends HttpServlet {
 
             System.out.println(action);
             if ("build".equalsIgnoreCase(action)) {
-                mv = itemGetController.build();
+                mv = auctionController.build();
 
             } else if ("create".equalsIgnoreCase(action)) {
-                mv = itemGetController.createItem();
+                mv = auctionController.getCreateItemPage();
 
             } else if ("delete".equalsIgnoreCase(action)) {
-                mv = itemGetController.deleteItem(itemId);
+                mv = auctionController.getDeleteItemPage(itemId);
 
             } else if ("json".equalsIgnoreCase(action)) {
-                mv = itemGetController.retrieveItemJSON(itemId);
+                mv = auctionController.getItemJSON(itemId);
 
             } else if ("retrieve".equalsIgnoreCase(action)) {
-                mv = itemGetController.retrieveItem(itemId);
+                mv = auctionController.getItemPage(itemId);
 
             } else if ("update".equalsIgnoreCase(action)) {
-                mv = itemGetController.updateItem(itemId);
+                mv = auctionController.getUpdateItemPage(itemId);
 
             } else if ("list".equalsIgnoreCase(action)) {
-                mv = itemGetController.getAllItems();
+                mv = auctionController.getAllItemsPage();
 
             } else {
                 System.out.println("bad action");
@@ -106,15 +104,15 @@ public class ItemServlet extends HttpServlet {
 
             if ("delete".equalsIgnoreCase(action)) {
                 System.out.println("delete");
-                mv = itemPostController.deleteItem(itemId);
+                mv = auctionController.processDeleteItem(itemId);
 
             } else if ("update".equalsIgnoreCase(action)) {
                 System.out.println("update");
-                mv = itemPostController.processAuctionForm(itemId);
+                mv = auctionController.processAuctionForm(itemId);
 
             } else if ("bid".equalsIgnoreCase(action)) {
                 System.out.println("bid");
-                mv = itemPostController.placeBid(itemId);
+                mv = auctionController.placeBid(itemId);
 
             } else {
                 System.out.println("bad action, doing get");

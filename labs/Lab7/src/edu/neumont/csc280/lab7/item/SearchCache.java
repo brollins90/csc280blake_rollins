@@ -46,7 +46,7 @@ public class SearchCache {
     public void addToCache(SearchResult result) {
         synchronized (this) {
             long now = new Date().getTime();
-            result.setExpireTime(now + 1000 * 60 * 5);//1 * 1 * 60 * 60 * 1000);
+            result.setExpireTime(now + 1);//1000 * 60 * 5);//1 * 1 * 60 * 60 * 1000);
             searchResults.add(result);
         }
     }

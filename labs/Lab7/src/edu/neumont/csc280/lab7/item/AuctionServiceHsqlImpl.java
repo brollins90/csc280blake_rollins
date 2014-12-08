@@ -2,6 +2,7 @@ package edu.neumont.csc280.lab7.item;
 
 import edu.neumont.csc280.lab7.Money;
 import edu.neumont.csc280.lab7.search.SearchModel;
+import edu.neumont.csc280.lab7.user.CurrentUser;
 
 import javax.ejb.Local;
 import javax.ejb.LocalBean;
@@ -36,15 +37,19 @@ public class AuctionServiceHsqlImpl implements AuctionService {
     @Override
     public void build() {
 
+        if (CurrentUser.getUser() == null) {
+            throw new AuctionException("You must be logged in.");
+        }
         if (!built) {
             for (int i = 1; i < 41; i++) {
                 Auction a = new Auction();
                 a.setTitle("Item " + i + " Title.");
                 a.setDescription("Item " + i + " description.");
-                a.setImageUrl("http://localhost:8080/lab6/img/item_" + i + ".png");
+                a.setImageUrl("http://localhost:8080/lab7/img/item_" + i + ".png");
                 a.setPrice(Money.dollars(new BigDecimal(0.01d)));
                 a.setStartTime(new Date());
                 a.setEndTime(new Date(a.getStartTime().getTime() + 7 * 24 * 60 * 60 * 1000));
+                a.setUser(CurrentUser.getUser());
                 create(a);
             }
 
@@ -57,6 +62,9 @@ public class AuctionServiceHsqlImpl implements AuctionService {
         if (auction == null) {
             throw new IllegalArgumentException("Auction cannot be null.");
         }
+        if (CurrentUser.getUser() == null) {
+            throw new AuctionException("You must be logged in.");
+        }
 
         TypedQuery<Auction> query = entityManager.createNamedQuery("Auction.byTitle", Auction.class);
         query.setParameter("title", auction.getTitle());
@@ -66,6 +74,7 @@ public class AuctionServiceHsqlImpl implements AuctionService {
             throw new IllegalArgumentException("Auction title already exists");
         }
 
+        auction.setUser(CurrentUser.getUser());
         entityManager.persist(auction);
         return auction;
 
@@ -86,6 +95,9 @@ public class AuctionServiceHsqlImpl implements AuctionService {
 
         if (current == null) {
             throw new IllegalArgumentException("Unknown auction id");
+        }
+        if (current.getUser() != CurrentUser.getUser()) {
+            throw new AuctionException("You can only edit your auctions.");
         }
 
         current.setTitle(auction.getTitle());
@@ -111,11 +123,13 @@ public class AuctionServiceHsqlImpl implements AuctionService {
     @Override
     public void delete(Long id) {
         Auction auction = retreive(id);
+        if (auction.getUser() != CurrentUser.getUser()) {
+            throw new AuctionException("You can only delete your auctions.");
+        }
 
         if (auction != null) {
             entityManager.remove(auction);
         }
-
     }
 
     @Override
@@ -139,13 +153,6 @@ public class AuctionServiceHsqlImpl implements AuctionService {
             TypedQuery<Auction> query = entityManager.createNamedQuery("Auction.like", Auction.class);
             query.setParameter("like", "%" + searchTerm.toUpperCase() + "%");
             List<Auction> searchResults = query.getResultList();
-//
-//            Collections.sort(searchResults, new Comparator<Auction>() {
-//                @Override
-//                public int compare(Auction a, Auction b) {
-//                    return a.getTitle().compareTo(b.getTitle());
-//                }
-//            });
 
             searchResult = new SearchResult();
             searchResult.setItems(searchResults);
@@ -162,6 +169,9 @@ public class AuctionServiceHsqlImpl implements AuctionService {
 
     @Override
     public Auction placeBid(Long id, Double bidAmount) {
+        if (CurrentUser.getUser() == null) {
+            throw new AuctionException("You can only bid if you are logged in.");
+        }
 
         Auction auction = retreive(id);
         Money newAmount = Money.dollars(bidAmount);
@@ -172,17 +182,6 @@ public class AuctionServiceHsqlImpl implements AuctionService {
                 auction.setNumBids(auction.getNumBids() + 1);
                 auction.setPrice(newAmount);
             }
-//            Double currentBidValue = (Double) entityManager.createQuery("SELECT MAX(b.amount) FROM Bid b WHERE b.auction = :auction")
-//                    .setParameter("auction", auction)
-//                    .getSingleResult();
-//
-//            if (currentBidValue == null || bidAmount > currentBidValue) {
-//                Bid bid = new Bid();
-//                bid.setAuction(auction);
-//                bid.setAmount(bidAmount);
-//                entityManager.persist(bid);
-//                auction.addBid(bid);
-//            }
         }
         return auction;
     }

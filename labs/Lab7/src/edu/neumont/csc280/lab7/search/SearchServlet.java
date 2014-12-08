@@ -1,7 +1,9 @@
-package edu.neumont.csc280.lab7.web;
+package edu.neumont.csc280.lab7.search;
 
 
 import edu.neumont.csc280.lab7.search.SearchGetController;
+import edu.neumont.csc280.lab7.web.DispatchServlet;
+import edu.neumont.csc280.lab7.web.ModelAndView;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;

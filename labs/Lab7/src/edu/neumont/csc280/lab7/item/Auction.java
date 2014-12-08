@@ -1,6 +1,7 @@
 package edu.neumont.csc280.lab7.item;
 
 import edu.neumont.csc280.lab7.Money;
+import edu.neumont.csc280.lab7.user.User;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -45,6 +46,9 @@ public class Auction {
 
     @Column
     private Date startTime;
+
+    @ManyToOne
+    private User user;
 
     public Auction() {
     }
@@ -111,6 +115,14 @@ public class Auction {
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getPrettyStart() {
